@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 .pnpm-store
 .superpowers
+.worktrees
 dist
 dist-ssr
 *.local
