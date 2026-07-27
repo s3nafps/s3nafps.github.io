@@ -1,0 +1,107 @@
+\documentclass[11pt,a4paper]{article}
+
+% Essential packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+% Disable page numbers
+\pagestyle{empty}
+
+% Section formatting for a clean, aggressive look
+\titleformat{\section}{\large\bfseries\uppercase}{}{0pt}{}[\titlerule]
+\titlespacing*{\section}{0pt}{1.5ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+% Hyperlink formatting
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=blue,
+}
+
+% Custom command for experience entries
+\newcommand{\resumeItem}[4]{
+  \vspace{1.5mm}
+  \noindent\textbf{#1} \hfill #2 \\
+  \textit{#3} \hfill \textit{#4} \par\vspace{1mm}
+}
+
+\begin{document}
+
+% -------------------- HEADER --------------------
+\begin{center}
+    {\huge \textbf{Mohamed Senator}} \\ \vspace{2mm}
+    Algiers, Algeria $|$ +213 541 176 852 $|$ \href{mailto:mohamed.senator@icloud.com}{mohamed.senator@icloud.com}
+\end{center}
+
+\vspace{-2mm}
+
+% -------------------- SUMMARY --------------------
+\section*{Professional Summary}
+Systems and Infrastructure Engineer with over 3 years of experience managing enterprise environments, network security, and infrastructure automation. Certified Google Cloud Associate Cloud Engineer with a proven track record of transitioning manual IT operations into streamlined, automated workflows. Expertise in PowerShell scripting, containerization, and configuring advanced security appliances to ensure high availability and minimize downtime for mission-critical operations.
+
+% -------------------- COMPETENCIES --------------------
+\section*{Core Competencies}
+\begin{itemize}[leftmargin=0.15in, label={}, itemsep=2pt]
+    \item \textbf{Cloud \& Infrastructure:} Google Cloud Platform (GCP), Windows Server Administration, Active Directory, GPO, DNS/DHCP.
+    \item \textbf{Automation \& DevOps:} Advanced PowerShell Scripting, Docker Containerization, Custom Tool Development (Go/PowerShell), Task Automation.
+    \item \textbf{Network \& Security:} Fortinet Ecosystem (FortiGate, FortiWeb, FortiMail), VPN Management, Endpoint Protection, Vulnerability Patching.
+    \item \textbf{Operations:} ITIL Methodologies, High-Availability Environments, Incident Management, Technical Documentation.
+\end{itemize}
+
+% -------------------- EXPERIENCE --------------------
+\section*{Professional Experience}
+
+\resumeItem{Autorité Gouvernementale de Certification Électronique (AGCE)}{Algiers, Algeria}
+{IT Support (Infrastructure \& Automation Focus)}{Feb 2025 -- Present}
+\begin{itemize}[leftmargin=0.15in, itemsep=1pt]
+    \item Provide critical infrastructure support for the national digital certification authority, ensuring high availability for secure, encrypted services.
+    \item Engineered and deployed "Net-Ops-Dashboard," a custom PowerShell-based IT diagnostic tool, containerizing the application using Docker to streamline network and system health checks.
+    \item Developed custom PowerShell modules for FortiWeb infrastructure utilizing session/cookie-based authentication to automate security administrative tasks.
+    \item Resolve complex connectivity and authentication issues within a highly regulated, air-gapped security framework.
+    \item Collaborate with cross-functional security teams to conduct system audits and deploy critical vulnerability patches.
+\end{itemize}
+
+\resumeItem{Agrofilm Packaging}{Algeria}
+{Systems Administrator (Contract)}{Feb 2024 -- Aug 2024}
+\begin{itemize}[leftmargin=0.15in, itemsep=1pt]
+    \item Administered and maintained Windows Server environments, architecting user access controls and permissions via Active Directory.
+    \item Led the enterprise-wide deployment of strict security policies across all workstations via GPO to ensure compliance and data integrity.
+    \item Reduced new employee onboarding time and accelerated time-to-productivity by standardizing hardware provisioning and developing comprehensive technical guides.
+    \item Served as the primary L2 escalation point for network outages, server access failures, and infrastructure troubleshooting.
+\end{itemize}
+
+\resumeItem{Samsung}{Algeria}
+{Systems Support Specialist}{Dec 2022 -- Dec 2023}
+\begin{itemize}[leftmargin=0.15in, itemsep=1pt]
+    \item Maintained 99.9\% network availability for a large-scale enterprise environment of 500+ users.
+    \item Configured and managed Fortinet network security appliances, ensuring secure and stable VPN access for a distributed remote workforce.
+    \item Streamlined L1/L2 helpdesk operations by writing and implementing automated system maintenance scripts deployed via Group Policy.
+    \item Designed and initiated a targeted user training program that successfully decreased recurring support incident tickets by 25\%.
+\end{itemize}
+
+\resumeItem{Brandt}{Algeria}
+{IT Operations Specialist}{Apr 2021 -- Apr 2022}
+\begin{itemize}[leftmargin=0.15in, itemsep=1pt]
+    \item Optimized IT service delivery workflows by structuring asset management and incident tracking using GLPI and ITIL methodologies.
+    \item Administered Microsoft communication and collaboration tools (Teams, Exchange), ensuring seamless internal operations.
+\end{itemize}
+
+\vspace{2mm}
+\noindent \textit{\small *Note: Additional experience includes critical 24/7 manufacturing infrastructure monitoring at IRIS Electronics (May 2022 -- Nov 2022).}
+
+% -------------------- EDUCATION & CERTS --------------------
+\section*{Education \& Certifications}
+\begin{itemize}[leftmargin=0.15in, itemsep=4pt]
+    \item \textbf{Google Cloud Associate Cloud Engineer (ACE)} -- Google (Issued Feb 2026)
+    \item \textbf{Technicien Supérieur (BTS) in Database Management} -- INSFP Baiche Abdelkader, Setif 
+    \begin{itemize}[leftmargin=0.2in, label={--}, itemsep=0pt]
+        \item \textit{Focus: Database architecture, SQL, and IT systems logic}
+    \end{itemize}
+\end{itemize}
+
+\end{document}
