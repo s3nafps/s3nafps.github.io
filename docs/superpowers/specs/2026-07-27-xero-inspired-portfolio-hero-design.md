@@ -1,38 +1,46 @@
-# Xero-Inspired Portfolio Hero Design
+# Full Xero-Inspired Portfolio Design
 
 ## Goal
 
-Create a separate local preview of a replacement hero for Mohamed Senator's portfolio. The preview adapts the supplied Xero visual direction to Mohamed's professional identity without changing the current portfolio or deployed GitHub Pages site.
+Restructure Mohamed Senator's portfolio into a recruiter-first single page using the approved A1 visual direction. Preserve all CV-grounded facts and public links while replacing the current cinematic styling.
 
-## Scope
+## Page Structure
 
-The preview covers the navbar, hero card, animated icon pipeline, primary call to action, and expertise row only. Existing experience, capabilities, projects, contact sections, and production deployment remain unchanged.
+1. Hero with responsive navigation, animated infrastructure pipeline, experience CTA, and CV download.
+2. Proof rail with four facts: 4+ years, 4,000+ users supported, Google Cloud ACE, and Algiers.
+3. Four capability cards for Windows, PowerShell, Networking and Security, and Cloud and Virtualization.
+4. Chronological experience timeline.
+5. Operating approach narrative: Reliability → Automation → Cloud.
+6. Contact card with email, LinkedIn, GitHub, and CV.
+
+Projects remain deferred.
 
 ## Visual Direction
 
 - Use Inter on a near-black page.
-- Center a rounded dark hero card beneath a compact three-column navbar.
-- Reproduce the pink-to-white radial arc and masked crosshatch grid from the supplied direction.
-- Keep purple and magenta confined to the arc, beam, splash, and small active-node highlights.
-- Use restrained monochrome typography and controls elsewhere.
+- Use rounded dark surfaces, restrained borders, generous spacing, and a responsive editorial grid.
+- Reproduce the pink-to-white radial arc and masked crosshatch grid in the hero.
+- Echo the arc subtly in the contact section.
+- Keep magenta limited to arcs, beams, active states, and small accents.
+- Use the existing generated capability images as muted visual bands rather than full-card backgrounds.
 
-## Content
+## Hero and Navigation
 
 - Brand: `Mohamed Senator`
-- Navigation: `Experience`, `Capabilities`, `Contact`
+- Navigation: `Experience`, `Capabilities`, `CV`, `Contact`
 - Eyebrow: `Systems Administrator · Cloud Engineer`
 - Heading: `Systems built to stay available.`
 - Supporting copy: `I engineer secure Windows infrastructure, automate recurring operations, and extend reliable systems into the cloud.`
-- Primary action: `View experience`
-- Expertise row: `Microsoft`, `PowerShell`, `Google Cloud`, `VMware`, `Fortinet`
+- Actions: `View experience` and `Download CV`
+- Mobile navigation uses a hamburger-controlled full-screen overlay and restores body scrolling on close or unmount.
 
 ## Animated Pipeline
 
-The pipeline communicates Mohamed's operating model:
+The pipeline communicates infrastructure → automation → secure cloud delivery:
 
 1. Left layers node: Windows infrastructure.
 2. Center `MS` monogram: automation and operational control.
-3. Right shield-check node: security and cloud-ready delivery.
+3. Right shield-check node: secure cloud delivery.
 
 An SVG beam follows the measured centers of all three nodes. A requestAnimationFrame state machine runs a 3.4-second loop:
 
@@ -41,24 +49,38 @@ An SVG beam follows the measured centers of all three nodes. A requestAnimationF
 - 800 ms from the center to the right node.
 - 1000 ms idle pause.
 
-The SVG path is recalculated on mount and resize. The animation stops cleanly on unmount. When reduced motion is requested, the pipeline remains visible without continuous movement.
+The SVG path is recalculated on mount and resize. The animation stops cleanly on unmount. With reduced motion, the pipeline remains visible with a centered static beam.
 
-## Responsive Behavior
+## Capabilities and Experience
 
-- Desktop retains the centered three-column navbar and full pipeline.
-- Below 860 px, the pipeline connectors shorten.
-- At 768 px and below, the navbar uses a hamburger-controlled full-screen menu, nodes shrink, and hero spacing tightens.
-- At 480 px and below, corner radii and expertise-row gaps reduce.
-- Opening the mobile menu locks body scrolling; closing or unmounting restores it.
+- Capability content and images continue to come from the typed local `capabilities` array.
+- Each card has a restrained image band, number, title, description, and three supporting items.
+- Experience continues to come from the typed local `experience` array.
+- Timeline rows show dates, role, company, location, and CV-grounded summary.
 
-## Implementation Boundary
+## Operating Approach and Contact
 
-The prototype will live only in the brainstorming preview directory. It will not edit `src/`, deploy to GitHub Pages, or replace the current hero until the user explicitly approves the rendered preview.
+- Replace the standalone About block with three connected ideas: Reliability, Automation, and Cloud.
+- Use the existing 4+ years, enterprise/manufacturing/government, and 4,000+ users facts in concise supporting copy.
+- Close with a dark contact card, subtle arc echo, email address, social links, CV link, Algiers, and the current year.
+
+## Technical Boundaries
+
+- Keep React, TypeScript, Vite, Framer Motion, Lucide React, and existing typed content.
+- Use semantic class names and plain CSS for the new presentation.
+- Add no API, CMS, analytics, backend, contact form, or project showcase.
+- Remove the remote hero video and continuous nonessential motion.
+
+## Responsive and Accessibility Requirements
+
+- Support desktop, tablet, and 390 px mobile widths without horizontal overflow.
+- Preserve readable card text and image cropping at every breakpoint.
+- Use semantic landmarks and heading order, visible focus states, descriptive labels, and comfortable touch targets.
+- Honor reduced motion and keep all content usable if Google Fonts fails.
 
 ## Validation
 
-- Confirm the preview renders at desktop and mobile widths.
-- Confirm the pipeline path connects all node centers after resize.
-- Confirm the menu opens, closes, and restores body scrolling.
-- Confirm reduced-motion behavior.
-- Confirm the preview has no horizontal overflow or browser console errors.
+- Run tests, TypeScript checking, and the production Vite build.
+- Verify the pipeline geometry, reduced-motion fallback, menu scroll locking, image loading, navigation, CV, email, and social links.
+- Confirm no browser console warnings or horizontal overflow at 390 px, 768 px, and desktop widths.
+- Deploy the verified build to the existing `s3nafps.github.io` GitHub Pages site.
