@@ -7,13 +7,8 @@ assert.deepEqual(
   ['01', '02', '03', '04'],
 )
 assert.deepEqual(
-  capabilities.map(({ image }) => image),
-  [
-    '/images/windows-infrastructure.webp',
-    '/images/powershell-automation.webp',
-    '/images/networking-security.webp',
-    '/images/cloud-virtualization.webp',
-  ],
+  capabilities.map((capability) => 'image' in capability),
+  [false, false, false, false],
 )
 assert.equal(experience.length, 5)
 assert.deepEqual(
