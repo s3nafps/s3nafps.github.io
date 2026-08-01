@@ -158,9 +158,14 @@ function App() {
             </div>
             <p className="hero-note">Based in Algiers, Algeria · Open to systems and cloud opportunities</p>
           </Reveal>
-          <Reveal className="portrait-frame" delay={0.1}>
-            <img src="/mohamed-senator-portrait.png" alt="Mohamed Senator" />
-            <span className="portrait-tag">Available for opportunities</span>
+          <Reveal className="hero-panel" delay={0.1}>
+            <p className="eyebrow">Operational focus</p>
+            <strong>Windows</strong>
+            <span aria-hidden="true" />
+            <strong>Automation</strong>
+            <span aria-hidden="true" />
+            <strong>Cloud</strong>
+            <p>Secure infrastructure, repeatable work, measured outcomes.</p>
           </Reveal>
         </section>
 

@@ -24,7 +24,7 @@ for (const section of sections) {
 assert.match(app, /Reliable systems\./)
 assert.match(app, /Download CV/)
 assert.doesNotMatch(app, /<video|HERO_VIDEO/)
-assert.match(app, /mohamed-senator-portrait\.png/)
+assert.doesNotMatch(app, /mohamed-senator-portrait/)
 assert.match(app, /portfolio-theme/)
 assert.match(app, /aria-label=.*dark theme/)
 assert.doesNotMatch(app, /capability-image/)
@@ -38,6 +38,7 @@ assert.match(css, /prefers-reduced-motion/)
 assert.match(css, /font-family:\s*Inter/)
 
 for (const image of [
+  'mohamed-senator-portrait.png',
   'windows-infrastructure.webp',
   'powershell-automation.webp',
   'networking-security.webp',
