@@ -3,7 +3,6 @@ export type Capability = {
   title: string
   description: string
   items: string[]
-  image: string
 }
 
 export type Experience = {
@@ -23,9 +22,8 @@ export const capabilities: Capability[] = [
     items: [
       'Windows Server',
       'Active Directory & Group Policy',
-      'Microsoft Exchange & Microsoft 365',
+      'Exchange, Microsoft 365 & SCCM/MECM',
     ],
-    image: '/images/windows-infrastructure.webp',
   },
   {
     number: '02',
@@ -34,10 +32,9 @@ export const capabilities: Capability[] = [
       'Recurring operations converted into consistent, reviewable workflows.',
     items: [
       'Infrastructure health checks',
-      'System audits & data collection',
-      'Dashboards & operational reporting',
+      'Audits, reporting & data collection',
+      'Bash, GitHub Actions & CI/CD',
     ],
-    image: '/images/powershell-automation.webp',
   },
   {
     number: '03',
@@ -49,7 +46,6 @@ export const capabilities: Capability[] = [
       'Fortinet FortiGate & PKI',
       'Vulnerability remediation & patching',
     ],
-    image: '/images/networking-security.webp',
   },
   {
     number: '04',
@@ -57,11 +53,10 @@ export const capabilities: Capability[] = [
     description:
       'Virtualized infrastructure experience with an expanding Google Cloud practice.',
     items: [
-      'Google Cloud Platform',
+      'GCP, Terraform & private GKE',
       'VMware vSphere & Hyper-V',
-      'Google Cloud Associate Cloud Engineer',
+      'Google Cloud Associate Cloud Engineer (ACE)',
     ],
-    image: '/images/cloud-virtualization.webp',
   },
 ]
 
@@ -72,7 +67,7 @@ export const experience: Experience[] = [
     role: 'IT Support & Systems Administration',
     location: 'Algiers, Algeria',
     summary:
-      'Building PowerShell automation, infrastructure health checks, system audits, dashboards, and operational reporting in a security-sensitive government environment.',
+      'Administering air-gapped Windows infrastructure, building 3+ PowerShell tools, and delivering dashboards for management, cybersecurity, and audit teams.',
   },
   {
     dates: 'Feb 2024 — Aug 2024',
@@ -80,7 +75,7 @@ export const experience: Experience[] = [
     role: 'IT Support Engineer — Contract',
     location: 'Algeria',
     summary:
-      'Supported Active Directory, Windows endpoints, connectivity, remote administration, and infrastructure incidents in a production environment.',
+      'Helped rebuild and stabilize system and network infrastructure across multiple sites while maintaining approximately 95% availability.',
   },
   {
     dates: 'Dec 2022 — Dec 2023',
@@ -88,7 +83,7 @@ export const experience: Experience[] = [
     role: 'IT Support / Infrastructure Support',
     location: 'Algeria',
     summary:
-      'Supported Windows services, 20+ virtual machines, Active Directory, Exchange, Cisco networking, FortiGate, and escalated infrastructure incidents.',
+      'Administered 20+ virtual machines and maintained Active Directory, Exchange, Cisco, and FortiGate services for 500+ users.',
   },
   {
     dates: 'May 2022 — Nov 2022',
@@ -96,7 +91,7 @@ export const experience: Experience[] = [
     role: 'IT Support — Contract',
     location: 'Algeria',
     summary:
-      'Monitored manufacturing infrastructure and responded to user, system, network, and production-availability incidents.',
+      'Monitored manufacturing IT and resolved user, system, and network incidents in a shift-based production environment.',
   },
   {
     dates: 'Apr 2021 — Apr 2022',
@@ -104,6 +99,6 @@ export const experience: Experience[] = [
     role: 'IT Support Technician',
     location: 'Algeria',
     summary:
-      'Supported an enterprise environment serving 4,000+ users while documenting recurring issues and coordinating infrastructure escalations.',
+      'Resolved 150+ GLPI tickets per month for 4,000+ users and contributed to a GLPI-to-ServiceNow migration.',
   },
 ]

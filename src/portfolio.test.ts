@@ -7,7 +7,7 @@ const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8')
 
 const sections = [
   'id="hero"',
-  'className="proof-rail"',
+  'className="proof-rail section-wrap"',
   'id="capabilities"',
   'id="experience"',
   'id="approach"',
@@ -24,7 +24,7 @@ for (const section of sections) {
 assert.match(app, /Reliable systems\./)
 assert.match(app, /Download CV/)
 assert.doesNotMatch(app, /<video|HERO_VIDEO/)
-assert.match(app, /mohamed-senator-portrait\.webp/)
+assert.match(app, /mohamed-senator-portrait\.png/)
 assert.match(app, /portfolio-theme/)
 assert.match(app, /aria-label=.*dark theme/)
 assert.doesNotMatch(app, /capability-image/)
