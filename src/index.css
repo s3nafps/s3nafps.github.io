@@ -163,6 +163,7 @@ h1, h2, h3 { letter-spacing: -.055em; }
   .approach-section { padding-inline: 16px; }
   .approach-grid { margin-top: 42px; }
   .approach-card { min-height: 200px; padding-inline: 0; }
+  .project-featured { grid-template-columns: 1fr; gap: 24px; padding: 24px; }
   .contact { padding-top: 72px; }
 }
 
