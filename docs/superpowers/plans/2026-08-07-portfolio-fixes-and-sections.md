@@ -302,13 +302,15 @@ git commit -m "feat(seo): add OpenGraph, canonical, JSON-LD, robots, sitemap"
 In `package.json`, after `"private": true,`, add:
 
 ```json
-  "packageManager": "pnpm@9.15.9",
+  "packageManager": "pnpm@10.34.5",
 ```
+
+(Verify with `npx pnpm@10 --version` — pnpm 10.34.5 is what actually manages this repo's lockfile, per the `allowBuilds` field in `pnpm-workspace.yaml`.)
 
 - [ ] **Step 2: Install oxlint and update the lint script**
 
 ```powershell
-npx --yes pnpm@9 add -D oxlint
+npx --yes pnpm@10 add -D oxlint
 ```
 
 Then change the `lint` script in `package.json` from `"tsc -b"` to:
@@ -458,9 +460,33 @@ function Reveal({
 }
 ```
 
-- [ ] **Step 4: Replace the `motion.li` timeline with a plain `li`**
+- [ ] **Step 4: Replace the `motion.li` timeline with a `TimelineItem` component**
 
-In `src/App.tsx`, replace the `{experience.map((item, index) => (` block:
+Calling `useReveal` inside a `.map()` callback would violate the rules of hooks and fail the oxlint gate. Instead, add a small `TimelineItem` component after `Reveal`:
+
+```tsx
+function TimelineItem({ item, index }: { item: Experience; index: number }) {
+  const ref = useReveal<HTMLLIElement>(index * 0.04)
+  return (
+    <li ref={ref} className="reveal">
+      <p className="timeline-date">{item.dates}</p>
+      <div>
+        <h3>{item.role}</h3>
+        <p className="timeline-company">{item.company} · {item.location}</p>
+      </div>
+      <p className="timeline-summary">{item.summary}</p>
+    </li>
+  )
+}
+```
+
+In `src/App.tsx`, update the content import to include the `Experience` type:
+
+```ts
+import { capabilities, experience, type Experience } from './content'
+```
+
+Then replace the `{experience.map((item, index) => (` block:
 
 ```tsx
             {experience.map((item, index) => (
@@ -485,24 +511,11 @@ with:
 
 ```tsx
             {experience.map((item, index) => (
-              <li
-                ref={useReveal<HTMLLIElement>(reduceMotion ? 0 : index * 0.04)}
-                className="reveal"
-                key={`${item.company}-${item.dates}`}
-              >
-                <p className="timeline-date">{item.dates}</p>
-                <div>
-                  <h3>{item.role}</h3>
-                  <p className="timeline-company">{item.company} · {item.location}</p>
-                </div>
-                <p className="timeline-summary">{item.summary}</p>
-              </li>
+              <TimelineItem item={item} index={index} key={`${item.company}-${item.dates}`} />
             ))}
 ```
 
-Note: `useReveal` is called inside `map` — it is a hook but here it only takes a plain value, so hook-order rules hold across renders (the list never reorders).
-
-Also remove the now-unused `reduceMotion` local in `App` if `tsc` flags it as unused (it is still used to compute the delay above — keep it).
+Also remove the now-unused `const reduceMotion = usePrefersReducedMotion()` local from `App()` (the timeline no longer uses it; `Reveal` and `TimelineItem` each call `usePrefersReducedMotion` themselves).
 
 - [ ] **Step 5: Add `.reveal` CSS to `src/index.css`**
 
@@ -522,7 +535,7 @@ And inside the existing reduced-motion block, add a rule so content is never stu
 - [ ] **Step 6: Remove the dependency**
 
 ```powershell
-npx --yes pnpm@9 remove framer-motion
+npx --yes pnpm@10 remove framer-motion
 ```
 
 - [ ] **Step 7: Verify**
@@ -865,4 +878,6 @@ Summarize: files changed, test/build/lint results, and remaining manual steps fo
 
 - Spec §1 (CV pipeline) → Task 1. §2 (SEO) → Task 3 + Task 2 (og.png). §3 (CI) → Task 4. §4 (bundle) → Task 5. §5 (Projects) → Task 6. §6 (Certifications) → Task 7. §7 (robustness: noscript) → Task 3; error boundary explicitly non-goal. §8 (tests/verification) → per-task tests + Task 8.
 - No placeholders: every step has concrete code/commands and expected output.
-- Type consistency: `Project`/`Certification` shapes match across content.ts, App.tsx, and both test files; `useReveal<T extends HTMLElement>` used as `useReveal<HTMLDivElement>` and `useReveal<HTMLLIElement>`.
+- Type consistency: `Project`/`Certification` shapes match across content.ts, App.tsx, and both test files; `useReveal<T extends HTMLElement>` used as `useReveal<HTMLDivElement>` (Reveal) and `useReveal<HTMLLIElement>` (TimelineItem).
+- Pre-flight fixes (2026-08-07): pnpm version corrected 9 → 10.34.5 (repo actually uses pnpm 10 per `allowBuilds` in pnpm-workspace.yaml); timeline reveal moved from inline `ref={useReveal(...)}` inside `.map()` into a `TimelineItem` component (rules-of-hooks compliance for the oxlint gate).
+
