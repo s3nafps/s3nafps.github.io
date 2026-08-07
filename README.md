@@ -1,12 +1,13 @@
 # portfolio-astryx
 
-Personal portfolio for **Mohamed Senator** — Systems Administrator / Cloud
-Infrastructure & Automation.
+My portfolio — I'm **Mohamed Senator**, Systems Administrator / Cloud
+Infrastructure & Automation. This is my resume site, and this README is my own
+runbook: my box, my gates, my on-call. I keep it in the first person because
+there is no handover — I am the only admin here.
 
-This box serves the resume site. Treat it like production: it is one.
-Changes to `main` propagate to the live site automatically. There is no staging
-environment, no canary, no rollback button — **rollback is `git revert` and a
-redeploy**. Act accordingly.
+Treat this like production. It is. Changes to `main` propagate to the live
+site automatically. There is no staging environment, no canary, no rollback
+button — **rollback is `git revert` and a redeploy**. Act accordingly.
 
 ---
 
