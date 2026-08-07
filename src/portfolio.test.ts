@@ -29,6 +29,20 @@ assert.match(app, /portfolio-theme/)
 assert.match(app, /aria-label=.*dark theme/)
 assert.doesNotMatch(app, /capability-image/)
 assert.match(html, /<title>Mohamed Senator<\/title>/)
+const metaChecks: Array<[string, RegExp]> = [
+  ['og:title', /og:title/],
+  ['og:description', /og:description/],
+  ['og:type', /og:type/],
+  ['og:url', /og:url/],
+  ['og:image', /og:image/],
+  ['twitter card', /twitter:card/],
+  ['canonical', /rel="canonical"/],
+  ['JSON-LD Person', /"@type":\s*"Person"/],
+  ['noscript', /<noscript>/],
+]
+for (const [name, pattern] of metaChecks) {
+  assert.match(html, pattern, `${name} meta must exist in index.html`)
+}
 assert.match(css, /@astryxdesign\/core\/reset\.css/)
 assert.match(css, /@astryxdesign\/theme-neutral\/theme\.css/)
 assert.match(css, /:root\s*{/)
@@ -48,6 +62,13 @@ for (const image of [
     existsSync(new URL(`../public/images/${image}`, import.meta.url)),
     false,
     `${image} must be removed`,
+  )
+}
+
+for (const file of ['robots.txt', 'sitemap.xml', 'og.png']) {
+  assert.ok(
+    existsSync(new URL(`../public/${file}`, import.meta.url)),
+    `${file} must exist in public/`,
   )
 }
 
