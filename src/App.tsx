@@ -3,7 +3,7 @@ import { ArrowUpRight, Check, Menu, Moon, Sun, X } from 'lucide-react'
 import { Button } from '@astryxdesign/core/Button'
 import { Theme } from '@astryxdesign/core/theme'
 import { neutralTheme } from '@astryxdesign/theme-neutral/built'
-import { capabilities, experience, type Experience } from './content'
+import { capabilities, experience, projects, type Experience } from './content'
 
 const EMAIL = 'mohamed.senator@icloud.com'
 const CV_PATH = '/Mohamed_Senator_Master_CV.pdf'
@@ -148,6 +148,7 @@ function App() {
             <div className="nav-desktop">
               <a href="#capabilities">Capabilities</a>
               <a href="#experience">Experience</a>
+              <a href="#projects">Projects</a>
               <a href={CV_PATH}>CV</a>
               <a href="#contact">Contact</a>
             </div>
@@ -173,6 +174,7 @@ function App() {
             <div className={`mobile-menu${menuOpen ? ' is-open' : ''}`}>
               <a href="#capabilities" onClick={closeMenu}>Capabilities</a>
               <a href="#experience" onClick={closeMenu}>Experience</a>
+              <a href="#projects" onClick={closeMenu}>Projects</a>
               <a href={CV_PATH} onClick={closeMenu}>Download CV</a>
               <a href="#contact" onClick={closeMenu}>Contact</a>
             </div>
@@ -248,6 +250,48 @@ function App() {
               <TimelineItem item={item} index={index} key={`${item.company}-${item.dates}`} />
             ))}
           </ol>
+        </section>
+
+        <section id="projects" className="section section-wrap projects-section">
+          <Reveal className="section-heading">
+            <p className="eyebrow">Selected work</p>
+            <h2>Built to make operations measurable.</h2>
+          </Reveal>
+          <div className="projects-grid">
+            {projects.map((project, index) =>
+              project.featured ? (
+                <Reveal key={project.number} className="project-featured">
+                  <div className="project-featured-main">
+                    <span className="project-flag">Featured · Open source</span>
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                  </div>
+                  <div className="project-featured-side">
+                    <ul className="project-tags">
+                      {project.tags.map((tag) => (
+                        <li key={tag}>{tag}</li>
+                      ))}
+                    </ul>
+                    <a href={project.href} target="_blank" rel="noreferrer">
+                      View on GitHub <ArrowUpRight size={14} aria-hidden="true" />
+                    </a>
+                  </div>
+                </Reveal>
+              ) : (
+                <Reveal key={project.number} className="project-row" delay={index * 0.06}>
+                  <span className="card-number">{project.number}</span>
+                  <div>
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                    <p className="project-row-meta">
+                      <span className="project-tag">{project.tags.join(' · ')}</span>
+                      <span className="project-internal">Internal · {project.context}</span>
+                    </p>
+                  </div>
+                </Reveal>
+              ),
+            )}
+          </div>
         </section>
 
         <section id="approach" className="section section-wrap approach-section">

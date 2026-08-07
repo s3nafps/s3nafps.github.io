@@ -11,7 +11,9 @@ const sections = [
   'className="proof-rail section-wrap"',
   'id="capabilities"',
   'id="experience"',
+  'id="projects"',
   'id="approach"',
+  'id="certifications"',
   'id="contact"',
 ]
 
@@ -24,6 +26,7 @@ for (const section of sections) {
 
 assert.match(app, /Reliable systems\./)
 assert.match(app, /Download CV/)
+assert.match(app, />Projects</, 'nav must include a Projects link')
 assert.doesNotMatch(app, /<video|HERO_VIDEO/)
 assert.doesNotMatch(app, /mohamed-senator-portrait/)
 assert.match(app, /portfolio-theme/)

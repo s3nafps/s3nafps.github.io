@@ -13,6 +13,22 @@ export type Experience = {
   summary: string
 }
 
+export type Project = {
+  number: string
+  title: string
+  description: string
+  tags: string[]
+  href?: string
+  featured: boolean
+  context?: string
+}
+
+export type Certification = {
+  title: string
+  issuer: string
+  url?: string
+}
+
 export const capabilities: Capability[] = [
   {
     number: '01',
@@ -100,5 +116,42 @@ export const experience: Experience[] = [
     location: 'Algeria',
     summary:
       'Resolved 150+ GLPI tickets per month for 4,000+ users and contributed to a GLPI-to-ServiceNow migration.',
+  },
+]
+
+export const projects: Project[] = [
+  {
+    number: 'P1',
+    title: 'ForecastFoundry',
+    description:
+      'Paper-first prediction-market research and execution engine — CLI, REST/OpenAPI, and MCP server.',
+    tags: ['Python', 'FastAPI', 'MCP', 'Alembic', 'Docker'],
+    href: 'https://github.com/s3nafps/ForecastFoundry',
+    featured: true,
+  },
+  {
+    number: 'P2',
+    title: 'Automated Health-Check Suite',
+    description:
+      'Weekly infrastructure health checks cut from ~3 hours to ~5 minutes (~97%) with consistent, accurate results.',
+    tags: ['PowerShell', 'Scheduled tasks'],
+    featured: false,
+    context: 'AGCE',
+  },
+  {
+    number: 'P3',
+    title: 'Ops & Audit Dashboards',
+    description:
+      'Dashboards for management, cybersecurity, and audit teams in an air-gapped environment.',
+    tags: ['PowerShell', 'Reporting'],
+    featured: false,
+    context: 'AGCE',
+  },
+]
+
+export const certifications: Certification[] = [
+  {
+    title: 'Google Cloud Associate Cloud Engineer (ACE)',
+    issuer: 'Google Cloud',
   },
 ]
