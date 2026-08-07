@@ -3,7 +3,7 @@ import { ArrowUpRight, Check, Menu, Moon, Sun, X } from 'lucide-react'
 import { Button } from '@astryxdesign/core/Button'
 import { Theme } from '@astryxdesign/core/theme'
 import { neutralTheme } from '@astryxdesign/theme-neutral/built'
-import { capabilities, experience, projects, type Experience } from './content'
+import { capabilities, certifications, experience, projects, type Experience } from './content'
 
 const EMAIL = 'mohamed.senator@icloud.com'
 const CV_PATH = '/Mohamed_Senator_Master_CV.pdf'
@@ -312,6 +312,22 @@ function App() {
               </Reveal>
             ))}
           </div>
+        </section>
+
+        <section id="certifications" className="section section-wrap certifications-section">
+          <Reveal className="section-heading section-heading-row">
+            <div>
+              <p className="eyebrow">Credentials</p>
+              <h2>Certifications.</h2>
+            </div>
+          </Reveal>
+          <Reveal className="certification-row">
+            <span className="card-number">01</span>
+            <div>
+              <h3>{certifications[0].title}</h3>
+              <p>{certifications[0].issuer}</p>
+            </div>
+          </Reveal>
         </section>
 
         <footer id="contact" className="contact section-wrap">

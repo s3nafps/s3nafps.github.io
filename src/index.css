@@ -135,6 +135,11 @@ h1, h2, h3 { letter-spacing: -.055em; }
 .project-tag { color: var(--muted); font-size: .78rem; }
 .project-internal { color: var(--accent); font: 500 .7rem 'DM Mono', monospace; letter-spacing: .05em; }
 
+.certifications-section { padding-top: 96px; }
+.certification-row { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 20px; align-items: center; margin-top: 48px; padding: 30px 4px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.certification-row h3 { margin-bottom: 6px; font-size: 1.3rem; line-height: 1.15; font-weight: 600; }
+.certification-row p { margin: 0; color: var(--muted); font-size: .9rem; }
+
 @media (max-width: 760px) {
   .section-wrap, .site-nav { width: min(100% - 32px, 1180px); }
   .site-header { padding-top: 12px; }
