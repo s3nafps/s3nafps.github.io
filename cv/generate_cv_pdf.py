@@ -22,7 +22,7 @@ LEGACY_PDF = ROOT / "public" / "Mohamed_Senator_CV.pdf"
 
 PROFILE = {
     "name": "Mohamed Senator",
-    "title": "Cloud / DevOps Support Engineer",
+    "title": "Systems Administrator / Cloud Infrastructure & Automation",
     "location": "Algiers, Algeria",
     "phone": "+213 541 176 852",
     "email": "mohamed.senator@icloud.com",
