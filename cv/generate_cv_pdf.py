@@ -17,7 +17,7 @@ from reportlab.platypus import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PRIMARY_PDF = ROOT / "public" / "Mohamed_Senator_CV_2026.pdf"
+PRIMARY_PDF = ROOT / "public" / "Mohamed_Senator_Master_CV.pdf"
 LEGACY_PDF = ROOT / "public" / "Mohamed_Senator_CV.pdf"
 
 PROFILE = {

@@ -10,5 +10,5 @@ C:\Users\s3nafps\.cache\codex-runtimes\codex-primary-runtime\dependencies\python
 
 Outputs:
 
-- `public/Mohamed_Senator_CV_2026.pdf`
-- `public/Mohamed_Senator_CV.pdf`
+- `public/Mohamed_Senator_Master_CV.pdf` (served by the site)
+- `public/Mohamed_Senator_CV.pdf` (legacy copy)

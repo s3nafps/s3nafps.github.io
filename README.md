@@ -27,7 +27,7 @@ Import the repo in Vercel — it auto-detects Vite:
 
 ## Notes
 
-- `public/Mohamed_Senator_CV_2026.pdf` is served as the downloadable CV —
-  replace it when the CV changes.
+- `public/Mohamed_Senator_Master_CV.pdf` is served as the downloadable CV —
+  regenerate it with `cv/generate_cv_pdf.py` when the CV changes.
 - Astryx component docs are available locally:
   `node node_modules/@astryxdesign/core/docs.mjs --list`
