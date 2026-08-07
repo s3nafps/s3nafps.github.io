@@ -1,10 +1,9 @@
-import { useEffect, useState, type ReactNode } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { ArrowUpRight, Check, Menu, Moon, Sun, X } from 'lucide-react'
 import { Button } from '@astryxdesign/core/Button'
 import { Theme } from '@astryxdesign/core/theme'
 import { neutralTheme } from '@astryxdesign/theme-neutral/built'
-import { capabilities, experience } from './content'
+import { capabilities, experience, type Experience } from './content'
 
 const EMAIL = 'mohamed.senator@icloud.com'
 const CV_PATH = '/Mohamed_Senator_Master_CV.pdf'
@@ -49,6 +48,38 @@ function usePrefersReducedMotion() {
   return reduceMotion
 }
 
+function useReveal<T extends HTMLElement>(delay = 0) {
+  const ref = useRef<T>(null)
+  const reduceMotion = usePrefersReducedMotion()
+
+  useEffect(() => {
+    const node = ref.current
+    if (!node) return
+    if (reduceMotion) {
+      node.classList.add('is-visible')
+      return
+    }
+    if (delay > 0) {
+      node.style.transitionDelay = `${delay}s`
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        }
+      },
+      { threshold: 0.2 },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [reduceMotion, delay])
+
+  return ref
+}
+
 function Reveal({
   children,
   className,
@@ -58,18 +89,25 @@ function Reveal({
   className?: string
   delay?: number
 }) {
-  const reduceMotion = usePrefersReducedMotion()
-
+  const ref = useReveal<HTMLDivElement>(delay)
   return (
-    <motion.div
-      className={className}
-      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, delay: reduceMotion ? 0 : delay }}
-    >
+    <div ref={ref} className={`reveal${className ? ` ${className}` : ''}`}>
       {children}
-    </motion.div>
+    </div>
+  )
+}
+
+function TimelineItem({ item, index }: { item: Experience; index: number }) {
+  const ref = useReveal<HTMLLIElement>(index * 0.04)
+  return (
+    <li ref={ref} className="reveal">
+      <p className="timeline-date">{item.dates}</p>
+      <div>
+        <h3>{item.role}</h3>
+        <p className="timeline-company">{item.company} · {item.location}</p>
+      </div>
+      <p className="timeline-summary">{item.summary}</p>
+    </li>
   )
 }
 
@@ -82,8 +120,6 @@ function App() {
       return 'light'
     }
   })
-  const reduceMotion = usePrefersReducedMotion()
-
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = menuOpen ? 'hidden' : previousOverflow
@@ -209,20 +245,7 @@ function App() {
           </Reveal>
           <ol className="timeline">
             {experience.map((item, index) => (
-              <motion.li
-                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.45, delay: reduceMotion ? 0 : index * 0.04 }}
-                key={`${item.company}-${item.dates}`}
-              >
-                <p className="timeline-date">{item.dates}</p>
-                <div>
-                  <h3>{item.role}</h3>
-                  <p className="timeline-company">{item.company} · {item.location}</p>
-                </div>
-                <p className="timeline-summary">{item.summary}</p>
-              </motion.li>
+              <TimelineItem item={item} index={index} key={`${item.company}-${item.dates}`} />
             ))}
           </ol>
         </section>

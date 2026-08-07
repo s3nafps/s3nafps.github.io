@@ -4,6 +4,7 @@ import { existsSync, readFileSync } from 'node:fs'
 const app = readFileSync(new URL('./App.tsx', import.meta.url), 'utf8')
 const css = readFileSync(new URL('./index.css', import.meta.url), 'utf8')
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8')
+const packageJson = readFileSync(new URL('../package.json', import.meta.url), 'utf8')
 
 const sections = [
   'id="hero"',
@@ -28,6 +29,8 @@ assert.doesNotMatch(app, /mohamed-senator-portrait/)
 assert.match(app, /portfolio-theme/)
 assert.match(app, /aria-label=.*dark theme/)
 assert.doesNotMatch(app, /capability-image/)
+assert.doesNotMatch(app, /framer-motion/, 'App.tsx must not use framer-motion')
+assert.doesNotMatch(css, /framer-motion/, 'index.css must not reference framer-motion')
 assert.match(html, /<title>Mohamed Senator<\/title>/)
 const metaChecks: Array<[string, RegExp]> = [
   ['og:title', /og:title/],
@@ -50,6 +53,7 @@ assert.match(css, /\[data-theme=['"]dark['"]\]/)
 assert.doesNotMatch(css, /--accent-pink:/)
 assert.match(css, /prefers-reduced-motion/)
 assert.match(css, /font-family:\s*Inter/)
+assert.doesNotMatch(packageJson, /framer-motion/, 'framer-motion must be removed from dependencies')
 
 for (const image of [
   'mohamed-senator-portrait.png',
