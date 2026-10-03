@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mohamedsenator.vercel.app/sitemap.xml
+Sitemap: https://s3nafps.github.io/sitemap.xml
