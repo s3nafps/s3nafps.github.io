@@ -16,11 +16,11 @@ export type Experience = {
 export type Project = {
   number: string
   title: string
+  kind: string
   description: string
+  highlights: string[]
   tags: string[]
-  href?: string
-  featured: boolean
-  context?: string
+  href: string
 }
 
 export type Certification = {
@@ -122,30 +122,33 @@ export const experience: Experience[] = [
 export const projects: Project[] = [
   {
     number: 'P1',
-    title: 'ForecastFoundry',
+    title: 'ADHealthCheck',
+    kind: 'PowerShell module',
     description:
-      'Paper-first prediction-market research and execution engine — CLI, REST/OpenAPI, and MCP server.',
-    tags: ['Python', 'FastAPI', 'MCP', 'Alembic', 'Docker'],
-    href: 'https://github.com/s3nafps/ForecastFoundry',
-    featured: true,
+      'Audits Active Directory health and security, from replication and FSMO roles to Kerberoastable accounts, delegation and LAPS coverage, and produces a scored HTML and JSON report.',
+    highlights: ['27 audit rules', '204 Pester tests, 95% coverage', 'PowerShell 5.1 and 7'],
+    tags: ['PowerShell', 'Active Directory', 'Pester', 'GitHub Actions'],
+    href: 'https://github.com/s3nafps/ADHealthCheck-PowerShell',
   },
   {
     number: 'P2',
-    title: 'Automated Health-Check Suite',
+    title: 'vps-platform',
+    kind: 'Infrastructure as code',
     description:
-      'Weekly infrastructure health checks cut from ~3 hours to ~5 minutes (~97%) with consistent, accurate results.',
-    tags: ['PowerShell', 'Scheduled tasks'],
-    featured: false,
-    context: 'AGCE',
+      'A Linux VPS hardened and run entirely from code: Ansible provisioning, automatic HTTPS, Prometheus, Grafana and Loki monitoring with alerting, and restic backups that are restore-tested every month.',
+    highlights: ['10-service Docker stack', '18 tested alert rules', 'Idempotent, CI-tested Ansible'],
+    tags: ['Ansible', 'Docker', 'Prometheus', 'Grafana', 'restic'],
+    href: 'https://github.com/s3nafps/vps-platform',
   },
   {
     number: 'P3',
-    title: 'Ops & Audit Dashboards',
+    title: 'gcp-landing-zone',
+    kind: 'Terraform on Google Cloud',
     description:
-      'Dashboards for management, cybersecurity, and audit teams in an air-gapped environment.',
-    tags: ['PowerShell', 'Reporting'],
-    featured: false,
-    context: 'AGCE',
+      'A Terraform landing zone for a private, hardened GKE platform with customer-managed encryption and keyless GitHub Actions deployments through Workload Identity Federation.',
+    highlights: ['Private GKE, KMS-encrypted secrets', '25 Terraform tests', 'checkov: 0 failed'],
+    tags: ['Terraform', 'GCP', 'GKE', 'Cloud KMS', 'IAM'],
+    href: 'https://github.com/s3nafps/gcp-landing-zone',
   },
 ]
 
