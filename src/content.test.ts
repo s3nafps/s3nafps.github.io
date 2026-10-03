@@ -16,19 +16,22 @@ assert.deepEqual(
   ['AGCE', 'Agrofilm Packaging Algeria', 'Samsung', 'IRIS SATEREX', 'Brandt Algeria'],
 )
 assert.equal(projects.length, 3)
-assert.equal(projects.filter((project) => project.featured).length, 1)
-assert.equal(
-  projects.find((project) => project.featured)?.href,
-  'https://github.com/s3nafps/ForecastFoundry',
-)
 assert.deepEqual(
-  projects.filter((project) => !project.featured).map((project) => project.href),
-  [undefined, undefined],
+  projects.map((project) => project.href),
+  [
+    'https://github.com/s3nafps/ADHealthCheck-PowerShell',
+    'https://github.com/s3nafps/vps-platform',
+    'https://github.com/s3nafps/gcp-landing-zone',
+  ],
 )
 assert.deepEqual(
   projects.map((project) => project.number),
   ['P1', 'P2', 'P3'],
 )
+for (const project of projects) {
+  assert.ok(project.highlights.length > 0, `${project.title} needs highlights`)
+  assert.ok(project.tags.length > 0, `${project.title} needs tags`)
+}
 assert.equal(certifications.length, 1)
 assert.equal(certifications[0].issuer, 'Google Cloud')
 

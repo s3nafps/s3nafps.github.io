@@ -140,6 +140,23 @@ h1, h2, h3 { letter-spacing: -.035em; font-weight: 650; }
 .timeline-company { margin-bottom: 10px; color: var(--accent); font-size: .9rem; font-weight: 500; }
 .timeline-summary { max-width: 720px; margin: 0; color: var(--muted); font-size: .94rem; line-height: 1.65; }
 
+/* projects */
+.projects-grid { display: grid; gap: 16px; margin-top: 52px; }
+.project-card { display: grid; gap: 18px; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); transition: border-color .15s; }
+.project-card:hover { border-color: var(--line-strong); }
+.project-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.project-kind { margin: 0 0 6px; color: var(--accent); font: 500 .72rem/1.4 'DM Mono', monospace; letter-spacing: .06em; text-transform: uppercase; }
+.project-card h3 { margin: 0; font-size: 1.4rem; line-height: 1.2; }
+.project-description { margin: 0; max-width: 720px; color: var(--muted); font-size: .95rem; line-height: 1.65; }
+.project-highlights { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0; padding: 0; list-style: none; }
+.project-highlights li { display: inline-flex; align-items: center; gap: 7px; color: var(--ink); font-size: .87rem; }
+.project-highlights svg { flex: none; color: var(--accent); }
+.project-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding-top: 18px; border-top: 1px solid var(--line); }
+.project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.project-tags li { padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font: .74rem 'DM Mono', monospace; }
+.project-link { display: inline-flex; align-items: center; gap: 7px; height: 38px; padding: 0 14px; border-radius: var(--radius-sm); background: var(--accent-soft); color: var(--accent); font-size: .86rem; font-weight: 600; text-decoration: none; transition: background .15s, color .15s; }
+.project-link:hover { background: var(--accent); color: var(--accent-ink); }
+
 /* approach */
 .approach-heading > p:last-child { max-width: 580px; margin: 20px 0 0; color: var(--muted); font-size: 1rem; line-height: 1.7; }
 .approach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 52px; }
