@@ -1,157 +1,105 @@
-# portfolio-astryx
+# Mohamed Senator
 
-My portfolio — I'm **Mohamed Senator**, Systems Administrator / Cloud
-Infrastructure & Automation. This is my resume site, and this README is my own
-runbook: my box, my gates, my on-call. I keep it in the first person because
-there is no handover — I am the only admin here.
+**Systems Administrator · Cloud Infrastructure & Automation** — Algiers, Algeria
 
-Treat this like production. It is. Changes to `main` propagate to the live
-site automatically. There is no staging environment, no canary, no rollback
-button — **rollback is `git revert` and a redeploy**. Act accordingly.
+I support Windows, virtualization, network, and security-sensitive infrastructure,
+then make recurring operational work faster, clearer, and more reliable. This
+repository is the source of my portfolio site.
+
+**Live site:** [mohamedsenator.vercel.app](https://mohamedsenator.vercel.app/) ·
+**CV:** [Mohamed_Senator_Master_CV.pdf](public/Mohamed_Senator_Master_CV.pdf) ·
+**LinkedIn:** [mohamedsenator](https://linkedin.com/in/mohamedsenator) ·
+**Email:** [mohamed.senator@icloud.com](mailto:mohamed.senator@icloud.com)
 
 ---
 
-## Service status
+## At a glance
 
-| Check | State | Gate |
+| | |
+|---|---|
+| **4+** | years in live environments |
+| **97%** | reduction in weekly health-check time (~3 hours → ~5 minutes) |
+| **4,000+** | users supported |
+| **ACE** | Google Cloud Associate Cloud Engineer |
+
+## What I do
+
+- **Windows infrastructure** — Windows Server, Active Directory & Group Policy,
+  Exchange, Microsoft 365, SCCM/MECM.
+- **PowerShell automation** — infrastructure health checks, audits, reporting,
+  Bash, GitHub Actions & CI/CD.
+- **Networking & security** — TCP/IP, Cisco, LAN/WAN, Fortinet FortiGate, PKI,
+  vulnerability remediation & patching.
+- **Cloud & virtualization** — GCP, Terraform, private GKE, VMware vSphere, Hyper-V.
+
+## Experience
+
+| When | Where | Role |
 |---|---|---|
-| Type-check + lint (oxlint) | GREEN | `npm run lint` |
-| Contract tests | GREEN | `npm test` |
-| Production build | GREEN | `npm run build` |
-| CI (GitHub Actions, push/PR to main) | GREEN since 2026-08-07 | `.github/workflows/ci.yml` |
-| Live site | verified in-browser 2026-08-07 (desktop + mobile, light/dark) | manual smoke |
+| Feb 2025 — Present | AGCE | IT Support & Systems Administration |
+| Feb 2024 — Aug 2024 | Agrofilm Packaging Algeria | IT Support Engineer (contract) |
+| Dec 2022 — Dec 2023 | Samsung | IT Support / Infrastructure Support |
+| May 2022 — Nov 2022 | IRIS SATEREX | IT Support (contract) |
+| Apr 2021 — Apr 2022 | Brandt Algeria | IT Support Technician |
 
-Sections served: hero · proof rail · capabilities · experience · projects ·
-approach · certifications · contact.
+## Selected work
 
----
+- **[ForecastFoundry](https://github.com/s3nafps/ForecastFoundry)** (open source) —
+  paper-first prediction-market research and execution engine with a CLI,
+  REST/OpenAPI, and an MCP server. *Python, FastAPI, MCP, Alembic, Docker.*
+- **Automated Health-Check Suite** (AGCE) — weekly infrastructure health checks
+  cut from ~3 hours to ~5 minutes with consistent, accurate results. *PowerShell,
+  scheduled tasks.*
+- **Ops & Audit Dashboards** (AGCE) — dashboards for management, cybersecurity,
+  and audit teams in an air-gapped environment. *PowerShell, reporting.*
 
-## System overview
+## Certification
 
-- **Stack:** Vite 8 + React 19 + TypeScript, Meta's Astryx design system
-  (`@astryxdesign/core` + `@astryxdesign/theme-neutral`), Tailwind, lucide icons.
-- **Package manager:** pnpm 10 (`packageManager` pinned in `package.json`;
-  lockfile is the single source of truth — never install without it).
-- **Content is data, not markup:** all copy lives in `src/content.ts` as typed
-  arrays (`capabilities`, `experience`, `projects`, `certifications`). Edit data,
-  not JSX. Contract tests in `src/content.test.ts` will reject structural drift.
-- **Palette/tokens:** overridden in `src/index.css` (`:root` +
-  `[data-theme='dark']`) — near-white paper, hairlines, olive accent.
-- **Motion:** IntersectionObserver-based reveal (`useReveal` in `src/App.tsx`),
-  CSS transitions, reduced-motion respected. No animation framework on the box.
+- Google Cloud Associate Cloud Engineer (ACE) — Google Cloud
 
 ---
 
-## Provisioning (first checkout)
+## About this site
+
+A single-page portfolio with a light, modern UI: floating glass navigation,
+bento-style capability cards, a hero "ops console", a timeline for experience,
+pointer-follow card highlights, and a dark theme (remembered between visits).
+Animations respect `prefers-reduced-motion`.
+
+**Built with** Vite · React 19 · TypeScript · Tailwind · Astryx design system ·
+lucide icons · pnpm.
+
+### Run it locally
 
 ```bash
 pnpm install --frozen-lockfile
+pnpm dev          # local dev server
+pnpm lint         # oxlint + type-check
+pnpm test         # content and structure checks
+pnpm build        # production build to dist/
+pnpm preview      # serve the production build
 ```
 
-`npm install` is not used locally and should not be. If the lockfile and
-`package.json` disagree, the install fails — that is a feature.
+### Project layout
 
----
-
-## Standard runbook
-
-| Command | Purpose |
+| Path | What lives there |
 |---|---|
-| `npm run dev -- --port 5173` | local dev server |
-| `npm run lint` | oxlint + `tsc -b`. **Gate.** Exit non-zero = do not ship |
-| `npm test` | contract tests. **Gate.** |
-| `npm run build` | production build to `dist/` |
-| `npm run preview` | serve `dist/` locally, verify the artifact, then throw it away |
+| `src/content.ts` | Capabilities, experience, projects, and certifications as typed data |
+| `src/App.tsx` | Page sections, navigation, and interaction hooks |
+| `src/index.css` | Design tokens (light/dark), layout, and responsive styles |
+| `index.html` | Meta tags, Open Graph/Twitter cards, JSON-LD, noscript fallback |
+| `cv/` | Scripts that generate the CV PDF and the Open Graph image |
+| `public/` | Served CV, favicon, `og.png`, `robots.txt`, `sitemap.xml` |
 
-### Change control checklist
+To update the copy, edit `src/content.ts`. To regenerate the CV or the social
+image, see [`cv/README.md`](cv/README.md) (`python cv/generate_cv_pdf.py`,
+`python cv/generate_og_image.py`).
 
-1. `pnpm install --frozen-lockfile` — sync state.
-2. Edit `src/content.ts` (content) or `src/App.tsx` / `src/index.css` (behavior).
-3. Run **all three gates**: `npm run lint`, `npm test`, `npm run build`.
-4. Smoke the live dev server: desktop, mobile (~390px), light + dark theme.
-5. Commit, push, **watch GitHub Actions**. Green means it deploys.
+### CI and deploy
 
----
-
-## Content operations
-
-### CV regeneration
-
-The served CV (`public/Mohamed_Senator_Master_CV.pdf`) is **generated, not
-hand-edited**. Edit the data in `cv/generate_cv_pdf.py`, then:
-
-```powershell
-python .\cv\generate_cv_pdf.py
-```
-
-Requirements: Python + reportlab. The exact interpreter used on this machine is
-documented in `cv/README.md`. Outputs: the served PDF plus a legacy
-`public/Mohamed_Senator_CV.pdf` copy (untracked by design).
-
-**Incident log — 2026-08-07:** served CV was not produced by any generator
-(hand-built binary served under a name nothing generated). Root cause: pipeline
-rot. Resolution: generator repointed at the served filename; headline aligned
-with site identity ("Systems Administrator / Cloud Infrastructure &
-Automation"). Prevention: `npm test` — the contract test now pins the served
-CV path in the app.
-
-### OpenGraph image
-
-```powershell
-python .\cv\generate_og_image.py
-```
-
-Requires Pillow. Regenerates `public/og.png` (1200×630) on the site palette
-from the current name/role strings.
-
-### Content editing cheat-sheet
-
-| What | Where |
-|---|---|
-| Sections, order, nav | `src/App.tsx` |
-| Capabilities / experience / projects / certifications | `src/content.ts` |
-| Tokens, layout, responsive breakpoints | `src/index.css` |
-| Head meta, OG/Twitter, JSON-LD, noscript | `index.html` |
+GitHub Actions runs install → lint → test → build on every pull request and push
+to `main`. The site is deployed on Vercel from `main` (`vercel.json`).
 
 ---
 
-## CI
-
-`.github/workflows/ci.yml` runs on push to `main` and every PR:
-`pnpm install --frozen-lockfile` → `lint` → `test` → `build`.
-
-No deploy step in CI. Deployment is handled by the hosting provider on a
-successful push to `main`.
-
-## Deploy
-
-Vercel, auto-deploy from `main` (`vercel.json`: build `npm run build`, output
-`dist`). Single page, no client-side routing, no special config.
-
----
-
-## Known caveats (accepted risk, tracked)
-
-- **`vercel.json` installs with `npm`**, not pnpm — Vercel resolves
-  dependencies without the lockfile. Working, but a drift risk vs. CI's frozen
-  pnpm install. If a deploy starts resolving differently than local, this is
-  the first suspect.
-- **SEO target is `mohamedsenator.vercel.app`** (canonical, og:url, robots,
-  sitemap). The git remote is `s3nafps/s3nafps.github.io`. If the site is ever
-  served from GitHub Pages instead, update `index.html`, `robots.txt`, and
-  `sitemap.xml` — and make `og:image` an absolute URL while you're in there.
-- **Legacy `public/Mohamed_Senator_CV.pdf`** is generated untracked after every
-  CV run. Decide: gitignore it or commit it. Current status: accepted.
-- Featured project's "View on GitHub" link has no dedicated hover/focus style
-  (inherits defaults). Cosmetic, not a defect.
-
----
-
-## Maintenance notes
-
-- Astryx component docs ship locally:
-  `node node_modules/@astryxdesign/core/docs.mjs --list`
-- Keep the CV generator and the site's hero/JSON-LD title in lockstep — the
-  2026-08-07 incident was exactly that drift.
-- No error boundary on the box (static site, no throw paths). If a runtime
-  error ever surfaces in the wild, add one — until then it is scope creep.
+© 2026 Mohamed Senator
