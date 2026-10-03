@@ -3,27 +3,27 @@
 @import '@astryxdesign/core/astryx.css';
 @import '@astryxdesign/theme-neutral/theme.css';
 
-/* Direction B — Soft cards: cool grey page, white cards, teal accent, dark contact block */
+/* Direction A — Minimal editorial: white page, hairline rules, one blue accent */
 :root {
   color-scheme: light;
-  --page: #f6f7f9;
+  --page: #ffffff;
   --nav-bg: #ffffff;
   --surface: #ffffff;
-  --ink: #0f172a;
-  --muted: #526071;
-  --line: #e3e6eb;
-  --line-strong: #c5ccd6;
-  --accent: #0f766e;
-  --accent-hover: #115e59;
+  --ink: #0a0a0a;
+  --muted: #5f6368;
+  --line: #e8e8e8;
+  --line-strong: #c8c8c8;
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
   --accent-ink: #ffffff;
-  --accent-soft: #e5f3f1;
-  --radius: 14px;
-  --radius-sm: 10px;
-  --shadow: 0 1px 2px rgba(16, 24, 40, .05);
-  --contact-bg: #0f172a;
-  --contact-ink: #ffffff;
-  --contact-muted: #a7b1c2;
-  --contact-accent: #5eead4;
+  --accent-soft: #eef3ff;
+  --radius: 6px;
+  --radius-sm: 6px;
+  --shadow: none;
+  --contact-bg: transparent;
+  --contact-ink: #0a0a0a;
+  --contact-muted: #5f6368;
+  --contact-accent: #1d4ed8;
   font-family: Inter, Arial, sans-serif;
   background: var(--page);
   color: var(--ink);
@@ -31,19 +31,20 @@
 
 [data-theme='dark'] {
   color-scheme: dark;
-  --page: #0b1120;
-  --nav-bg: #0f172a;
-  --surface: #111a2e;
-  --ink: #e8edf5;
-  --muted: #9aa6b8;
-  --line: #1f2a40;
-  --line-strong: #334155;
-  --accent: #2dd4bf;
-  --accent-hover: #5eead4;
-  --accent-ink: #042f2e;
-  --accent-soft: #0f2e2c;
-  --shadow: none;
-  --contact-bg: #111a2e;
+  --page: #0b0b0c;
+  --nav-bg: #0b0b0c;
+  --surface: #0b0b0c;
+  --ink: #f2f2f2;
+  --muted: #a0a0a0;
+  --line: #262626;
+  --line-strong: #3d3d3d;
+  --accent: #7aa2ff;
+  --accent-hover: #9bb9ff;
+  --accent-ink: #0b0b0c;
+  --accent-soft: #141f38;
+  --contact-ink: #f2f2f2;
+  --contact-muted: #a0a0a0;
+  --contact-accent: #7aa2ff;
 }
 
 * { box-sizing: border-box; }
@@ -200,15 +201,24 @@ h1, h2, h3 { letter-spacing: -.035em; font-weight: 650; }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
   .reveal { opacity: 1; }
 }
-/* B: everything sits on a card */
-.proof-rail { gap: 16px; }
-.proof-item { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
-.proof-item strong { color: var(--accent); }
-.timeline { display: grid; gap: 12px; border-top: 0; }
-.timeline li { padding: 24px 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
-[data-theme='dark'] .contact-card { border: 1px solid var(--line); }
+/* A: flatten cards into ruled grids */
+.hero-panel { padding: 8px 0 8px 36px; border: 0; border-left: 1px solid var(--line); border-radius: 0; background: none; }
+.focus-icon, .icon-tile { background: none; border: 1px solid var(--line); color: var(--ink); }
+.proof-rail { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.proof-item { padding: 32px 28px; }
+.proof-item:first-child { padding-left: 0; }
+.proof-item + .proof-item { border-left: 1px solid var(--line); }
+.capabilities-grid { gap: 0; border-top: 1px solid var(--line); }
+.capability-card { padding: 36px 36px 36px 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+.capability-card:nth-child(even) { padding: 36px 0 36px 36px; border-left: 1px solid var(--line); }
+.approach-card { padding: 24px 0 0; border: 0; border-top: 2px solid var(--ink); border-radius: 0; }
+.certification-row { padding: 24px 0; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; }
+.contact-card { padding: 72px 0 0; border-top: 1px solid var(--line); border-radius: 0; }
+.contact-card h2 { font-size: clamp(2.2rem, 5vw, 4rem); }
 @media (max-width: 760px) {
-  .proof-rail { gap: 10px; }
-  .proof-item { padding: 20px 18px; }
-  .timeline li { padding: 20px; }
+  .proof-item, .proof-item:first-child { padding: 22px 16px; }
+  .proof-item:nth-child(3) { border-left: 0; }
+  .proof-item:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .capability-card, .capability-card:nth-child(even) { padding: 28px 0; border-left: 0; }
+  .hero-panel { padding-left: 24px; }
 }

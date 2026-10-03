@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import {
-  Activity,
+  ArrowRight,
   ArrowUpRight,
   Award,
   Check,
@@ -8,12 +8,12 @@ import {
   Download,
   Github,
   Linkedin,
+  Mail,
   MapPin,
   Menu,
   Moon,
   Server,
   ShieldCheck,
-  Sparkles,
   Sun,
   Terminal,
   X,
@@ -54,53 +54,11 @@ const approach = [
 
 const capabilityIcons: LucideIcon[] = [Server, Terminal, ShieldCheck, Cloud]
 
-const consoleRows = [
-  { label: 'Windows', detail: 'AD · GPO · Exchange', status: 'Operational', width: '96%' },
-  { label: 'Automation', detail: 'PowerShell · CI/CD', status: '97% faster', width: '88%' },
-  { label: 'Cloud', detail: 'GCP · Terraform · GKE', status: 'ACE certified', width: '72%' },
+const focusAreas = [
+  { icon: Server, label: 'Windows infrastructure', detail: 'Active Directory, GPO, Exchange, M365' },
+  { icon: Terminal, label: 'PowerShell automation', detail: 'Health checks, audits, reporting' },
+  { icon: Cloud, label: 'Cloud & virtualization', detail: 'GCP, Terraform, private GKE, vSphere' },
 ]
-
-const marqueeItems = [
-  'Windows Server', 'Active Directory', 'PowerShell', 'Terraform', 'GCP', 'Private GKE',
-  'VMware vSphere', 'Hyper-V', 'Microsoft 365', 'Fortinet', 'Cisco', 'GitHub Actions',
-]
-
-function useSpotlight() {
-  useEffect(() => {
-    const onMove = (event: PointerEvent) => {
-      const card = (event.target as HTMLElement | null)?.closest<HTMLElement>('.spot')
-      if (!card) return
-      const rect = card.getBoundingClientRect()
-      card.style.setProperty('--mx', `${event.clientX - rect.left}px`)
-      card.style.setProperty('--my', `${event.clientY - rect.top}px`)
-    }
-    document.addEventListener('pointermove', onMove, { passive: true })
-    return () => document.removeEventListener('pointermove', onMove)
-  }, [])
-}
-
-function useScrollProgress() {
-  useEffect(() => {
-    let frame = 0
-    const update = () => {
-      frame = 0
-      const max = document.documentElement.scrollHeight - window.innerHeight
-      const ratio = max > 0 ? Math.min(1, window.scrollY / max) : 0
-      document.documentElement.style.setProperty('--progress', String(ratio))
-    }
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update)
-    }
-    update()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-      if (frame) cancelAnimationFrame(frame)
-    }
-  }, [])
-}
 
 function usePrefersReducedMotion() {
   const [reduceMotion, setReduceMotion] = useState(() =>
@@ -117,7 +75,7 @@ function usePrefersReducedMotion() {
   return reduceMotion
 }
 
-function useReveal<T extends HTMLElement>(delay = 0) {
+function useReveal<T extends HTMLElement>() {
   const ref = useRef<T>(null)
   const reduceMotion = usePrefersReducedMotion()
 
@@ -128,9 +86,6 @@ function useReveal<T extends HTMLElement>(delay = 0) {
       node.classList.add('is-visible')
       return
     }
-    if (delay > 0) {
-      node.style.transitionDelay = `${delay}s`
-    }
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -140,25 +95,17 @@ function useReveal<T extends HTMLElement>(delay = 0) {
           }
         }
       },
-      { threshold: 0.2 },
+      { threshold: 0.15 },
     )
     observer.observe(node)
     return () => observer.disconnect()
-  }, [reduceMotion, delay])
+  }, [reduceMotion])
 
   return ref
 }
 
-function Reveal({
-  children,
-  className,
-  delay = 0,
-}: {
-  children: ReactNode
-  className?: string
-  delay?: number
-}) {
-  const ref = useReveal<HTMLDivElement>(delay)
+function Reveal({ children, className }: { children: ReactNode; className?: string }) {
+  const ref = useReveal<HTMLDivElement>()
   return (
     <div ref={ref} className={`reveal${className ? ` ${className}` : ''}`}>
       {children}
@@ -166,13 +113,12 @@ function Reveal({
   )
 }
 
-function TimelineItem({ item, index }: { item: Experience; index: number }) {
-  const ref = useReveal<HTMLLIElement>(index * 0.04)
+function TimelineItem({ item }: { item: Experience }) {
+  const ref = useReveal<HTMLLIElement>()
   return (
     <li ref={ref} className="reveal">
-      <span className="timeline-dot" aria-hidden="true" />
-      <div className="timeline-card spot">
-        <p className="timeline-date">{item.dates}</p>
+      <p className="timeline-date">{item.dates}</p>
+      <div className="timeline-body">
         <h3>{item.role}</h3>
         <p className="timeline-company">{item.company} · {item.location}</p>
         <p className="timeline-summary">{item.summary}</p>
@@ -182,8 +128,6 @@ function TimelineItem({ item, index }: { item: Experience; index: number }) {
 }
 
 function App() {
-  useSpotlight()
-  useScrollProgress()
   const [menuOpen, setMenuOpen] = useState(false)
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     try {
@@ -192,41 +136,43 @@ function App() {
       return 'light'
     }
   })
-  useEffect(() => {
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = menuOpen ? 'hidden' : previousOverflow
-    return () => {
-      document.body.style.overflow = previousOverflow
-    }
-  }, [menuOpen])
 
   const closeMenu = () => setMenuOpen(false)
   const toggleTheme = () => {
     setTheme((current) => {
       const next = current === 'light' ? 'dark' : 'light'
-      localStorage.setItem('portfolio-theme', next)
+      try {
+        localStorage.setItem('portfolio-theme', next)
+      } catch {
+        // Storage can be unavailable (private mode); the toggle still works for this visit.
+      }
       return next
     })
   }
 
   return (
     <Theme theme={neutralTheme} mode={theme}>
-      <main>
-        <div className="scroll-progress" aria-hidden="true" />
-        <div className="aurora" aria-hidden="true" />
+      <main className="layout">
         <header className="site-header">
           <nav className="site-nav" aria-label="Primary navigation">
             <a className="nav-logo" href="#hero" onClick={closeMenu}>
               <span className="nav-mark" aria-hidden="true">MS</span>
-              Mohamed Senator
+              <span className="nav-name">
+                Mohamed Senator
+                <span className="nav-role">Systems Administrator</span>
+              </span>
             </a>
             <div className="nav-desktop">
               <a href="#capabilities">Capabilities</a>
               <a href="#experience">Experience</a>
-              <a href={CV_PATH}>CV</a>
+              <a href="#approach">Approach</a>
+              <a href="#contact">Contact</a>
             </div>
             <div className="nav-tools">
-              <a className="nav-cta" href="#contact">Contact</a>
+              <a className="nav-cta" href={CV_PATH}>
+                <Download size={15} aria-hidden="true" />
+                Download CV
+              </a>
               <button
                 className="theme-toggle"
                 type="button"
@@ -242,172 +188,161 @@ function App() {
                 aria-expanded={menuOpen}
                 onClick={() => setMenuOpen((open) => !open)}
               >
-                {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+                {menuOpen ? <X size={18} aria-hidden="true" /> : <Menu size={18} aria-hidden="true" />}
               </button>
             </div>
             <div className={`mobile-menu${menuOpen ? ' is-open' : ''}`}>
               <a href="#capabilities" onClick={closeMenu}>Capabilities</a>
               <a href="#experience" onClick={closeMenu}>Experience</a>
-              <a href={CV_PATH} onClick={closeMenu}>Download CV</a>
+              <a href="#approach" onClick={closeMenu}>Approach</a>
               <a href="#contact" onClick={closeMenu}>Contact</a>
+              <a href={CV_PATH} onClick={closeMenu}>Download CV</a>
+            </div>
+            <div className="nav-footer">
+              <a href={`mailto:${EMAIL}`} aria-label="Email"><Mail size={16} aria-hidden="true" /></a>
+              <a href="https://linkedin.com/in/mohamedsenator" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={16} aria-hidden="true" /></a>
+              <a href="https://github.com/s3nafps" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={16} aria-hidden="true" /></a>
             </div>
           </nav>
         </header>
 
-        <section id="hero" className="hero section-wrap" aria-labelledby="hero-title">
-          <Reveal className="hero-copy">
-            <p className="status-badge"><span className="status-dot" aria-hidden="true" />Open to systems and cloud opportunities</p>
-            <p className="eyebrow">Systems Administrator · Cloud Infrastructure &amp; Automation</p>
-            <h1 id="hero-title">Reliable systems.<br /><span className="gradient-text">Clear operations.</span></h1>
-            <p className="hero-summary">
-              I support Windows, virtualization, network, and security-sensitive
-              infrastructure — then make recurring operational work faster,
-              clearer, and more reliable.
-            </p>
-            <div className="hero-actions">
-              <Button label="View experience" href="#experience" variant="primary" endContent={<ArrowUpRight size={16} aria-hidden="true" />} />
-              <Button label="Download CV" href={CV_PATH} variant="secondary" endContent={<Download size={16} aria-hidden="true" />} />
-            </div>
-            <p className="hero-note"><MapPin size={14} aria-hidden="true" />Based in Algiers, Algeria</p>
-          </Reveal>
-          <Reveal className="hero-panel" delay={0.1}>
-            <div className="console">
-              <div className="console-bar">
-                <span className="console-lights" aria-hidden="true"><i /><i /><i /></span>
-                <p className="eyebrow">Operational focus</p>
-                <Activity size={14} aria-hidden="true" />
+        <div className="content">
+          <section id="hero" className="hero section-wrap" aria-labelledby="hero-title">
+            <Reveal className="hero-copy">
+              <p className="status-badge"><span className="status-dot" aria-hidden="true" />Open to systems and cloud opportunities</p>
+              <p className="eyebrow">Systems Administrator · Cloud Infrastructure &amp; Automation</p>
+              <h1 id="hero-title">Reliable systems.<br /><span className="hero-accent">Clear operations.</span></h1>
+              <p className="hero-summary">
+                I support Windows, virtualization, network, and security-sensitive
+                infrastructure — then make recurring operational work faster,
+                clearer, and more reliable.
+              </p>
+              <div className="hero-actions">
+                <Button label="View experience" href="#experience" variant="primary" endContent={<ArrowRight size={16} aria-hidden="true" />} />
+                <Button label="Download CV" href={CV_PATH} variant="secondary" endContent={<Download size={16} aria-hidden="true" />} />
               </div>
-              <ul className="console-rows">
-                {consoleRows.map((row) => (
-                  <li key={row.label}>
-                    <div className="console-row-head">
-                      <div>
-                        <strong>{row.label}</strong>
-                        <span>{row.detail}</span>
-                      </div>
-                      <em>{row.status}</em>
+              <p className="hero-note"><MapPin size={14} aria-hidden="true" />Based in Algiers, Algeria</p>
+            </Reveal>
+            <Reveal className="hero-panel">
+              <p className="eyebrow">Operational focus</p>
+              <ul className="focus-list">
+                {focusAreas.map(({ icon: Icon, label, detail }) => (
+                  <li key={label}>
+                    <span className="focus-icon"><Icon size={18} aria-hidden="true" /></span>
+                    <div>
+                      <strong>{label}</strong>
+                      <span>{detail}</span>
                     </div>
-                    <div className="meter" aria-hidden="true"><i style={{ width: row.width }} /></div>
                   </li>
                 ))}
               </ul>
-              <p className="console-note">Secure infrastructure, repeatable work, measured outcomes.</p>
-            </div>
-            <div className="float-chip float-chip-a"><Sparkles size={14} aria-hidden="true" />3h → 5 min</div>
-            <div className="float-chip float-chip-b"><ShieldCheck size={14} aria-hidden="true" />Air-gapped ops</div>
-          </Reveal>
-        </section>
+              <p className="hero-panel-note">
+                <strong>3 hours → 5 minutes.</strong> Weekly health checks, automated with PowerShell.
+              </p>
+            </Reveal>
+          </section>
 
-        <section className="proof-rail section-wrap" aria-label="Professional proof points">
-          {proofPoints.map((item) => (
-            <div className="proof-item" key={item.label}>
-              <strong>{item.value}</strong>
-              <span>{item.label}</span>
-            </div>
-          ))}
-        </section>
-
-        <div className="marquee" aria-hidden="true">
-          <div className="marquee-track">
-            {[...marqueeItems, ...marqueeItems].map((item, index) => (
-              <span key={`${item}-${index}`}>{item}</span>
+          <section className="proof-rail section-wrap" aria-label="Professional proof points">
+            {proofPoints.map((item) => (
+              <div className="proof-item" key={item.label}>
+                <strong>{item.value}</strong>
+                <span>{item.label}</span>
+              </div>
             ))}
-          </div>
-        </div>
+          </section>
 
-        <section id="capabilities" className="section section-wrap">
-          <Reveal className="section-heading">
-            <p className="eyebrow">Capabilities</p>
-            <h2>Infrastructure depth, built for the next layer of cloud operations.</h2>
-          </Reveal>
-          <div className="capabilities-grid">
-            {capabilities.map((capability, index) => {
-              const Icon = capabilityIcons[index]
-              return (
-              <Reveal className="capability-card spot" delay={index * 0.06} key={capability.number}>
-                <div className="card-top">
-                  <span className="icon-tile"><Icon size={20} aria-hidden="true" /></span>
-                  <span className="card-number">{capability.number}</span>
-                </div>
-                <h3>{capability.title}</h3>
-                <p>{capability.description}</p>
-                <ul>
-                  {capability.items.map((item) => (
-                    <li key={item}><Check size={15} aria-hidden="true" />{item}</li>
-                  ))}
-                </ul>
-              </Reveal>
-              )
-            })}
-          </div>
-        </section>
-
-        <section id="experience" className="section section-wrap experience-section">
-          <Reveal className="section-heading section-heading-row">
-            <div>
-              <p className="eyebrow">Experience</p>
-              <h2>Built in the environments where uptime matters.</h2>
+          <section id="capabilities" className="section section-wrap">
+            <Reveal className="section-heading">
+              <p className="eyebrow">Capabilities</p>
+              <h2>Infrastructure depth, built for the next layer of cloud operations.</h2>
+            </Reveal>
+            <div className="capabilities-grid">
+              {capabilities.map((capability, index) => {
+                const Icon = capabilityIcons[index]
+                return (
+                  <Reveal className="capability-card" key={capability.number}>
+                    <div className="card-top">
+                      <span className="icon-tile"><Icon size={20} aria-hidden="true" /></span>
+                      <span className="card-number">{capability.number}</span>
+                    </div>
+                    <h3>{capability.title}</h3>
+                    <p>{capability.description}</p>
+                    <ul>
+                      {capability.items.map((item) => (
+                        <li key={item}><Check size={15} aria-hidden="true" />{item}</li>
+                      ))}
+                    </ul>
+                  </Reveal>
+                )
+              })}
             </div>
-            <span>2021 — Present</span>
-          </Reveal>
-          <ol className="timeline">
-            {experience.map((item, index) => (
-              <TimelineItem item={item} index={index} key={`${item.company}-${item.dates}`} />
-            ))}
-          </ol>
-        </section>
+          </section>
 
-        <section id="approach" className="section section-wrap approach-section">
-          <Reveal className="section-heading approach-heading">
-            <p className="eyebrow">Operating approach</p>
-            <h2>From three hours to five minutes.</h2>
-            <p>
-              At AGCE, a weekly automated health check cut a recurring process by
-              about 97% while making reported results more consistent and accurate.
-            </p>
-          </Reveal>
-          <div className="approach-grid">
-            {approach.map((item, index) => (
-              <Reveal className="approach-card spot" delay={index * 0.08} key={item.title}>
-                <span>{item.number}</span>
-                <h3>{item.title}</h3>
-                <p>{item.copy}</p>
-              </Reveal>
-            ))}
-          </div>
-        </section>
+          <section id="experience" className="section section-wrap experience-section">
+            <Reveal className="section-heading section-heading-row">
+              <div>
+                <p className="eyebrow">Experience</p>
+                <h2>Built in the environments where uptime matters.</h2>
+              </div>
+              <span>2021 — Present</span>
+            </Reveal>
+            <ol className="timeline">
+              {experience.map((item) => (
+                <TimelineItem item={item} key={`${item.company}-${item.dates}`} />
+              ))}
+            </ol>
+          </section>
 
-        <section id="certifications" className="section section-wrap certifications-section">
-          <Reveal className="section-heading section-heading-row">
-            <div>
+          <section id="approach" className="section section-wrap approach-section">
+            <Reveal className="section-heading approach-heading">
+              <p className="eyebrow">Operating approach</p>
+              <h2>From three hours to five minutes.</h2>
+              <p>
+                At AGCE, a weekly automated health check cut a recurring process by
+                about 97% while making reported results more consistent and accurate.
+              </p>
+            </Reveal>
+            <div className="approach-grid">
+              {approach.map((item) => (
+                <Reveal className="approach-card" key={item.title}>
+                  <span>{item.number}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.copy}</p>
+                </Reveal>
+              ))}
+            </div>
+          </section>
+
+          <section id="certifications" className="section section-wrap certifications-section">
+            <Reveal className="section-heading">
               <p className="eyebrow">Credentials</p>
               <h2>Certifications.</h2>
-            </div>
-          </Reveal>
-          <Reveal className="certification-row spot">
-            <span className="icon-tile"><Award size={20} aria-hidden="true" /></span>
-            <div>
-              <h3>{certifications[0].title}</h3>
-              <p>{certifications[0].issuer}</p>
-            </div>
-          </Reveal>
-        </section>
+            </Reveal>
+            <Reveal className="certification-row">
+              <span className="icon-tile"><Award size={20} aria-hidden="true" /></span>
+              <div>
+                <h3>{certifications[0].title}</h3>
+                <p>{certifications[0].issuer}</p>
+              </div>
+            </Reveal>
+          </section>
 
-        <footer id="contact" className="contact section-wrap">
-          <div className="contact-card">
-            <div>
-              <p className="eyebrow">Open to systems and cloud opportunities</p>
-              <h2>Let&apos;s make important systems easier to run.</h2>
+          <footer id="contact" className="contact section-wrap">
+            <div className="contact-card">
+              <div>
+                <p className="eyebrow">Open to systems and cloud opportunities</p>
+                <h2>Let&apos;s make important systems easier to run.</h2>
+              </div>
+              <a className="contact-email" href={`mailto:${EMAIL}`}>{EMAIL}<ArrowUpRight size={18} aria-hidden="true" /></a>
+              <div className="contact-links">
+                <a href="https://linkedin.com/in/mohamedsenator" target="_blank" rel="noreferrer"><Linkedin size={15} aria-hidden="true" />LinkedIn</a>
+                <a href="https://github.com/s3nafps" target="_blank" rel="noreferrer"><Github size={15} aria-hidden="true" />GitHub</a>
+                <a href={CV_PATH}><Download size={15} aria-hidden="true" />Download CV</a>
+              </div>
+              <p className="contact-location">Algiers, Algeria · © 2026</p>
             </div>
-            <a className="contact-email" href={`mailto:${EMAIL}`}>{EMAIL}<ArrowUpRight aria-hidden="true" /></a>
-            <div className="contact-links">
-              <a href="https://linkedin.com/in/mohamedsenator" target="_blank" rel="noreferrer"><Linkedin size={15} aria-hidden="true" />LinkedIn</a>
-              <a href="https://github.com/s3nafps" target="_blank" rel="noreferrer"><Github size={15} aria-hidden="true" />GitHub</a>
-              <a href={CV_PATH}><Download size={15} aria-hidden="true" />Download CV</a>
-            </div>
-            <p className="contact-location">Algiers, Algeria · © 2026</p>
-          </div>
-        </footer>
+          </footer>
+        </div>
       </main>
     </Theme>
   )
