@@ -28,7 +28,7 @@ PROFILE = {
     "email": "mohamed.senator@icloud.com",
     "linkedin": "linkedin.com/in/mohamedsenator",
     "github": "github.com/s3nafps",
-    "portfolio": "mohamedsenator.vercel.app",
+    "portfolio": "s3nafps.github.io",
 }
 
 SUMMARY = (

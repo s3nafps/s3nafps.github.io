@@ -6,7 +6,7 @@ I support Windows, virtualization, network, and security-sensitive infrastructur
 then make recurring operational work faster, clearer, and more reliable. This
 repository is the source of my portfolio site.
 
-**Live site:** [mohamedsenator.vercel.app](https://mohamedsenator.vercel.app/) ·
+**Live site:** [s3nafps.github.io](https://s3nafps.github.io/) ·
 **CV:** [Mohamed_Senator_Master_CV.pdf](public/Mohamed_Senator_Master_CV.pdf) ·
 **LinkedIn:** [mohamedsenator](https://linkedin.com/in/mohamedsenator) ·
 **Email:** [mohamed.senator@icloud.com](mailto:mohamed.senator@icloud.com)
@@ -41,17 +41,6 @@ repository is the source of my portfolio site.
 | Dec 2022 — Dec 2023 | Samsung | IT Support / Infrastructure Support |
 | May 2022 — Nov 2022 | IRIS SATEREX | IT Support (contract) |
 | Apr 2021 — Apr 2022 | Brandt Algeria | IT Support Technician |
-
-## Selected work
-
-- **[ForecastFoundry](https://github.com/s3nafps/ForecastFoundry)** (open source) —
-  paper-first prediction-market research and execution engine with a CLI,
-  REST/OpenAPI, and an MCP server. *Python, FastAPI, MCP, Alembic, Docker.*
-- **Automated Health-Check Suite** (AGCE) — weekly infrastructure health checks
-  cut from ~3 hours to ~5 minutes with consistent, accurate results. *PowerShell,
-  scheduled tasks.*
-- **Ops & Audit Dashboards** (AGCE) — dashboards for management, cybersecurity,
-  and audit teams in an air-gapped environment. *PowerShell, reporting.*
 
 ## Certification
 
@@ -90,6 +79,7 @@ pnpm preview      # serve the production build
 | `index.html` | Meta tags, Open Graph/Twitter cards, JSON-LD, noscript fallback |
 | `cv/` | Scripts that generate the CV PDF and the Open Graph image |
 | `public/` | Served CV, favicon, `og.png`, `robots.txt`, `sitemap.xml` |
+| `.github/workflows/` | CI checks and the GitHub Pages deploy |
 
 To update the copy, edit `src/content.ts`. To regenerate the CV or the social
 image, see [`cv/README.md`](cv/README.md) (`python cv/generate_cv_pdf.py`,
@@ -97,8 +87,10 @@ image, see [`cv/README.md`](cv/README.md) (`python cv/generate_cv_pdf.py`,
 
 ### CI and deploy
 
-GitHub Actions runs install → lint → test → build on every pull request and push
-to `main`. The site is deployed on Vercel from `main` (`vercel.json`).
+GitHub Actions runs install → lint → test → build on every pull request
+(`.github/workflows/ci.yml`). Every push to `main` runs the same checks and then
+publishes `dist/` to GitHub Pages (`.github/workflows/deploy.yml`). In the repo
+settings, **Pages → Source** must be set to **GitHub Actions**.
 
 ---
 
