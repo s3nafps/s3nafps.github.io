@@ -42,6 +42,18 @@ repository is the source of my portfolio site.
 | May 2022 — Nov 2022 | IRIS SATEREX | IT Support (contract) |
 | Apr 2021 — Apr 2022 | Brandt Algeria | IT Support Technician |
 
+## Selected work
+
+- **[ADHealthCheck](https://github.com/s3nafps/ADHealthCheck-PowerShell)**: a PowerShell module
+  that audits Active Directory health and security (27 rules) and produces scored HTML and JSON
+  reports. It has 204 Pester tests, with CI on PowerShell 5.1 and 7.
+- **[vps-platform](https://github.com/s3nafps/vps-platform)**: a Linux VPS hardened and run
+  entirely from code. It covers Ansible, Caddy, Prometheus, Grafana, Loki and alerting, plus restic
+  backups with monthly restore tests.
+- **[gcp-landing-zone](https://github.com/s3nafps/gcp-landing-zone)**: a Terraform landing zone for
+  a private, hardened GKE platform with Cloud KMS and keyless GitHub Actions deploys through
+  Workload Identity Federation.
+
 ## Certification
 
 - Google Cloud Associate Cloud Engineer (ACE) — Google Cloud

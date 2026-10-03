@@ -22,7 +22,7 @@ import {
 import { Button } from '@astryxdesign/core/Button'
 import { Theme } from '@astryxdesign/core/theme'
 import { neutralTheme } from '@astryxdesign/theme-neutral/built'
-import { capabilities, certifications, experience, type Experience } from './content'
+import { capabilities, certifications, experience, projects, type Experience } from './content'
 
 const EMAIL = 'mohamed.senator@icloud.com'
 const CV_PATH = '/Mohamed_Senator_Master_CV.pdf'
@@ -165,6 +165,7 @@ function App() {
             <div className="nav-desktop">
               <a href="#capabilities">Capabilities</a>
               <a href="#experience">Experience</a>
+              <a href="#projects">Projects</a>
               <a href="#approach">Approach</a>
               <a href="#contact">Contact</a>
             </div>
@@ -194,6 +195,7 @@ function App() {
             <div className={`mobile-menu${menuOpen ? ' is-open' : ''}`}>
               <a href="#capabilities" onClick={closeMenu}>Capabilities</a>
               <a href="#experience" onClick={closeMenu}>Experience</a>
+              <a href="#projects" onClick={closeMenu}>Projects</a>
               <a href="#approach" onClick={closeMenu}>Approach</a>
               <a href="#contact" onClick={closeMenu}>Contact</a>
               <a href={CV_PATH} onClick={closeMenu}>Download CV</a>
@@ -291,6 +293,44 @@ function App() {
                 <TimelineItem item={item} key={`${item.company}-${item.dates}`} />
               ))}
             </ol>
+          </section>
+
+          <section id="projects" className="section section-wrap projects-section">
+            <Reveal className="section-heading">
+              <p className="eyebrow">Selected work</p>
+              <h2>Open-source projects, built to production standards.</h2>
+            </Reveal>
+            <div className="projects-grid">
+              {projects.map((project) => (
+                <Reveal className="project-card" key={project.number}>
+                  <div className="project-head">
+                    <div>
+                      <p className="project-kind">{project.kind}</p>
+                      <h3>{project.title}</h3>
+                    </div>
+                    <span className="card-number">{project.number}</span>
+                  </div>
+                  <p className="project-description">{project.description}</p>
+                  <ul className="project-highlights">
+                    {project.highlights.map((highlight) => (
+                      <li key={highlight}><Check size={15} aria-hidden="true" />{highlight}</li>
+                    ))}
+                  </ul>
+                  <div className="project-footer">
+                    <ul className="project-tags" aria-label={`${project.title} technologies`}>
+                      {project.tags.map((tag) => (
+                        <li key={tag}>{tag}</li>
+                      ))}
+                    </ul>
+                    <a className="project-link" href={project.href} target="_blank" rel="noreferrer">
+                      <Github size={15} aria-hidden="true" />
+                      View on GitHub
+                      <ArrowUpRight size={15} aria-hidden="true" />
+                    </a>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </section>
 
           <section id="approach" className="section section-wrap approach-section">
