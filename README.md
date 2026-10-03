@@ -50,10 +50,11 @@ repository is the source of my portfolio site.
 
 ## About this site
 
-A single-page portfolio with a light, modern UI: floating glass navigation,
-bento-style capability cards, a hero "ops console", a timeline for experience,
-pointer-follow card highlights, and a dark theme (remembered between visits).
-Animations respect `prefers-reduced-motion`.
+A clean, single-page résumé layout: a fixed sidebar with navigation, CV download,
+and contact links; a content column with capabilities, an experience timeline, and
+credentials; and a dark theme that is remembered between visits. On small screens
+the sidebar becomes a top bar. Motion is limited to a short fade-in and respects
+`prefers-reduced-motion`.
 
 **Built with** Vite · React 19 · TypeScript · Tailwind · Astryx design system ·
 lucide icons · pnpm.
