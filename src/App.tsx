@@ -1,5 +1,24 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { ArrowUpRight, Check, Menu, Moon, Sun, X } from 'lucide-react'
+import {
+  Activity,
+  ArrowUpRight,
+  Award,
+  Check,
+  Cloud,
+  Download,
+  Github,
+  Linkedin,
+  MapPin,
+  Menu,
+  Moon,
+  Server,
+  ShieldCheck,
+  Sparkles,
+  Sun,
+  Terminal,
+  X,
+  type LucideIcon,
+} from 'lucide-react'
 import { Button } from '@astryxdesign/core/Button'
 import { Theme } from '@astryxdesign/core/theme'
 import { neutralTheme } from '@astryxdesign/theme-neutral/built'
@@ -32,6 +51,56 @@ const approach = [
     copy: 'Apply proven operational discipline to Terraform, private GKE, and secure delivery.',
   },
 ]
+
+const capabilityIcons: LucideIcon[] = [Server, Terminal, ShieldCheck, Cloud]
+
+const consoleRows = [
+  { label: 'Windows', detail: 'AD · GPO · Exchange', status: 'Operational', width: '96%' },
+  { label: 'Automation', detail: 'PowerShell · CI/CD', status: '97% faster', width: '88%' },
+  { label: 'Cloud', detail: 'GCP · Terraform · GKE', status: 'ACE certified', width: '72%' },
+]
+
+const marqueeItems = [
+  'Windows Server', 'Active Directory', 'PowerShell', 'Terraform', 'GCP', 'Private GKE',
+  'VMware vSphere', 'Hyper-V', 'Microsoft 365', 'Fortinet', 'Cisco', 'GitHub Actions',
+]
+
+function useSpotlight() {
+  useEffect(() => {
+    const onMove = (event: PointerEvent) => {
+      const card = (event.target as HTMLElement | null)?.closest<HTMLElement>('.spot')
+      if (!card) return
+      const rect = card.getBoundingClientRect()
+      card.style.setProperty('--mx', `${event.clientX - rect.left}px`)
+      card.style.setProperty('--my', `${event.clientY - rect.top}px`)
+    }
+    document.addEventListener('pointermove', onMove, { passive: true })
+    return () => document.removeEventListener('pointermove', onMove)
+  }, [])
+}
+
+function useScrollProgress() {
+  useEffect(() => {
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      const ratio = max > 0 ? Math.min(1, window.scrollY / max) : 0
+      document.documentElement.style.setProperty('--progress', String(ratio))
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [])
+}
 
 function usePrefersReducedMotion() {
   const [reduceMotion, setReduceMotion] = useState(() =>
@@ -101,17 +170,20 @@ function TimelineItem({ item, index }: { item: Experience; index: number }) {
   const ref = useReveal<HTMLLIElement>(index * 0.04)
   return (
     <li ref={ref} className="reveal">
-      <p className="timeline-date">{item.dates}</p>
-      <div>
+      <span className="timeline-dot" aria-hidden="true" />
+      <div className="timeline-card spot">
+        <p className="timeline-date">{item.dates}</p>
         <h3>{item.role}</h3>
         <p className="timeline-company">{item.company} · {item.location}</p>
+        <p className="timeline-summary">{item.summary}</p>
       </div>
-      <p className="timeline-summary">{item.summary}</p>
     </li>
   )
 }
 
 function App() {
+  useSpotlight()
+  useScrollProgress()
   const [menuOpen, setMenuOpen] = useState(false)
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     try {
@@ -140,19 +212,22 @@ function App() {
   return (
     <Theme theme={neutralTheme} mode={theme}>
       <main>
+        <div className="scroll-progress" aria-hidden="true" />
+        <div className="aurora" aria-hidden="true" />
         <header className="site-header">
           <nav className="site-nav" aria-label="Primary navigation">
             <a className="nav-logo" href="#hero" onClick={closeMenu}>
-              Mohamed Senator<span aria-hidden="true">.</span>
+              <span className="nav-mark" aria-hidden="true">MS</span>
+              Mohamed Senator
             </a>
             <div className="nav-desktop">
               <a href="#capabilities">Capabilities</a>
               <a href="#experience">Experience</a>
               <a href="#projects">Projects</a>
               <a href={CV_PATH}>CV</a>
-              <a href="#contact">Contact</a>
             </div>
             <div className="nav-tools">
+              <a className="nav-cta" href="#contact">Contact</a>
               <button
                 className="theme-toggle"
                 type="button"
@@ -183,8 +258,9 @@ function App() {
 
         <section id="hero" className="hero section-wrap" aria-labelledby="hero-title">
           <Reveal className="hero-copy">
+            <p className="status-badge"><span className="status-dot" aria-hidden="true" />Open to systems and cloud opportunities</p>
             <p className="eyebrow">Systems Administrator · Cloud Infrastructure &amp; Automation</p>
-            <h1 id="hero-title">Reliable systems.<br />Clear operations.</h1>
+            <h1 id="hero-title">Reliable systems.<br /><span className="gradient-text">Clear operations.</span></h1>
             <p className="hero-summary">
               I support Windows, virtualization, network, and security-sensitive
               infrastructure — then make recurring operational work faster,
@@ -192,18 +268,35 @@ function App() {
             </p>
             <div className="hero-actions">
               <Button label="View experience" href="#experience" variant="primary" endContent={<ArrowUpRight size={16} aria-hidden="true" />} />
-              <Button label="Download CV" href={CV_PATH} variant="secondary" endContent={<ArrowUpRight size={16} aria-hidden="true" />} />
+              <Button label="Download CV" href={CV_PATH} variant="secondary" endContent={<Download size={16} aria-hidden="true" />} />
             </div>
-            <p className="hero-note">Based in Algiers, Algeria · Open to systems and cloud opportunities</p>
+            <p className="hero-note"><MapPin size={14} aria-hidden="true" />Based in Algiers, Algeria</p>
           </Reveal>
           <Reveal className="hero-panel" delay={0.1}>
-            <p className="eyebrow">Operational focus</p>
-            <strong>Windows</strong>
-            <span aria-hidden="true" />
-            <strong>Automation</strong>
-            <span aria-hidden="true" />
-            <strong>Cloud</strong>
-            <p>Secure infrastructure, repeatable work, measured outcomes.</p>
+            <div className="console">
+              <div className="console-bar">
+                <span className="console-lights" aria-hidden="true"><i /><i /><i /></span>
+                <p className="eyebrow">Operational focus</p>
+                <Activity size={14} aria-hidden="true" />
+              </div>
+              <ul className="console-rows">
+                {consoleRows.map((row) => (
+                  <li key={row.label}>
+                    <div className="console-row-head">
+                      <div>
+                        <strong>{row.label}</strong>
+                        <span>{row.detail}</span>
+                      </div>
+                      <em>{row.status}</em>
+                    </div>
+                    <div className="meter" aria-hidden="true"><i style={{ width: row.width }} /></div>
+                  </li>
+                ))}
+              </ul>
+              <p className="console-note">Secure infrastructure, repeatable work, measured outcomes.</p>
+            </div>
+            <div className="float-chip float-chip-a"><Sparkles size={14} aria-hidden="true" />3h → 5 min</div>
+            <div className="float-chip float-chip-b"><ShieldCheck size={14} aria-hidden="true" />Air-gapped ops</div>
           </Reveal>
         </section>
 
@@ -216,15 +309,28 @@ function App() {
           ))}
         </section>
 
+        <div className="marquee" aria-hidden="true">
+          <div className="marquee-track">
+            {[...marqueeItems, ...marqueeItems].map((item, index) => (
+              <span key={`${item}-${index}`}>{item}</span>
+            ))}
+          </div>
+        </div>
+
         <section id="capabilities" className="section section-wrap">
           <Reveal className="section-heading">
             <p className="eyebrow">Capabilities</p>
             <h2>Infrastructure depth, built for the next layer of cloud operations.</h2>
           </Reveal>
           <div className="capabilities-grid">
-            {capabilities.map((capability, index) => (
-              <Reveal className="capability-card" delay={index * 0.06} key={capability.number}>
-                <span className="card-number">{capability.number}</span>
+            {capabilities.map((capability, index) => {
+              const Icon = capabilityIcons[index]
+              return (
+              <Reveal className="capability-card spot" delay={index * 0.06} key={capability.number}>
+                <div className="card-top">
+                  <span className="icon-tile"><Icon size={20} aria-hidden="true" /></span>
+                  <span className="card-number">{capability.number}</span>
+                </div>
                 <h3>{capability.title}</h3>
                 <p>{capability.description}</p>
                 <ul>
@@ -233,7 +339,8 @@ function App() {
                   ))}
                 </ul>
               </Reveal>
-            ))}
+              )
+            })}
           </div>
         </section>
 
@@ -260,7 +367,7 @@ function App() {
           <div className="projects-grid">
             {projects.map((project, index) =>
               project.featured ? (
-                <Reveal key={project.number} className="project-featured">
+                <Reveal key={project.number} className="project-featured spot">
                   <div className="project-featured-main">
                     <span className="project-flag">Featured · Open source</span>
                     <h3>{project.title}</h3>
@@ -278,7 +385,7 @@ function App() {
                   </div>
                 </Reveal>
               ) : (
-                <Reveal key={project.number} className="project-row" delay={index * 0.06}>
+                <Reveal key={project.number} className="project-row spot" delay={index * 0.06}>
                   <span className="card-number">{project.number}</span>
                   <div>
                     <h3>{project.title}</h3>
@@ -305,7 +412,7 @@ function App() {
           </Reveal>
           <div className="approach-grid">
             {approach.map((item, index) => (
-              <Reveal className="approach-card" delay={index * 0.08} key={item.title}>
+              <Reveal className="approach-card spot" delay={index * 0.08} key={item.title}>
                 <span>{item.number}</span>
                 <h3>{item.title}</h3>
                 <p>{item.copy}</p>
@@ -321,8 +428,8 @@ function App() {
               <h2>Certifications.</h2>
             </div>
           </Reveal>
-          <Reveal className="certification-row">
-            <span className="card-number">01</span>
+          <Reveal className="certification-row spot">
+            <span className="icon-tile"><Award size={20} aria-hidden="true" /></span>
             <div>
               <h3>{certifications[0].title}</h3>
               <p>{certifications[0].issuer}</p>
@@ -338,9 +445,9 @@ function App() {
             </div>
             <a className="contact-email" href={`mailto:${EMAIL}`}>{EMAIL}<ArrowUpRight aria-hidden="true" /></a>
             <div className="contact-links">
-              <a href="https://linkedin.com/in/mohamedsenator" target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight size={14} aria-hidden="true" /></a>
-              <a href="https://github.com/s3nafps" target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={14} aria-hidden="true" /></a>
-              <a href={CV_PATH}>Download CV <ArrowUpRight size={14} aria-hidden="true" /></a>
+              <a href="https://linkedin.com/in/mohamedsenator" target="_blank" rel="noreferrer"><Linkedin size={15} aria-hidden="true" />LinkedIn</a>
+              <a href="https://github.com/s3nafps" target="_blank" rel="noreferrer"><Github size={15} aria-hidden="true" />GitHub</a>
+              <a href={CV_PATH}><Download size={15} aria-hidden="true" />Download CV</a>
             </div>
             <p className="contact-location">Algiers, Algeria · © 2026</p>
           </div>
