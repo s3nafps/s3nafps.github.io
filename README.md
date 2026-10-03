@@ -42,17 +42,6 @@ repository is the source of my portfolio site.
 | May 2022 — Nov 2022 | IRIS SATEREX | IT Support (contract) |
 | Apr 2021 — Apr 2022 | Brandt Algeria | IT Support Technician |
 
-## Selected work
-
-- **[ForecastFoundry](https://github.com/s3nafps/ForecastFoundry)** (open source) —
-  paper-first prediction-market research and execution engine with a CLI,
-  REST/OpenAPI, and an MCP server. *Python, FastAPI, MCP, Alembic, Docker.*
-- **Automated Health-Check Suite** (AGCE) — weekly infrastructure health checks
-  cut from ~3 hours to ~5 minutes with consistent, accurate results. *PowerShell,
-  scheduled tasks.*
-- **Ops & Audit Dashboards** (AGCE) — dashboards for management, cybersecurity,
-  and audit teams in an air-gapped environment. *PowerShell, reporting.*
-
 ## Certification
 
 - Google Cloud Associate Cloud Engineer (ACE) — Google Cloud
