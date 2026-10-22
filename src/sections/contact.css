@@ -1,4 +1,4 @@
-/* Contact: closing panel with a rotating aura, faint grid and horizon glow, then the site footer. */
+/* Contact: closing panel with a rotating aura, faint grid and horizon glow. */
 .contact { padding-bottom: clamp(56px, 8vw, 104px); }
 
 .contact-panel {
@@ -169,40 +169,6 @@
 .contact-meta > span { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 .contact-meta time { color: var(--ink-2); }
 
-/* Footer */
-.contact-footer { border-top: 1px solid var(--line); }
-.contact-footer-inner {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 28px;
-  padding-block: 26px 30px; color: var(--muted); font-size: 0.84rem;
-}
-.contact-footer-copy { color: var(--ink-2); font-weight: 500; }
-.contact-footer-note { font: 500 0.74rem/1.5 var(--font-mono); letter-spacing: 0.01em; }
-.contact-footer-note { display: flex; flex-wrap: wrap; gap: 4px 12px; }
-.contact-footer-dot { color: var(--faint); }
-.contact-top-link {
-  display: inline-flex; align-items: center; gap: 12px; color: var(--ink-2); font-weight: 500; transition: color .2s;
-}
-.contact-top-link:hover { color: var(--ink); }
-.contact-top-icon {
-  position: relative; display: grid; place-items: center; width: 34px; height: 34px; overflow: hidden;
-  border: 1px solid var(--line-strong); border-radius: 50%; background: color-mix(in srgb, var(--surface) 60%, transparent);
-  transition: border-color .25s, box-shadow .35s;
-}
-.contact-top-icon svg { grid-area: 1 / 1; transition: transform .5s var(--ease-out); }
-.contact-top-icon svg:nth-child(2) { transform: translateY(170%); }
-.contact-top-link:hover .contact-top-icon, .contact-top-link:focus-visible .contact-top-icon {
-  border-color: color-mix(in srgb, var(--accent) 60%, var(--line-strong)); box-shadow: 0 0 18px -4px var(--glow-1);
-}
-/* The arrow flies out the top and a fresh one rises in from below. */
-.contact-top-link:hover .contact-top-icon svg:first-child,
-.contact-top-link:focus-visible .contact-top-icon svg:first-child { transform: translateY(-170%); }
-.contact-top-link:hover .contact-top-icon svg:nth-child(2),
-.contact-top-link:focus-visible .contact-top-icon svg:nth-child(2) { transform: translateY(0); }
-
-@media (max-width: 960px) {
-  /* Copyright and back-to-top share the first row; the build note drops below. */
-  .contact-footer-note { order: 3; flex-basis: 100%; }
-}
 @media (max-width: 860px) {
   .contact-links { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 560px; }
 }
@@ -213,12 +179,8 @@
   .contact-links { grid-template-columns: 1fr; gap: 10px; }
   .contact-link { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: 'icon text arrow'; align-items: center; column-gap: 14px; padding: 12px 14px; }
   .contact-link-arrow { align-self: center; }
-  .contact-footer-inner { flex-direction: column; justify-content: center; text-align: center; }
-  .contact-footer-note { flex-direction: column; align-items: center; order: 0; flex-basis: auto; }
-  .contact-footer-dot { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .contact-aura { animation: none; }
-  .contact-top-icon svg { transition: none; }
 }
