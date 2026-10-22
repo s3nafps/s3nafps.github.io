@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint && tsc -b",
-    "test": "node --experimental-strip-types src/lib/format.test.ts && node --experimental-strip-types src/lib/apify.test.ts && node --experimental-strip-types src/data/data.test.ts",
+    "test": "node --experimental-strip-types src/lib/format.test.ts && node --experimental-strip-types src/lib/apify.test.ts && node --experimental-strip-types src/data/data.test.ts && node --experimental-strip-types src/structure.test.ts",
     "preview": "vite preview"
   },
   "dependencies": {
