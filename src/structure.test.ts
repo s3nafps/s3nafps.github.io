@@ -17,6 +17,7 @@ for (const tag of order) {
 }
 assert.match(app, /<MotionConfig reducedMotion="user">/, 'motion respects reduced-motion preferences')
 assert.match(app, /className="skip-link" href="#main"/)
+assert.ok(app.indexOf('<Footer />') > app.indexOf('</main>'), 'footer is a contentinfo landmark after <main>')
 
 const sectionIds: Array<[string, string]> = [
   ['src/sections/Hero.tsx', 'top'],

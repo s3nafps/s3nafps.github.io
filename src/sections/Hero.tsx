@@ -1,6 +1,6 @@
 import { useRef, type PointerEvent } from 'react'
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
-import { ArrowDown, ArrowRight, Download, Github, Linkedin, MapPin } from 'lucide-react'
+import { ArrowRight, Download, Github, Linkedin, MapPin } from 'lucide-react'
 import { profile, proofStats, terminalScenes } from '../data/profile.ts'
 import type { ApifyStoreState } from '../hooks/useApifyStore.ts'
 import { useFinePointer } from '../hooks/useMediaQuery.ts'
@@ -159,9 +159,6 @@ export function Hero({ store }: { store: ApifyStoreState }) {
         })}
       </div>
 
-      <motion.a className="hero-scroll" href="#capabilities" aria-label="Scroll to capabilities" {...fadeUp(1.8)}>
-        <ArrowDown size={16} aria-hidden="true" />
-      </motion.a>
     </section>
   )
 }

@@ -1,4 +1,5 @@
 import { MotionConfig } from 'motion/react'
+import { Footer } from './components/Footer.tsx'
 import { Nav } from './components/Nav.tsx'
 import { ScrollProgress } from './components/ScrollProgress.tsx'
 import { useApifyStore } from './hooks/useApifyStore.ts'
@@ -29,6 +30,7 @@ function App() {
         <Experience />
         <Contact />
       </main>
+      <Footer />
     </MotionConfig>
   )
 }

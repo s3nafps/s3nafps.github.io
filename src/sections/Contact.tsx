@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type PointerEvent, type RefObject } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { ArrowUp, ArrowUpRight, Check, Clock, Copy, Download, Github, Linkedin, MapPin, Webhook, type LucideIcon } from 'lucide-react'
+import { ArrowUpRight, Check, Clock, Copy, Download, Github, Linkedin, MapPin, Webhook, type LucideIcon } from 'lucide-react'
 import { profile } from '../data/profile.ts'
 import { Magnetic } from '../components/motion/Magnetic.tsx'
 import { Reveal } from '../components/motion/Reveal.tsx'
@@ -36,7 +36,6 @@ export function Contact() {
   }
 
   return (
-    <>
       <section id="contact" className="section contact" aria-labelledby="contact-title">
         <div className="container">
           <motion.div
@@ -118,8 +117,6 @@ export function Contact() {
           </motion.div>
         </div>
       </section>
-      <Footer />
-    </>
   )
 }
 
@@ -237,31 +234,5 @@ function LocalTime() {
       <Clock size={14} aria-hidden="true" />
       <time dateTime={now.toISOString()}>{localTime.format(now)}</time> local time
     </span>
-  )
-}
-
-function Footer() {
-  return (
-    <footer className="contact-footer">
-      <div className="container contact-footer-inner">
-        <p className="contact-footer-copy">
-          © {new Date().getFullYear()} {profile.name}
-        </p>
-        <p className="contact-footer-note">
-          <span>Built with React, Motion &amp; Vite</span>
-          <span className="contact-footer-dot" aria-hidden="true">
-            ·
-          </span>
-          <span>live data from the Apify API</span>
-        </p>
-        <a className="contact-top-link" href="#top">
-          Back to top
-          <span className="contact-top-icon" aria-hidden="true">
-            <ArrowUp size={15} />
-            <ArrowUp size={15} />
-          </span>
-        </a>
-      </div>
-    </footer>
   )
 }
