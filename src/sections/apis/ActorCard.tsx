@@ -1,10 +1,14 @@
-import { useRef, useState, type PointerEvent } from 'react'
+import { useEffect, useRef, useState, type PointerEvent } from 'react'
 import { Activity, ArrowUpRight } from 'lucide-react'
 import type { ActorWithStats } from '../../data/types.ts'
 import { useFinePointer } from '../../hooks/useMediaQuery.ts'
 import { compactNumber } from '../../lib/format.ts'
 import { CardMedia } from './CardMedia.tsx'
+import { iconFallback } from './shared.ts'
 import './card.css'
+
+/** Hover must rest this long before the preview loads, so passing over a card costs nothing. */
+const HOVER_INTENT_MS = 200
 
 type ActorCardProps = {
   actor: ActorWithStats
@@ -23,8 +27,24 @@ export function ActorCard({ actor, wide = false, suspended = false, onOpen }: Ac
   const ref = useRef<HTMLElement>(null)
   const finePointer = useFinePointer()
   const [hovered, setHovered] = useState(false)
+  const [intent, setIntent] = useState(false)
   const [focused, setFocused] = useState(false)
   const previewActive = !suspended && (wide || (finePointer && (hovered || focused)))
+
+  // Hover intent: the cursor has to rest on the card; scrolling cancels the wait.
+  useEffect(() => {
+    if (!intent) return
+    const cancel = () => setIntent(false)
+    const timer = window.setTimeout(() => {
+      setHovered(true)
+      setIntent(false)
+    }, HOVER_INTENT_MS)
+    window.addEventListener('scroll', cancel, { passive: true })
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('scroll', cancel)
+    }
+  }, [intent])
 
   // Spotlight border (base.css .spotlight) follows the mouse.
   const onPointerMove = (event: PointerEvent<HTMLElement>) => {
@@ -34,11 +54,14 @@ export function ActorCard({ actor, wide = false, suspended = false, onOpen }: Ac
     node.style.setProperty('--mx', `${event.clientX - rect.left}px`)
     node.style.setProperty('--my', `${event.clientY - rect.top}px`)
     node.style.setProperty('--spot', '1')
+    // Restart the wait after a scroll cancelled it.
+    if (!hovered && !intent) setIntent(true)
   }
   const onPointerEnter = (event: PointerEvent<HTMLElement>) => {
-    if (event.pointerType === 'mouse') setHovered(true)
+    if (event.pointerType === 'mouse') setIntent(true)
   }
   const onPointerLeave = () => {
+    setIntent(false)
     setHovered(false)
     ref.current?.style.setProperty('--spot', '0')
   }
@@ -59,7 +82,16 @@ export function ActorCard({ actor, wide = false, suspended = false, onOpen }: Ac
 
         <div className="apis-card-body">
           <div className="apis-card-top">
-            <img className="apis-card-icon" src={actor.media.icon} alt="" width={40} height={40} loading="lazy" decoding="async" />
+            <img
+              className="apis-card-icon"
+              src={actor.media.icon}
+              alt=""
+              width={40}
+              height={40}
+              loading="lazy"
+              decoding="async"
+              onError={iconFallback}
+            />
             <span className="apis-card-category">{actor.category}</span>
           </div>
 

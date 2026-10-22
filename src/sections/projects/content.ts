@@ -43,6 +43,7 @@ export type DiagramNode = {
 export type DiagramLayout = {
   width: number
   height: number
+  /** The custom VPC: it wraps only the GKE nodes; KMS and Artifact Registry are project-level. */
   zone: { x: number; y: number; w: number; h: number; labelX: number; labelY: number }
   nodes: DiagramNode[]
   edges: Array<{ id: string; d: string; dashed?: boolean }>
@@ -73,16 +74,16 @@ export const DIAGRAM_STEP: Record<string, number> = {
 export const DIAGRAM_WIDE: DiagramLayout = {
   width: 440,
   height: 268,
-  zone: { x: 10, y: 154, w: 420, h: 106, labelX: 24, labelY: 173 },
+  zone: { x: 136, y: 154, w: 168, h: 98, labelX: 148, labelY: 173 },
   nodes: [
     { id: 'gh', x: 12, y: 16, w: 136, h: 40, lines: ['GitHub Actions'] },
     { id: 'oidc', x: 174, y: 26, w: 52, h: 20, lines: ['OIDC'], tone: 'pill' },
     { id: 'wif', x: 252, y: 12, w: 176, h: 48, lines: ['Workload Identity', 'Federation'], tone: 'key' },
     { id: 'plan', x: 116, y: 100, w: 100, h: 34, lines: ['plan SA'] },
     { id: 'deploy', x: 230, y: 100, w: 104, h: 34, lines: ['deploy SA'] },
-    { id: 'kms', x: 24, y: 190, w: 104, h: 44, lines: ['Cloud KMS'] },
+    { id: 'kms', x: 14, y: 190, w: 104, h: 44, lines: ['Cloud KMS'] },
     { id: 'gke', x: 150, y: 186, w: 140, h: 52, lines: ['GKE', 'private nodes'], tone: 'accent' },
-    { id: 'ar', x: 312, y: 186, w: 104, h: 52, lines: ['Artifact', 'Registry'] },
+    { id: 'ar', x: 322, y: 186, w: 104, h: 52, lines: ['Artifact', 'Registry'] },
   ],
   edges: [
     { id: 'gh-wif', d: 'M148 36 H252' },
@@ -90,8 +91,8 @@ export const DIAGRAM_WIDE: DiagramLayout = {
     { id: 'wif-deploy', d: 'M340 60 V80 H282 V100' },
     { id: 'plan-gke', d: 'M166 134 V186', dashed: true },
     { id: 'deploy-gke', d: 'M282 134 V186' },
-    { id: 'kms-gke', d: 'M128 212 H150' },
-    { id: 'ar-gke', d: 'M312 212 H290' },
+    { id: 'kms-gke', d: 'M118 212 H150' },
+    { id: 'ar-gke', d: 'M322 212 H290' },
   ],
   packets: [
     [[148, 36], [252, 36]],
@@ -103,7 +104,7 @@ export const DIAGRAM_WIDE: DiagramLayout = {
 export const DIAGRAM_TALL: DiagramLayout = {
   width: 300,
   height: 400,
-  zone: { x: 8, y: 226, w: 284, h: 166, labelX: 20, labelY: 245 },
+  zone: { x: 54, y: 226, w: 192, h: 92, labelX: 66, labelY: 245 },
   nodes: [
     { id: 'gh', x: 70, y: 12, w: 160, h: 38, lines: ['GitHub Actions'] },
     { id: 'oidc', x: 124, y: 66, w: 52, h: 20, lines: ['OIDC'], tone: 'pill' },

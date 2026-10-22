@@ -97,7 +97,7 @@
   fill: color-mix(in srgb, var(--cyan) 14%, var(--surface));
   stroke: color-mix(in srgb, var(--cyan) 60%, transparent);
 }
-.proj-lz-node.is-pill text { fill: var(--cyan); font-size: 10px; font-weight: 600; letter-spacing: 0.06em; }
+.proj-lz-node.is-pill text { fill: var(--cyan-ink); font-size: 10px; font-weight: 600; letter-spacing: 0.06em; }
 .proj-lz-node.is-key rect { stroke: color-mix(in srgb, var(--cyan) 50%, var(--line-strong)); }
 .proj-lz-node.is-accent rect {
   fill: color-mix(in srgb, var(--violet) 14%, var(--surface));
@@ -167,7 +167,7 @@
 .proj-svc-dot::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--green); opacity: 0; }
 .proj-svc-name { color: var(--ink-2); font: 500 0.74rem/1.25 var(--font-mono); white-space: nowrap; }
 .proj-svc-role {
-  grid-column: 2; overflow: hidden; color: color-mix(in srgb, var(--muted) 85%, transparent);
+  grid-column: 2; overflow: hidden; color: var(--muted);
   font: 400 0.64rem/1.2 var(--font-mono); white-space: nowrap; text-overflow: ellipsis;
 }
 /* Health wave: each dot pings and its tile glints, rippling diagonally from caddy. */

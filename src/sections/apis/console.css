@@ -46,7 +46,7 @@
 .apis-endpoint:focus-visible { outline-offset: -3px; }
 .apis-endpoint-method {
   padding: 3px 7px; border-radius: 6px; background: color-mix(in srgb, var(--green) 14%, transparent);
-  color: var(--green); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.06em;
+  color: var(--green-ink); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.06em;
 }
 .apis-endpoint-path { white-space: nowrap; }
 .apis-endpoint svg { flex: none; color: var(--muted); transition: transform .3s var(--ease-out), color .2s; }

@@ -21,7 +21,7 @@
   position: relative; display: grid; gap: clamp(56px, 8vw, 80px);
 }
 .caps-pillar { position: relative; z-index: 1; display: grid; align-content: start; gap: 22px; }
-.caps-pillar[data-pillar='operate'] { --caps-tone: var(--cyan); }
+.caps-pillar[data-pillar='operate'] { --caps-tone: var(--cyan); --caps-ink: var(--cyan-ink); }
 .caps-pillar[data-pillar='build'] { --caps-tone: var(--violet-soft); }
 
 /* Pillar heading: node on the rail, then name and intent. */
@@ -33,7 +33,7 @@
   border: 1px solid color-mix(in srgb, var(--caps-tone) 55%, var(--line-strong));
   background: radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--caps-tone) 20%, var(--bg)), var(--bg) 75%);
   box-shadow: 0 0 0 5px color-mix(in srgb, var(--caps-tone) 8%, transparent), 0 0 26px -6px var(--caps-tone);
-  color: var(--caps-tone); font: 600 0.72rem/1 var(--font-mono); letter-spacing: 0.04em;
+  color: var(--caps-ink, var(--caps-tone)); font: 600 0.72rem/1 var(--font-mono); letter-spacing: 0.04em;
 }
 /* Ring that pings when the rail's signal passes the node. */
 .caps-node::after {

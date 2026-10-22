@@ -54,7 +54,7 @@
 .apis-card-go-icon svg { transition: transform .45s var(--ease-out); }
 .apis-card:hover .apis-card-go-icon,
 .apis-card:has(.apis-card-open:focus-visible) .apis-card-go-icon {
-  border-color: transparent; background: var(--grad-strong); color: #fff;
+  border-color: transparent; background: var(--btn-grad); color: #fff;
 }
 .apis-card:hover .apis-card-go-icon svg { transform: translate(1px, -1px) rotate(45deg); }
 
@@ -66,6 +66,11 @@
 }
 .apis-card--wide .apis-card-title { font-size: clamp(1.5rem, 2.6vw, 2.25rem); line-height: 1.08; letter-spacing: -0.04em; }
 .apis-card--wide .apis-card-tagline { font-size: clamp(0.94rem, 1.1vw, 1.02rem); -webkit-line-clamp: 4; line-clamp: 4; }
+
+/* The spotlight still carries its headline at the top; on narrow media the badge would cover it. */
+@container (max-width: 560px) {
+  .apis-card--wide .apis-badge { display: none; }
+}
 
 @media (min-width: 761px) {
   .apis-card--wide .apis-card-inner {

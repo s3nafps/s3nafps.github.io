@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type PointerEvent } from 'react'
+import { useEffect, useId, useRef, useState, type FocusEvent, type PointerEvent } from 'react'
 import {
   AnimatePresence,
   motion,
@@ -66,8 +66,9 @@ function SideScreen({ shot }: { shot: Shot }) {
 
 /**
  * Three fanned phones with scroll parallax. The center phone cycles through the
- * screenshots; it pauses off-screen, in background tabs, on hover, when paused by
- * the user, and never cycles under reduced motion.
+ * screenshots; it pauses off-screen, in background tabs, on hover, while focus is in
+ * the fan, and stops once the user pauses it or picks a screenshot. It never cycles
+ * under reduced motion.
  */
 export function PhoneFan({ shots }: { shots: Shot[] }) {
   const fanRef = useRef<HTMLDivElement>(null)
@@ -77,9 +78,10 @@ export function PhoneFan({ shots }: { shots: Shot[] }) {
   const inView = useInView(fanRef, { margin: '-10% 0px -10% 0px' })
   const pageVisible = usePageVisible()
   const [hovered, setHovered] = useState(false)
+  const [focused, setFocused] = useState(false)
   const [userPaused, setUserPaused] = useState(false)
 
-  const running = inView && pageVisible && !hovered && !userPaused && !reduceMotion
+  const running = inView && pageVisible && !hovered && !focused && !userPaused && !reduceMotion
   const { index, direction, goTo } = useAutoAdvance(shots.length, CYCLE_MS, running)
   const count = shots.length
   const prev = shots[(index - 1 + count) % count]
@@ -118,6 +120,14 @@ export function PhoneFan({ shots }: { shots: Shot[] }) {
     if (event.pointerType === 'mouse') setHovered(true)
   }
   const onPointerLeave = () => setHovered(false)
+  const onBlur = (event: FocusEvent) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false)
+  }
+  // Pressing play resumes right away, even with focus still on the button.
+  const onToggle = () => {
+    setFocused(false)
+    setUserPaused((paused) => !paused)
+  }
 
   return (
     <div
@@ -129,6 +139,8 @@ export function PhoneFan({ shots }: { shots: Shot[] }) {
       aria-label="Trackr screenshots"
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
+      onFocus={() => setFocused(true)}
+      onBlur={onBlur}
     >
       <div className="proj-fan-glow" aria-hidden="true">
         <span className="proj-fan-glow-violet" />
@@ -198,7 +210,10 @@ export function PhoneFan({ shots }: { shots: Shot[] }) {
                 aria-pressed={active}
                 aria-controls={screenId}
                 aria-label={`Screenshot ${dotIndex + 1} of ${count}: ${shot.alt}`}
-                onClick={() => goTo(dotIndex)}
+                onClick={() => {
+                  goTo(dotIndex)
+                  setUserPaused(true)
+                }}
               >
                 <span className="proj-dot-track">
                   {active && running ? (
@@ -222,7 +237,7 @@ export function PhoneFan({ shots }: { shots: Shot[] }) {
             type="button"
             className="proj-fan-toggle"
             aria-label={userPaused ? 'Play screenshot slideshow' : 'Pause screenshot slideshow'}
-            onClick={() => setUserPaused((paused) => !paused)}
+            onClick={onToggle}
           >
             {userPaused ? <Play size={13} aria-hidden="true" /> : <Pause size={13} aria-hidden="true" />}
           </button>
