@@ -1,0 +1,94 @@
+/* Actor detail dialog (portalled to <body>, above the nav). */
+.apis-dialog-layer { position: fixed; inset: 0; z-index: 90; }
+.apis-dialog-layer[data-closing] { pointer-events: none; }
+
+.apis-dialog-backdrop {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 50% at 50% 35%, color-mix(in srgb, var(--violet) 14%, transparent), transparent 70%),
+    color-mix(in srgb, var(--bg) 76%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+.apis-dialog-frame {
+  position: absolute; inset: 0; display: flex; overflow-y: auto; overscroll-behavior: contain;
+  padding: clamp(12px, 4vh, 40px) var(--gutter);
+}
+.apis-dialog { position: relative; width: min(1120px, 100%); margin: auto; }
+.apis-dialog:focus { outline: none; }
+.apis-dialog > :not(.apis-dialog-surface) { position: relative; }
+[data-theme='light'] .apis-dialog-surface { --apis-drop: rgba(30, 27, 75, 0.16); }
+.apis-dialog-surface {
+  --apis-drop: rgba(0, 0, 0, 0.65);
+  position: absolute; inset: 0; border-radius: var(--radius-xl);
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(180deg, var(--surface-2), var(--surface) 46%);
+  box-shadow: var(--shadow-lg), 0 60px 140px -50px var(--apis-drop), inset 0 1px 0 color-mix(in srgb, #fff 6%, transparent);
+}
+
+/* Window bar: sticks to the top so Close stays reachable while scrolling on phones. */
+.apis-dialog > .apis-dialog-bar {
+  position: sticky; top: 0; z-index: 3;
+  display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 18px;
+  border-bottom: 1px solid var(--line); border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  background: color-mix(in srgb, var(--surface-2) 82%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.apis-dialog-icon { width: 28px; height: 28px; flex: none; border-radius: 8px; border: 1px solid var(--line-strong); object-fit: cover; }
+.apis-dialog-path {
+  flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--muted); font: 500 0.76rem/1.3 var(--font-mono);
+}
+.apis-dialog-path strong { color: var(--ink); font-weight: 500; }
+.apis-dialog-close {
+  display: grid; flex: none; place-items: center; width: 38px; height: 38px; border-radius: 12px;
+  border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 60%, transparent); color: var(--ink);
+  transition: background-color .2s, border-color .2s, transform .3s var(--ease-out);
+}
+.apis-dialog-close:hover { background: var(--surface-3); border-color: var(--line-strong); transform: rotate(90deg); }
+
+.apis-dialog-main {
+  display: grid; grid-template-columns: minmax(0, 1.36fr) minmax(0, 1fr); align-items: start;
+  gap: clamp(20px, 3vw, 36px); padding: clamp(12px, 1.8vw, 20px);
+}
+.apis-dialog-media { z-index: 1; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.75); }
+.apis-dialog-media[data-flying] { z-index: 5; }
+.apis-dialog-media > video { background: #000; }
+
+.apis-dialog-info { display: grid; align-content: start; gap: 14px; padding: 4px clamp(0px, 1vw, 10px) 4px 0; }
+.apis-dialog-kicker {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+  color: var(--muted); font: 500 0.68rem/1.2 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.apis-dialog-featured { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); }
+.apis-dialog-title { font-size: clamp(1.5rem, 2.5vw, 2.05rem); line-height: 1.1; letter-spacing: -0.04em; }
+.apis-dialog-tagline { color: var(--muted); font-size: 0.98rem; line-height: 1.65; }
+
+/* Facts: hairline grid; price takes the full first row. */
+.apis-facts {
+  display: grid; grid-template-columns: minmax(0, 1.7fr) repeat(2, minmax(0, 1fr)); gap: 1px; margin: 2px 0 0;
+  overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--line);
+}
+.apis-fact { display: grid; gap: 5px; padding: 11px 14px; background: color-mix(in srgb, var(--surface) 92%, var(--surface-2)); }
+.apis-fact--price:only-child { grid-column: 1 / -1; }
+.apis-fact dt { color: var(--muted); font: 500 0.62rem/1 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.apis-fact dd { margin: 0; font: 600 1rem/1.25 var(--font-display); letter-spacing: -0.015em; font-variant-numeric: tabular-nums; }
+.apis-fact--price dd { font: 500 0.92rem/1.3 var(--font-mono); letter-spacing: -0.01em; }
+
+.apis-dialog-cta { justify-self: start; margin-top: 2px; }
+.apis-dialog-api { padding: 4px clamp(12px, 1.8vw, 20px) clamp(16px, 2vw, 22px); }
+
+@media (max-width: 880px) {
+  .apis-dialog-main { grid-template-columns: minmax(0, 1fr); }
+  .apis-dialog-info { padding: 0 4px; }
+}
+@media (max-width: 640px) {
+  .apis-dialog-frame { padding: 8px; }
+  .apis-dialog-surface { border-radius: 22px; }
+  .apis-dialog-bar { padding: 8px 8px 8px 14px; border-radius: 22px 22px 0 0; }
+  .apis-dialog-main { padding: 8px; gap: 18px; }
+  .apis-dialog-info { padding: 0 6px; }
+  .apis-dialog-cta { justify-self: stretch; }
+  .apis-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .apis-fact--price { grid-column: 1 / -1; }
+  .apis-dialog-api { padding: 6px 8px 12px; }
+}
