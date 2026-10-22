@@ -1,0 +1,107 @@
+/* Design tokens. Dark is the default; [data-theme='light'] overrides. */
+:root {
+  color-scheme: dark;
+
+  --bg: #07080c;
+  --bg-elev: #0b0d13;
+  --surface: #0f121a;
+  --surface-2: #151925;
+  --surface-3: #1b2030;
+  --line: rgba(255, 255, 255, 0.075);
+  --line-strong: rgba(255, 255, 255, 0.15);
+  --ink: #eef0f6;
+  --ink-2: #c6ccd8;
+  --muted: #8b94a6;
+  --faint: #5b6375;
+
+  --violet: #8b5cf6;
+  --violet-soft: #a78bfa;
+  --indigo: #818cf8;
+  --cyan: #22d3ee;
+  --green: #34d399;
+  --amber: #fbbf24;
+  --red: #f87171;
+
+  --accent: #a78bfa;
+  --accent-2: #22d3ee;
+  --accent-ink: #0b0614;
+  --grad: linear-gradient(115deg, #c4b5fd 0%, #a78bfa 30%, #818cf8 55%, #22d3ee 100%);
+  --grad-strong: linear-gradient(115deg, #8b5cf6 0%, #6366f1 50%, #06b6d4 100%);
+  /* Darker stops so white button labels stay above 4.5:1 across the whole gradient. */
+  --btn-grad: linear-gradient(115deg, #7c3aed 0%, #4f46e5 55%, #0e7490 100%);
+  /* Text-safe versions of the status colors (dots and borders keep --green / --cyan). */
+  --green-ink: #34d399;
+  --cyan-ink: #22d3ee;
+  --glow-1: rgba(139, 92, 246, 0.38);
+  --glow-2: rgba(34, 211, 238, 0.24);
+  --glow-3: rgba(99, 102, 241, 0.28);
+  --glass: rgba(10, 12, 18, 0.62);
+  --glass-strong: rgba(10, 12, 18, 0.86);
+  --grid-line: rgba(255, 255, 255, 0.045);
+  --shadow-lg: 0 30px 80px -24px rgba(0, 0, 0, 0.7);
+  --shadow-md: 0 12px 32px -12px rgba(0, 0, 0, 0.55);
+  --noise-opacity: 0.06;
+  --code-bg: #0a0c12;
+
+  --font-display: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
+
+  --gutter: clamp(16px, 4vw, 40px);
+  --container: 1200px;
+  --section-pad: clamp(80px, 9vw, 128px);
+  --nav-h: 68px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f6f6fa;
+  --bg-elev: #fbfbfd;
+  --surface: #ffffff;
+  --surface-2: #f1f2f7;
+  --surface-3: #e8eaf2;
+  --line: rgba(15, 18, 32, 0.085);
+  --line-strong: rgba(15, 18, 32, 0.16);
+  --ink: #0b0d14;
+  --ink-2: #2a2f3c;
+  --muted: #586174;
+  --faint: #8a93a5;
+
+  --violet: #7c3aed;
+  --violet-soft: #6d28d9;
+  --indigo: #4f46e5;
+  --cyan: #0891b2;
+  --green: #059669;
+  --amber: #b45309;
+  --red: #dc2626;
+
+  --accent: #6d28d9;
+  --accent-2: #0891b2;
+  --accent-ink: #ffffff;
+  --grad: linear-gradient(115deg, #7c3aed 0%, #6d28d9 30%, #4f46e5 55%, #0891b2 100%);
+  --grad-strong: linear-gradient(115deg, #7c3aed 0%, #4f46e5 50%, #0891b2 100%);
+  --btn-grad: linear-gradient(115deg, #7c3aed 0%, #4f46e5 55%, #0e7490 100%);
+  --green-ink: #065f46;
+  --cyan-ink: #0e7490;
+  --glow-1: rgba(139, 92, 246, 0.22);
+  --glow-2: rgba(34, 211, 238, 0.18);
+  --glow-3: rgba(99, 102, 241, 0.16);
+  --glass: rgba(255, 255, 255, 0.66);
+  --glass-strong: rgba(255, 255, 255, 0.9);
+  --grid-line: rgba(15, 18, 32, 0.06);
+  --shadow-lg: 0 30px 70px -28px rgba(30, 27, 75, 0.28);
+  --shadow-md: 0 12px 30px -14px rgba(30, 27, 75, 0.2);
+  --noise-opacity: 0.035;
+  --code-bg: #0d1017;
+}

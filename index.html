@@ -1,23 +1,35 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mohamed Senator</title>
     <meta
       name="description"
-      content="Mohamed Senator — Systems Administrator focused on cloud infrastructure, PowerShell automation, and reliable IT operations."
+      content="Mohamed Senator — Systems Administrator in Algiers who automates infrastructure work and ships data APIs on Apify, open-source infrastructure, and the Trackr Android app."
     />
-    <meta property="og:title" content="Mohamed Senator — Systems Administrator & Cloud Engineer" />
-    <meta property="og:description" content="Systems Administrator focused on cloud infrastructure, PowerShell automation, and reliable IT operations." />
+    <meta name="theme-color" content="#07080c" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://s3nafps.github.io/" />
+
+    <meta property="og:title" content="Mohamed Senator — Systems Administrator & Builder" />
+    <meta property="og:description" content="I keep systems running and build the tools around them: infrastructure automation, data APIs on Apify, and the Trackr Android app." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://s3nafps.github.io/" />
     <meta property="og:image" content="https://s3nafps.github.io/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Mohamed Senator — Systems Administrator & Cloud Engineer" />
-    <meta name="twitter:description" content="Systems Administrator focused on cloud infrastructure, PowerShell automation, and reliable IT operations." />
+    <meta name="twitter:title" content="Mohamed Senator — Systems Administrator & Builder" />
+    <meta name="twitter:description" content="I keep systems running and build the tools around them: infrastructure automation, data APIs on Apify, and the Trackr Android app." />
     <meta name="twitter:image" content="https://s3nafps.github.io/og.png" />
-    <link rel="canonical" href="https://s3nafps.github.io/" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;650;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    />
+    <link rel="preconnect" href="https://api.apify.com" crossorigin />
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -25,29 +37,39 @@
         "name": "Mohamed Senator",
         "jobTitle": "Systems Administrator / Cloud Infrastructure & Automation",
         "email": "mailto:mohamed.senator@icloud.com",
+        "url": "https://s3nafps.github.io/",
         "address": { "@type": "PostalAddress", "addressLocality": "Algiers", "addressCountry": "DZ" },
         "sameAs": [
           "https://linkedin.com/in/mohamedsenator",
-          "https://github.com/s3nafps"
+          "https://github.com/s3nafps",
+          "https://apify.com/s3nafps"
         ]
       }
     </script>
     <script>
+      // Apply the saved theme before first paint (dark is the default).
       try {
-        if (localStorage.getItem('portfolio-theme') === 'dark') {
-          document.documentElement.dataset.theme = 'dark'
+        if (localStorage.getItem('portfolio-theme') === 'light') {
+          document.documentElement.dataset.theme = 'light'
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f6f6fa')
         }
       } catch {}
     </script>
-    <title>Mohamed Senator</title>
   </head>
   <body>
     <div id="root"></div>
     <noscript>
-      <p style="font-family: sans-serif; padding: 24px; text-align: center;">
-        This portfolio needs JavaScript. Contact Mohamed at
-        <a href="mailto:mohamed.senator@icloud.com">mohamed.senator@icloud.com</a>.
-      </p>
+      <div style="font-family: system-ui, sans-serif; max-width: 640px; margin: 64px auto; padding: 0 24px; line-height: 1.6; color: #eef0f6; background: #07080c;">
+        <h1 style="font-size: 2rem;">Mohamed Senator</h1>
+        <p>Systems Administrator · Cloud Infrastructure &amp; Automation · Algiers, Algeria.</p>
+        <p>
+          This portfolio needs JavaScript for its animations. Reach me at
+          <a style="color: #a78bfa;" href="mailto:mohamed.senator@icloud.com">mohamed.senator@icloud.com</a>,
+          see <a style="color: #a78bfa;" href="https://github.com/s3nafps">GitHub</a> and
+          <a style="color: #a78bfa;" href="https://apify.com/s3nafps">Apify</a>, or download the
+          <a style="color: #a78bfa;" href="/Mohamed_Senator_Master_CV.pdf">CV</a>.
+        </p>
+      </div>
     </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
