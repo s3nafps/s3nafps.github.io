@@ -1,4 +1,4 @@
-import { useRef, type PointerEvent } from 'react'
+import { useEffect, useRef, type PointerEvent } from 'react'
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
 import { ArrowRight, Download, Github, Linkedin, MapPin } from 'lucide-react'
 import { profile, proofStats, terminalScenes } from '../data/profile.ts'
@@ -31,6 +31,17 @@ export function Hero({ store }: { store: ApifyStoreState }) {
   // Pointer tilt for the terminal.
   const tiltX = useSpring(useMotionValue(0), { stiffness: 120, damping: 18 })
   const tiltY = useSpring(useMotionValue(0), { stiffness: 120, damping: 18 })
+
+  // Pause the CSS loops (aurora, grid, floating badges) once the hero scrolls away.
+  useEffect(() => {
+    const node = sectionRef.current
+    if (!node) return
+    const observer = new IntersectionObserver(([entry]) => {
+      node.toggleAttribute('data-offscreen', !entry.isIntersecting)
+    })
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
 
   const onPointerMove = (event: PointerEvent<HTMLElement>) => {
     const node = sectionRef.current
@@ -152,7 +163,7 @@ export function Hero({ store }: { store: ApifyStoreState }) {
           const value = stat.label.includes('Apify') ? actorCount : stat.value
           return (
             <motion.div className="hero-stat" key={stat.label} {...fadeUp(1.3 + index * 0.08)}>
-              <CountUp className="hero-stat-value" value={value} prefix={stat.prefix} suffix={stat.suffix} />
+              <CountUp className="hero-stat-value" value={value} prefix={stat.prefix} suffix={stat.suffix} margin="0px" />
               <span className="hero-stat-label">{stat.label}</span>
             </motion.div>
           )

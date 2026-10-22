@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { MotionConfig } from 'motion/react'
 import { Footer } from './components/Footer.tsx'
 import { Nav } from './components/Nav.tsx'
@@ -15,6 +16,17 @@ import { Stack } from './sections/Stack.tsx'
 function App() {
   const { theme, toggle } = useTheme()
   const store = useApifyStore()
+
+  // React renders after the browser's own jump to #fragment, so deep links like
+  // /#experience would land at the top. Scroll there once mounted, and again after
+  // web fonts settle (they change the layout height above the target).
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1))
+    if (!id) return
+    const go = () => document.getElementById(id)?.scrollIntoView({ block: 'start' })
+    go()
+    document.fonts?.ready.then(go).catch(() => {})
+  }, [])
 
   return (
     <MotionConfig reducedMotion="user">
