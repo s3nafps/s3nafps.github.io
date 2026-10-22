@@ -1,0 +1,66 @@
+/* Stack marquee: a full-bleed band between the hero and the first section. */
+.stack {
+  --stack-gap: clamp(18px, 2.2vw, 34px);
+  position: relative; isolation: isolate;
+  padding-block: clamp(22px, 3vw, 34px) clamp(26px, 3.4vw, 40px);
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--surface) 45%, transparent) 50%, transparent);
+}
+/* Hairlines that fade at the edges; the top one carries a soft accent glint in the middle. */
+.stack::before, .stack::after {
+  content: ''; position: absolute; inset-inline: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--line-strong) 18%, var(--line-strong) 82%, transparent);
+}
+.stack::before {
+  top: 0;
+  background: linear-gradient(90deg, transparent, var(--line-strong) 18%, color-mix(in srgb, var(--violet-soft) 70%, transparent) 42%, color-mix(in srgb, var(--cyan) 60%, transparent) 58%, var(--line-strong) 82%, transparent);
+}
+.stack::after { bottom: 0; }
+
+.stack-head { display: flex; align-items: center; margin-bottom: clamp(14px, 1.8vw, 20px); }
+.stack-label { margin: 0; }
+
+.stack-rows {
+  display: grid; gap: clamp(6px, 1vw, 12px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+}
+.stack-row { display: flex; overflow: hidden; padding-block: 6px; }
+
+/* Each copy is at least as wide as the band and slides by exactly its own width, so the loop never shows a seam. */
+.stack-group {
+  flex: none; display: flex; align-items: center; justify-content: space-around; min-width: 100%;
+  animation: stack-scroll var(--stack-duration, 60s) linear infinite;
+}
+.stack-row[data-direction='right'] .stack-group { animation-direction: reverse; }
+@keyframes stack-scroll { to { transform: translate3d(-100%, 0, 0); } }
+@media (hover: hover) {
+  .stack-row:hover .stack-group { animation-play-state: paused; }
+}
+
+.stack-item {
+  display: inline-flex; align-items: center; gap: var(--stack-gap); padding-inline-end: var(--stack-gap);
+  color: var(--ink-2); white-space: nowrap;
+  font: 550 clamp(1.05rem, 1.75vw, 1.55rem)/1.25 var(--font-display); letter-spacing: -0.025em;
+  transition: color .3s var(--ease-out);
+}
+.stack-row[data-direction='right'] .stack-item { color: var(--muted); }
+.stack-item:hover { color: var(--ink); }
+
+/* Small gradient diamond between tools. */
+.stack-sep {
+  flex: none; width: 6px; height: 6px; border-radius: 1.5px; transform: rotate(45deg);
+  background: var(--grad-strong); box-shadow: 0 0 10px var(--glow-1); opacity: .85;
+  transition: transform .4s var(--ease-out), opacity .3s;
+}
+.stack-item:hover .stack-sep { transform: rotate(135deg) scale(1.25); opacity: 1; }
+
+/* Reduced motion: no drift; one copy per row, wrapped inside the container. */
+@media (prefers-reduced-motion: reduce) {
+  .stack-rows {
+    width: min(var(--container), calc(100% - 2 * var(--gutter))); margin-inline: auto; gap: 4px;
+    -webkit-mask-image: none; mask-image: none;
+  }
+  .stack-row { overflow: visible; }
+  .stack-group { flex: 1 1 auto; flex-wrap: wrap; justify-content: flex-start; row-gap: 8px; min-width: 0; animation: none; }
+  .stack-group[data-clone] { display: none; }
+}
