@@ -73,7 +73,7 @@
   display: inline-flex; align-items: center; gap: 8px; padding: 4px 10px 4px 9px; border-radius: var(--radius-pill);
   border: 1px solid color-mix(in srgb, var(--green) 32%, transparent);
   background: color-mix(in srgb, var(--green) 9%, transparent);
-  color: var(--green); font: 500 0.66rem/1.3 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--green-ink); font: 500 0.66rem/1.3 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase;
 }
 .exp-now .live-dot { width: 6px; height: 6px; }
 
@@ -157,7 +157,7 @@
 
 .exp-cert-icon {
   position: relative; display: grid; place-items: center; width: 68px; height: 68px; border-radius: 20px;
-  background: var(--grad-strong); color: #fff;
+  background: var(--btn-grad); color: #fff;
   box-shadow:
     0 0 0 6px color-mix(in srgb, var(--violet) 12%, transparent),
     0 16px 40px -10px var(--glow-1),

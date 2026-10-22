@@ -12,7 +12,7 @@ import { ActorGrid } from './apis/ActorGrid.tsx'
 import { CategoryFilter } from './apis/CategoryFilter.tsx'
 import { LivePanel } from './apis/LivePanel.tsx'
 import { useModalLock } from './apis/modal.ts'
-import { SNIPPET_TABS, countByCategory, featuredFirst, riseInView, type CategoryFilter as Filter } from './apis/shared.ts'
+import { SNIPPET_TABS, countByCategory, featuredFirst, iconFallback, riseInView, type CategoryFilter as Filter } from './apis/shared.ts'
 import './apis.css'
 
 const GRID_ID = 'apis-grid'
@@ -74,8 +74,8 @@ export function Apis({ store }: { store: ApifyStoreState }) {
           </div>
           <Reveal delay={0.15} className="apis-head-aside">
             <p className="section-lead">
-              Each Actor runs in the Apify cloud and bills per result. Call it over REST, from the JavaScript or Python SDK,
-              or let an AI agent use it through MCP.
+              Each Actor runs in the Apify cloud and bills per event (a page, a result or a report). Call it over REST, from
+              the JavaScript or Python API client, or let an AI agent use it through MCP.
             </p>
             <ul className="chip-list apis-protocols" aria-label="Ways to call an Actor">
               {SNIPPET_TABS.map((tab) => (
@@ -118,7 +118,16 @@ export function Apis({ store }: { store: ApifyStoreState }) {
         <motion.div className="apis-cta" {...riseInView(0.05)}>
           <div className="apis-cta-icons" aria-hidden="true">
             {ordered.slice(0, 5).map((actor) => (
-              <img key={actor.slug} src={actor.media.icon} alt="" width={40} height={40} loading="lazy" decoding="async" />
+              <img
+                key={actor.slug}
+                src={actor.media.icon}
+                alt=""
+                width={40}
+                height={40}
+                loading="lazy"
+                decoding="async"
+                onError={iconFallback}
+              />
             ))}
           </div>
           <div className="apis-cta-copy">

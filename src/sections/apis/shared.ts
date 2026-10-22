@@ -1,3 +1,4 @@
+import type { SyntheticEvent } from 'react'
 import type { Variants } from 'motion/react'
 import { Building2, Podcast, Radar, Radio, Search, Sparkles, type LucideIcon } from 'lucide-react'
 import { EASE_OUT } from '../../components/motion/ease.ts'
@@ -36,6 +37,14 @@ export const mediaLayoutId = (slug: string) => `apis-media-${slug}`
 
 /** Same radius on both ends of the shared-element morph (Motion corrects it while scaling). */
 export const MEDIA_RADIUS = 14
+
+const FALLBACK_ICON = '/favicon.svg'
+
+/** `onError` for Actor icons: a broken Store picture falls back to the site icon (once, so it cannot loop). */
+export function iconFallback(event: SyntheticEvent<HTMLImageElement>): void {
+  const img = event.currentTarget
+  if (img.getAttribute('src') !== FALLBACK_ICON) img.src = FALLBACK_ICON
+}
 
 /** Featured Actors first, original order otherwise. */
 export function featuredFirst(actors: ActorWithStats[]): ActorWithStats[] {

@@ -113,7 +113,7 @@
 .contact-copy-icon > span { display: grid; place-items: center; }
 .contact-copy[data-state='copied'] {
   border-color: color-mix(in srgb, var(--green) 55%, transparent);
-  color: var(--green);
+  color: var(--green-ink);
 }
 .contact-toast {
   position: absolute; bottom: calc(100% + 12px); left: 50%; translate: -50% 0; z-index: 3;
@@ -152,7 +152,7 @@
   background: color-mix(in srgb, var(--violet) 12%, var(--surface-2));
   transition: color .25s, background-color .25s;
 }
-.contact-link:hover .contact-link-icon { color: #fff; background: var(--grad-strong); }
+.contact-link:hover .contact-link-icon { color: #fff; background: var(--btn-grad); }
 .contact-link-arrow { grid-area: arrow; align-self: start; color: var(--muted); transition: transform .35s var(--ease-out), color .25s; }
 .contact-link:hover .contact-link-arrow { color: var(--ink); transform: translate(2px, -2px); }
 .contact-link:hover .contact-link-arrow--down { transform: translateY(2px); }
@@ -176,6 +176,9 @@
   .contact-panel { --contact-meta-h: calc(2.24rem + 8px); border-radius: var(--radius-lg); }
   .contact-meta { flex-direction: column; gap: 8px; }
   .contact-email-row { flex-direction: column; gap: 14px; }
+  /* Stacked under the email, the toast drops below the button so it never covers the address. */
+  .contact-toast { top: calc(100% + 12px); bottom: auto; }
+  .contact-toast::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--ink); }
   .contact-links { grid-template-columns: 1fr; gap: 10px; }
   .contact-link { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: 'icon text arrow'; align-items: center; column-gap: 14px; padding: 12px 14px; }
   .contact-link-arrow { align-self: center; }

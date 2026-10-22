@@ -131,8 +131,8 @@ export function LandingZoneDiagram() {
       <Sketch layout={DIAGRAM_TALL} phase={phase} flowing={flowing} className="proj-lz-svg--tall" />
       <figcaption className="sr-only">
         Architecture: GitHub Actions signs in with OIDC through Workload Identity Federation, which grants a plan
-        service account and a deploy service account. Both reach private GKE nodes inside a custom VPC, alongside
-        Cloud KMS and Artifact Registry.
+        service account and a deploy service account. Both reach private GKE nodes inside a custom VPC, which use
+        Cloud KMS and Artifact Registry at project level, outside the VPC.
       </figcaption>
     </figure>
   )

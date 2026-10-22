@@ -17,13 +17,14 @@ type ActorGridProps = {
 /**
  * Layout-animated grid. Cards stagger in once the grid is in view; on filter changes
  * leavers blur out (popped out of flow) while the rest glide to their new cells.
+ * Each card animates itself, so Actors appended later by the live API reveal too.
  */
 export function ActorGrid({ id, actors, spotlightSlug, suspended, onOpen }: ActorGridProps) {
   const ref = useRef<HTMLUListElement>(null)
   const inView = useInView(ref, { once: true, margin: '0px 0px -8% 0px' })
 
   return (
-    <motion.ul ref={ref} id={id} className="apis-grid" initial="hidden" animate={inView ? 'show' : 'hidden'}>
+    <ul ref={ref} id={id} className="apis-grid">
       <AnimatePresence mode="popLayout">
         {actors.map((actor, index) => {
           const wide = actor.slug === spotlightSlug
@@ -34,6 +35,8 @@ export function ActorGrid({ id, actors, spotlightSlug, suspended, onOpen }: Acto
               layout
               custom={index}
               variants={cardVariants}
+              initial="hidden"
+              animate={inView ? 'show' : 'hidden'}
               exit="exit"
               transition={{ layout: LAYOUT_SPRING }}
             >
@@ -42,6 +45,6 @@ export function ActorGrid({ id, actors, spotlightSlug, suspended, onOpen }: Acto
           )
         })}
       </AnimatePresence>
-    </motion.ul>
+    </ul>
   )
 }

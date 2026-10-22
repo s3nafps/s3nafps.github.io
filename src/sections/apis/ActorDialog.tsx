@@ -8,7 +8,7 @@ import { relativeTime } from '../../lib/format.ts'
 import { ActorCover } from './ActorCover.tsx'
 import { ApiPanel } from './ApiPanel.tsx'
 import { trapTab } from './modal.ts'
-import { MEDIA_RADIUS, PROFILE_HOST, mediaLayoutId } from './shared.ts'
+import { MEDIA_RADIUS, PROFILE_HOST, iconFallback, mediaLayoutId } from './shared.ts'
 import './dialog.css'
 
 /** Content blocks rise in after the media has started its flight from the card. */
@@ -17,6 +17,12 @@ const appear = (delay: number) => ({
   animate: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE_OUT, delay } },
   exit: { opacity: 0, y: 8, transition: { duration: 0.18 } },
 })
+
+/** Autoplay the promo (several MB) only on wider screens without Data Saver. */
+function promoAutoplayAllowed(): boolean {
+  const { connection } = navigator as Navigator & { connection?: { saveData?: boolean } }
+  return window.matchMedia('(min-width: 641px)').matches && !connection?.saveData
+}
 
 type ActorDialogProps = {
   actor: ActorWithStats
@@ -39,6 +45,7 @@ export function ActorDialog({ actor, onClose }: ActorDialogProps) {
   // While the media flies in from the card it sits above everything; once it has landed it
   // drops below the sticky bar, and only then does the promo (several MB) start loading.
   const [landed, setLanded] = useState(false)
+  const [autoplayAllowed] = useState(promoAutoplayAllowed)
 
   useEffect(() => {
     panelRef.current?.focus({ preventScroll: true })
@@ -89,7 +96,7 @@ export function ActorDialog({ actor, onClose }: ActorDialogProps) {
           />
 
           <motion.header className="apis-dialog-bar" {...appear(0.1)}>
-            <img className="apis-dialog-icon" src={icon} alt="" width={28} height={28} decoding="async" />
+            <img className="apis-dialog-icon" src={icon} alt="" width={28} height={28} decoding="async" onError={iconFallback} />
             <span className="apis-dialog-path">
               {PROFILE_HOST}/<strong>{actor.slug}</strong>
             </span>
@@ -118,8 +125,8 @@ export function ActorDialog({ actor, onClose }: ActorDialogProps) {
                   controls
                   muted
                   playsInline
-                  autoPlay={!reduceMotion}
-                  preload={reduceMotion ? 'metadata' : 'auto'}
+                  autoPlay={autoplayAllowed && !reduceMotion}
+                  preload="metadata"
                   aria-label={`${actor.title} promo video`}
                 />
               ) : null}

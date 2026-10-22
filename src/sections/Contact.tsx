@@ -175,8 +175,11 @@ function CopyEmail({ email, fallbackTarget }: { email: string; fallbackTarget: R
     }
   }
 
-  const shortcut = /Mac|iPhone|iPad/.test(navigator.userAgent) ? '⌘C' : 'Ctrl+C'
-  const message = state === 'copied' ? 'Email copied to clipboard' : state === 'failed' ? `Selected, press ${shortcut} to copy` : ''
+  // Touch screens have no copy shortcut to point at.
+  const hint = window.matchMedia('(pointer: coarse)').matches
+    ? 'long-press to copy'
+    : `press ${/Mac|iPhone|iPad/.test(navigator.userAgent) ? '⌘C' : 'Ctrl+C'} to copy`
+  const message = state === 'copied' ? 'Email copied to clipboard' : state === 'failed' ? `Selected, ${hint}` : ''
 
   return (
     <span className="contact-copy-wrap">

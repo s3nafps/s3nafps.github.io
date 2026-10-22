@@ -106,13 +106,14 @@
   backdrop-filter: blur(12px);
 }
 .proj-dots { display: flex; align-items: center; }
-.proj-dot { display: grid; place-items: center; height: 30px; padding: 0 8px; border-radius: var(--radius-pill); }
+.proj-dot { display: grid; place-items: center; min-width: 24px; height: 30px; padding: 0 8px; border-radius: var(--radius-pill); }
+/* Resting dots stay above 3:1 against the control bar. */
 .proj-dot-track {
   display: block; width: 7px; height: 7px; overflow: hidden; border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--ink) 24%, transparent);
+  background: color-mix(in srgb, var(--ink) 50%, transparent);
   transition: width 0.5s var(--ease-out), background-color 0.3s;
 }
-.proj-dot:hover .proj-dot-track { background: color-mix(in srgb, var(--ink) 50%, transparent); }
+.proj-dot:hover .proj-dot-track { background: color-mix(in srgb, var(--ink) 75%, transparent); }
 .proj-dot[aria-pressed='true'] .proj-dot-track { width: 30px; background: color-mix(in srgb, var(--trackr-violet) 24%, var(--line-strong)); }
 .proj-dot-fill {
   display: block; width: 100%; height: 100%; border-radius: inherit; transform-origin: 0 50%;

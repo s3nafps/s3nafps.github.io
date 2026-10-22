@@ -23,7 +23,7 @@
   background: color-mix(in srgb, var(--ink) 7%, transparent); color: var(--muted);
   font: 500 0.68rem/1 var(--font-mono); transition: background-color .25s, color .25s;
 }
-.apis-filter-btn[aria-pressed='true'] .apis-filter-count { background: var(--grad-strong); color: #fff; }
+.apis-filter-btn[aria-pressed='true'] .apis-filter-count { background: var(--btn-grad); color: #fff; }
 
 @media (max-width: 720px) {
   /* Scrolls sideways inside its own rail; the edge fade hints there is more. */
