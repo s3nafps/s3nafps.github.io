@@ -1,0 +1,109 @@
+/* Trackr feature panel. Brand colors come from the app's launcher icon. */
+.proj-trackr {
+  --trackr-ink: #1a1d24;
+  --trackr-violet: #7c5cff;
+  --trackr-amber: #ffb547;
+  position: relative; isolation: isolate; overflow: hidden;
+  padding: clamp(22px, 4.2vw, 60px);
+  border: 1px solid var(--line); border-radius: var(--radius-xl);
+  background:
+    radial-gradient(60% 80% at 80% 34%, color-mix(in srgb, var(--trackr-violet) 13%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 82%, transparent), var(--surface) 70%);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 color-mix(in srgb, var(--ink) 7%, transparent);
+}
+/* Faint dot grid that fades out toward the copy. */
+.proj-trackr-bg {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--ink) 16%, transparent) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(55% 60% at 76% 38%, #000 10%, transparent 75%);
+  mask-image: radial-gradient(55% 60% at 76% 38%, #000 10%, transparent 75%);
+  opacity: 0.55;
+}
+/* Top hairline highlight in the brand colors. */
+.proj-trackr::before {
+  content: ''; position: absolute; inset: 0 12% auto; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--trackr-violet) 80%, transparent), color-mix(in srgb, var(--trackr-amber) 70%, transparent), transparent);
+}
+
+.proj-trackr-main {
+  display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  align-items: center; gap: clamp(32px, 5vw, 72px);
+}
+
+/* Brand row: icon, name, repo path */
+.proj-trackr-brand { display: flex; align-items: center; gap: 16px; }
+.proj-trackr-icon {
+  display: block; flex: none; width: 64px; height: 64px; overflow: hidden; border-radius: 18px;
+  box-shadow:
+    0 16px 36px -12px color-mix(in srgb, var(--trackr-violet) 70%, transparent),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.6s var(--ease-out);
+}
+.proj-trackr-icon svg { width: 100%; height: 100%; }
+.proj-trackr-brand:hover .proj-trackr-icon { transform: rotate(-6deg) scale(1.05); }
+.proj-trackr-id { display: grid; gap: 6px; }
+.proj-trackr-name { font: 650 1.65rem/1 var(--font-display); letter-spacing: -0.035em; }
+.proj-trackr-repo {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--muted); font: 500 0.74rem/1.3 var(--font-mono); letter-spacing: 0.01em;
+}
+
+.proj-trackr-tagline {
+  max-width: 15ch; margin-top: 28px;
+  font-size: clamp(1.9rem, 3.5vw, 2.9rem); line-height: 1.04; letter-spacing: -0.045em; text-wrap: balance;
+}
+.proj-trackr-desc { max-width: 54ch; margin-top: 18px; color: var(--muted); font-size: 1rem; line-height: 1.7; text-wrap: pretty; }
+
+.proj-trackr-highlights { display: grid; gap: 10px; margin-top: 24px; }
+.proj-trackr-highlights li { display: flex; align-items: center; gap: 11px; color: var(--ink-2); font-size: 0.93rem; }
+.proj-trackr-check {
+  display: grid; flex: none; place-items: center; width: 20px; height: 20px; border-radius: 50%;
+  color: var(--trackr-violet); background: color-mix(in srgb, var(--trackr-violet) 16%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--trackr-violet) 30%, transparent);
+}
+[data-theme='light'] .proj-trackr-check { color: #5b3fe0; }
+.proj-trackr-stack { margin-top: 24px; }
+.proj-trackr-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+/* Features: a 3 × 2 grid divided by hairlines */
+.proj-features {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--line);
+}
+.proj-feature {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-content: start; align-items: center;
+  column-gap: 12px; row-gap: 10px; padding: 28px clamp(16px, 2.2vw, 30px) 4px;
+}
+.proj-feature:nth-child(3n + 1) { padding-left: 0; }
+.proj-feature:nth-child(3n) { padding-right: 0; }
+.proj-feature:nth-child(3n + 2), .proj-feature:nth-child(3n) { border-left: 1px solid var(--line); }
+.proj-feature:nth-child(n + 4) { margin-top: 24px; border-top: 1px solid var(--line); }
+.proj-feature-icon {
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px;
+  color: var(--trackr-violet); background: color-mix(in srgb, var(--trackr-violet) 13%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--trackr-violet) 26%, transparent);
+}
+[data-theme='light'] .proj-feature-icon { color: #5b3fe0; }
+.proj-feature-title { font-size: 1.04rem; font-weight: 620; letter-spacing: -0.02em; }
+.proj-feature-copy { grid-column: 1 / -1; color: var(--muted); font-size: 0.9rem; line-height: 1.6; text-wrap: pretty; }
+
+@media (max-width: 960px) {
+  .proj-trackr-main { grid-template-columns: minmax(0, 1fr); }
+  .proj-trackr-tagline { max-width: 18ch; }
+  .proj-features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .proj-feature,
+  .proj-feature:nth-child(n) { margin-top: 0; padding: 24px 0 22px; border-left: 0; border-top: 0; }
+  .proj-feature:nth-child(2n) { padding-left: 24px; border-left: 1px solid var(--line); }
+  .proj-feature:nth-child(2n + 1) { padding-right: 24px; }
+  .proj-feature:nth-child(n + 3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 560px) {
+  .proj-trackr { border-radius: var(--radius-lg); }
+  .proj-trackr-icon { width: 56px; height: 56px; border-radius: 16px; }
+  .proj-trackr-actions .btn { flex: 1 1 auto; }
+  .proj-features { grid-template-columns: minmax(0, 1fr); }
+  .proj-feature:nth-child(n) { padding: 20px 0; border-left: 0; }
+  .proj-feature:nth-child(n + 2) { border-top: 1px solid var(--line); }
+}

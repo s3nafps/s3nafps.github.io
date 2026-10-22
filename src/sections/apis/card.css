@@ -1,0 +1,88 @@
+/* Actor card. `.card` + `.spotlight` come from base.css. */
+.apis-card {
+  width: 100%; height: 100%;
+  transition: transform .55s var(--ease-out), box-shadow .55s var(--ease-out), border-color .3s;
+}
+.apis-card:hover { transform: translateY(-4px); border-color: var(--line-strong); box-shadow: var(--shadow-lg); }
+.apis-card:hover .apis-media > img { transform: scale(1.035); }
+.apis-card:hover .apis-play { transform: scale(1.08); background: rgba(139, 92, 246, 0.55); }
+
+.apis-card-inner { display: flex; flex-direction: column; height: 100%; padding: 7px; }
+.apis-card-body { display: flex; flex: 1; flex-direction: column; gap: 10px; padding: 16px 12px 8px; }
+.apis-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+.apis-card-icon {
+  width: 40px; height: 40px; border-radius: 11px; object-fit: cover;
+  border: 1px solid var(--line-strong); background: var(--surface-3);
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.5);
+}
+.apis-card-category { color: var(--muted); font: 500 0.68rem/1.2 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; text-align: right; }
+
+.apis-card-title { font-size: 1.24rem; line-height: 1.2; letter-spacing: -0.028em; font-weight: 620; }
+.apis-card-open { text-align: left; font-weight: inherit; letter-spacing: inherit; line-height: inherit; }
+/* Stretched hit area: the whole card opens the dialog. */
+.apis-card-open::after {
+  content: ''; position: absolute; inset: 0; z-index: 3; border-radius: calc(var(--radius-lg) - 1px);
+}
+.apis-card-open:focus-visible { outline: none; }
+.apis-card-open:focus-visible::after { outline: 2px solid var(--accent-2); outline-offset: 3px; }
+
+.apis-card-tagline {
+  margin-bottom: 6px; color: var(--muted); font-size: 0.92rem; line-height: 1.6;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden;
+}
+.apis-card-tags { margin-bottom: 6px; }
+
+.apis-card-foot {
+  display: flex; align-items: center; gap: 14px; margin-top: auto; padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.apis-card-price {
+  display: inline-flex; align-items: center; gap: 8px; min-width: 0;
+  color: var(--ink); font: 500 0.78rem/1.2 var(--font-mono); letter-spacing: -0.01em;
+}
+.apis-card-price::before {
+  content: ''; flex: none; width: 6px; height: 6px; border-radius: 2px; background: var(--grad-strong);
+  box-shadow: 0 0 10px var(--glow-2);
+}
+.apis-card-runs { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font: 500 0.76rem/1 var(--font-mono); white-space: nowrap; }
+.apis-card-go { display: inline-flex; align-items: center; gap: 10px; margin-left: auto; color: var(--ink-2); font-size: 0.82rem; font-weight: 500; white-space: nowrap; }
+.apis-card-go-icon {
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--line-strong); color: var(--ink);
+  transition: background-color .3s, border-color .3s, color .3s, transform .45s var(--ease-out);
+}
+.apis-card-go-icon svg { transition: transform .45s var(--ease-out); }
+.apis-card:hover .apis-card-go-icon,
+.apis-card:has(.apis-card-open:focus-visible) .apis-card-go-icon {
+  border-color: transparent; background: var(--btn-grad); color: #fff;
+}
+.apis-card:hover .apis-card-go-icon svg { transform: translate(1px, -1px) rotate(45deg); }
+
+/* Featured: a faint violet edge. Spotlight (wide) card: a stronger glow and side-by-side layout. */
+.apis-card[data-featured] { border-color: color-mix(in srgb, var(--violet) 18%, var(--line)); }
+.apis-card--wide {
+  border-color: color-mix(in srgb, var(--violet) 34%, var(--line));
+  box-shadow: var(--shadow-md), 0 40px 110px -56px var(--glow-1);
+}
+.apis-card--wide .apis-card-title { font-size: clamp(1.5rem, 2.6vw, 2.25rem); line-height: 1.08; letter-spacing: -0.04em; }
+.apis-card--wide .apis-card-tagline { font-size: clamp(0.94rem, 1.1vw, 1.02rem); -webkit-line-clamp: 4; line-clamp: 4; }
+
+/* The spotlight still carries its headline at the top; on narrow media the badge would cover it. */
+@container (max-width: 560px) {
+  .apis-card--wide .apis-badge { display: none; }
+}
+
+@media (min-width: 761px) {
+  .apis-card--wide .apis-card-inner {
+    display: grid; grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr); align-items: center; gap: 6px;
+  }
+  .apis-card--wide .apis-card-body { height: 100%; padding: clamp(18px, 2.4vw, 32px) clamp(16px, 2.2vw, 30px) clamp(12px, 1.6vw, 20px); }
+}
+
+@media (max-width: 1000px) {
+  .apis-card-go-label { display: none; }
+}
+@media (max-width: 420px) {
+  .apis-card-body { padding: 14px 10px 6px; }
+  .apis-card-title { font-size: 1.16rem; }
+}

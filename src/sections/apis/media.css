@@ -1,0 +1,81 @@
+/* Actor media: 16:9 always-dark frame (the promo stills are dark in both themes). */
+.apis-media {
+  position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 16 / 9;
+  container-type: inline-size;
+  background: var(--code-bg);
+}
+.apis-media > img,
+.apis-media > video {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+}
+.apis-media > img { transition: transform 1.2s var(--ease-out); }
+.apis-media-preview { opacity: 0; transition: opacity .5s var(--ease-out); }
+.apis-media[data-playing] .apis-media-preview { opacity: 1; }
+/* Hairline ring and a low vignette so badges stay legible on any still. */
+.apis-media-shade {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(180deg, rgba(5, 6, 10, 0.28), transparent 26%, transparent 70%, rgba(5, 6, 10, 0.4));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+.apis-badge {
+  position: absolute; top: 10px; left: 10px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px; border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.14); background: rgba(8, 10, 16, 0.55);
+  backdrop-filter: blur(10px);
+  color: #eef0f6; font: 500 0.66rem/1 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase;
+}
+.apis-badge svg { color: #c4b5fd; }
+
+/* Play hint: a glass disc that turns into an equaliser while the preview runs. */
+.apis-play {
+  position: absolute; right: 10px; bottom: 10px; z-index: 2;
+  display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16); background: rgba(8, 10, 16, 0.5);
+  backdrop-filter: blur(10px);
+  color: #fff; transition: transform .35s var(--ease-out), background-color .3s;
+}
+.apis-play svg { margin-left: 2px; }
+.apis-bars { display: flex; align-items: flex-end; gap: 2px; height: 12px; }
+.apis-bars i { width: 3px; height: 100%; border-radius: 2px; background: linear-gradient(#67e8f9, #a78bfa); transform-origin: bottom; animation: apis-eq 0.9s var(--ease-in-out) infinite alternate; }
+.apis-bars i:nth-child(2) { animation-delay: -0.3s; }
+.apis-bars i:nth-child(3) { animation-delay: -0.6s; }
+@keyframes apis-eq { from { transform: scaleY(0.3); } to { transform: scaleY(1); } }
+
+/* Generated cover for Actors without a poster. Sizes follow the media width (cqi). */
+.apis-cover {
+  position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 3.2cqi;
+  padding: 6cqi; text-align: center; color: #eef0f6;
+  background:
+    radial-gradient(70% 90% at 85% 0%, rgba(139, 92, 246, 0.42), transparent 60%),
+    radial-gradient(60% 80% at 0% 100%, rgba(34, 211, 238, 0.26), transparent 62%),
+    linear-gradient(160deg, #11131d, #07080c);
+}
+.apis-cover-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 7cqi 7cqi;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, #000 20%, transparent 75%);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, #000 20%, transparent 75%);
+}
+.apis-cover-icon {
+  position: relative; display: grid; place-items: center; width: 19cqi; height: 19cqi; border-radius: 5cqi;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(150deg, rgba(167, 139, 250, 0.35), rgba(34, 211, 238, 0.14));
+  box-shadow: 0 2cqi 6cqi -2cqi rgba(139, 92, 246, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.apis-cover-icon svg { width: 52%; height: 52%; }
+.apis-cover-title { position: relative; max-width: 22ch; font: 650 6.4cqi/1.08 var(--font-display); letter-spacing: -0.035em; }
+.apis-cover-meta {
+  position: absolute; left: 5cqi; bottom: 4.2cqi; display: inline-flex; align-items: center; gap: 1.4cqi;
+  color: rgba(238, 240, 246, 0.6); font: 500 2.6cqi/1 var(--font-mono);
+}
+.apis-cover-meta i { width: 1.8cqi; height: 1.8cqi; border-radius: 0.4cqi; background: #8b5cf6; }
+
+@media (max-width: 480px) {
+  .apis-badge { top: 8px; left: 8px; padding: 4px 8px 4px 6px; font-size: 0.6rem; gap: 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apis-bars i { animation: none; }
+}
