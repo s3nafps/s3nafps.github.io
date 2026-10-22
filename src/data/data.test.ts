@@ -10,7 +10,7 @@ const assertPublic = (path: string, what: string) =>
   assert.ok(existsSync(publicFile(path)), `${what}: ${path} must exist in public/`)
 
 // Actors
-assert.equal(actors.length, 13, 'all 13 public Actors are listed')
+assert.equal(actors.length, 12, 'all 12 public Store Actors are listed')
 assert.equal(new Set(actors.map((a) => a.slug)).size, actors.length, 'Actor slugs are unique')
 assert.equal(actors.filter((a) => a.featured).length, 6, 'six featured Actors')
 for (const actor of actors) {
@@ -22,7 +22,8 @@ for (const actor of actors) {
   assertPublic(actor.media.icon, `${actor.slug} icon`)
   for (const key of ['poster', 'preview', 'promo'] as const) {
     const path = actor.media[key]
-    if (path) assertPublic(path, `${actor.slug} ${key}`)
+    assert.ok(path, `${actor.slug} has ${key} media`)
+    assertPublic(path, `${actor.slug} ${key}`)
   }
 }
 for (const category of actorCategories) {
@@ -52,7 +53,7 @@ for (const project of repoProjects) {
 // Experience and profile
 assert.deepEqual(
   experience.map(({ company }) => company),
-  ['AGCE', 'Agrofilm Packaging Algeria', 'Samsung', 'IRIS SATEREX', 'Brandt Algeria'],
+  ['AGCE', 'Agrofilm Packaging Algeria', 'Samsung Algeria', 'IRIS Electronics', 'Brandt Algeria'],
 )
 assert.equal(certifications[0].issuer, 'Google Cloud')
 assertPublic(profile.links.cv, 'CV')

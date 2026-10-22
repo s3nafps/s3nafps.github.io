@@ -1,20 +1,16 @@
 import type { Actor, ActorCategory } from './types.ts'
 
-const media = (slug: string, withPromo = true): Actor['media'] => ({
+const media = (slug: string): Actor['media'] => ({
   icon: `/previews/actors/${slug}-icon.webp`,
-  ...(withPromo
-    ? {
-        poster: `/previews/actors/${slug}.webp`,
-        preview: `/previews/actors/${slug}.mp4`,
-        promo: `/media/${slug}/promo.mp4`,
-      }
-    : {}),
+  poster: `/previews/actors/${slug}.webp`,
+  preview: `/previews/actors/${slug}.mp4`,
+  promo: `/media/${slug}/promo.mp4`,
 })
 
 export const actorCategories: ActorCategory[] = ['AI & RAG', 'Search & SEO', 'Intel & security', 'Real estate', 'Media']
 
 /**
- * The 13 public Actors on apify.com/s3nafps. Copy is condensed from each Actor's
+ * The 12 public Actors listed on apify.com/s3nafps. Copy is condensed from each Actor's
  * store listing; prices are the Free-plan price of the main billing event.
  * Live run counts are merged in at runtime from the Apify Store API.
  */
@@ -101,7 +97,7 @@ export const actors: Actor[] = [
     tagline: 'Classifies the URLs in a public sitemap into pricing, docs, blog, changelog, product, legal, support and other page types.',
     category: 'Search & SEO',
     tags: ['Sitemaps', 'Classification'],
-    priceLabel: '$0.20 / 1,000 URLs',
+    priceLabel: '$0.20 / 1,000 URLs + $0.05 / run',
     featured: false,
     media: media('sitemap-intelligence-api'),
     exampleInput: { startUrls: ['https://www.apify.com'] },
@@ -137,7 +133,7 @@ export const actors: Actor[] = [
     tagline: 'Saudi property listings and agents in English and Arabic: price per m², below-market flags, GPS, photos and licences.',
     category: 'Real estate',
     tags: ['Saudi Arabia', 'EN/AR', 'Listings'],
-    priceLabel: '$5 / 1,000 listings',
+    priceLabel: '$1.50 / 1,000 listings',
     featured: false,
     media: media('aqar-scraper'),
     exampleInput: { city: 'riyadh', category: 'apartments-for-rent', maxResults: 50 },
@@ -165,17 +161,5 @@ export const actors: Actor[] = [
     featured: true,
     media: media('bilibili-scraper'),
     exampleInput: { mode: 'search', keywords: ['人工智能'], maxItems: 10 },
-  },
-  {
-    slug: 'podcast-rss-episode-extractor',
-    title: 'Podcast RSS Episode Extractor',
-    storeTitle: 'Podcast RSS Episode Extractor',
-    tagline: 'Episode titles, audio URLs, publish dates, durations and descriptions from public RSS and Atom feeds, as JSON or CSV.',
-    category: 'Media',
-    tags: ['RSS', 'Podcasts', 'Free'],
-    priceLabel: 'Free',
-    featured: false,
-    media: media('podcast-rss-episode-extractor', false),
-    exampleInput: { feedUrls: [{ url: 'https://feeds.npr.org/510289/podcast.xml' }], maxEpisodesPerFeed: 5 },
   },
 ]

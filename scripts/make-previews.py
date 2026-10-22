@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parent.parent
 MEDIA = ROOT / "public" / "media"
 OUT = ROOT / "public" / "previews"
 
-# Apify Actor icons (public store images). Only the podcast Actor has no promo media.
+# Apify Actor icons (public store images).
 ICON_SIZE = 96
 APIFY_STORE = "https://api.apify.com/v2/store?username=s3nafps&limit=100"
 
@@ -75,12 +75,6 @@ def actor_icons() -> None:
     with urllib.request.urlopen(APIFY_STORE, timeout=30) as response:
         items = json.load(response)["data"]["items"]
     names = {item["name"]: item["pictureUrl"] for item in items}
-    # The podcast Actor is public but not listed by the store search yet.
-    names.setdefault(
-        "podcast-rss-episode-extractor",
-        "https://apify-image-uploads-prod.s3.us-east-1.amazonaws.com/"
-        "mmzn9VF30bAgUcK6Q-actor-1Yrq3sFigS3FV6SHS-7SULXqmpej-podcast-rss-episode-extractor.png",
-    )
     for slug, url in sorted(names.items()):
         with urllib.request.urlopen(url, timeout=30) as response:
             image = Image.open(io.BytesIO(response.read()))

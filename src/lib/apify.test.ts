@@ -71,22 +71,35 @@ assert.deepEqual(live[0], {
 })
 assert.equal(live[1].lastRunAt, undefined)
 assert.throws(() => parseStoreResponse({}), /shape/)
-assert.throws(() => parseStoreResponse({ data: { items: [{ title: 'no name' }] } }), /shape/)
 assert.throws(() => parseStoreResponse(null), /shape/)
+// one malformed item is skipped instead of discarding all live data
+assert.deepEqual(
+  parseStoreResponse({ data: { items: [{ title: 'no name' }, null, { name: 'ok', title: 'OK' }] } }).map((a) => a.name),
+  ['ok'],
+)
 // non-numeric stats become 0 instead of NaN
 assert.equal(parseStoreResponse({ data: { items: [{ name: 'a', title: 'A', stats: { totalRuns: 'x' } }] } })[0].runs, 0)
 
 // mergeActors: overlays stats by slug, keeps static order, appends unknown live Actors
 const merged = mergeActors([base, other], live)
-assert.deepEqual(merged.map((a) => a.slug), ['ai-ready-webpage-extractor', 'doc-to-markdown', 'brand-new-actor'])
+assert.deepEqual(
+  merged.map((a) => a.slug),
+  ['ai-ready-webpage-extractor', 'brand-new-actor'],
+  'curated Actors the live Store no longer lists are dropped; new live Actors are appended',
+)
 assert.deepEqual(merged[0].stats, { runs: 871, users: 8, lastRunAt: '2026-10-21T18:44:34.372Z' })
-assert.equal(merged[1].stats, undefined)
 assert.equal(merged[0].title, 'Website to Markdown Crawler', 'static copy wins over live copy')
-assert.equal(merged[2].title, 'Brand New Actor')
-assert.equal(merged[2].tagline, 'Fresh from the store.')
-assert.equal(merged[2].media.icon, 'https://images.apifyusercontent.com/y.webp')
-assert.equal(merged[2].featured, false)
-assert.equal(merged[2].category, 'Intel & security', 'DEVELOPER_TOOLS maps to a known category')
+assert.equal(merged[1].title, 'Brand New Actor')
+assert.equal(merged[1].tagline, 'Fresh from the store.')
+assert.equal(merged[1].media.icon, 'https://images.apifyusercontent.com/y.webp')
+assert.equal(merged[1].featured, false)
+assert.equal(merged[1].category, 'Intel & security', 'DEVELOPER_TOOLS maps to a known category')
+// appended Actors with missing fields still get readable fallbacks
+const sparse = mergeActors([], parseStoreResponse({ data: { items: [{ name: 'bare', title: 'Bare' }] } }))[0]
+assert.equal(sparse.tagline, 'Live on the Apify Store.')
+assert.equal(sparse.media.icon, '/favicon.svg')
+// an empty live list is treated as no data rather than wiping the page
+assert.equal(mergeActors([base, other], []).length, 2)
 
 // categoryFor maps Apify categories onto the page's filter groups
 assert.equal(categoryFor(['SEO_TOOLS', 'AI']), 'Search & SEO', 'first known category wins')
@@ -96,13 +109,13 @@ assert.equal(categoryFor(['SOCIAL_MEDIA']), 'Media')
 assert.equal(categoryFor(['LEAD_GENERATION']), 'Intel & security')
 assert.equal(categoryFor(['SEO_TOOLS']), 'Search & SEO')
 assert.equal(categoryFor([]), 'Intel & security')
-assert.deepEqual(merged[2].exampleInput, {})
+assert.deepEqual(merged[1].exampleInput, {})
 // no live data: static list unchanged, no stats
 assert.deepEqual(mergeActors([base, other], null).map((a) => a.stats), [undefined, undefined])
 
 // summarize
 assert.deepEqual(summarize(merged), {
-  actorCount: 3,
+  actorCount: 2,
   totalRuns: 874,
   totalUsers: 9,
   lastRunAt: '2026-10-21T18:44:34.372Z',
@@ -132,6 +145,8 @@ assert.ok(snippets.javascript.includes('"maxPages": 5'))
 assert.ok(snippets.python.includes('client.actor("s3nafps/ai-ready-webpage-extractor").call(run_input='))
 assert.ok(snippets.python.includes('"render": True'))
 assert.ok(snippets.python.includes('"proxy": None'))
+assert.ok(snippets.python.includes('client.dataset(run.default_dataset_id).list_items().items'), 'apify-client 3.x returns a Run model')
+assert.ok(!snippets.python.includes('run["defaultDatasetId"]'))
 const mcp = JSON.parse(snippets.mcp)
 assert.equal(mcp.mcpServers.apify.url, 'https://mcp.apify.com?tools=s3nafps/ai-ready-webpage-extractor')
 

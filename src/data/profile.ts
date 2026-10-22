@@ -21,7 +21,7 @@ export const proofStats: ProofStat[] = [
   { value: 4, suffix: '+', label: 'Years in live environments' },
   { value: 97, suffix: '%', label: 'Less time on weekly health checks' },
   { value: 4000, suffix: '+', label: 'Users supported' },
-  { value: 13, label: 'Public Apify Actors' },
+  { value: 12, label: 'Public Apify Actors' },
 ]
 
 /** Commands and output shown by the hero terminal. Output lines come from the repos' READMEs. */
@@ -31,8 +31,8 @@ export const terminalScenes: TerminalScene[] = [
     output: [
       { text: 'Domain   : contoso.com', tone: 'muted' },
       { text: 'Rules    : 27 across 10 areas', tone: 'muted' },
-      { text: 'Score    : 82 · Grade B', tone: 'ok' },
-      { text: 'Results  : 21 pass · 4 warn · 2 fail', tone: 'warn' },
+      { text: 'Results  : 18 pass · 6 warn · 2 fail · 1 skipped', tone: 'warn' },
+      { text: 'Score    : 46/100 · Grade F (sample domain)', tone: 'warn' },
       { text: '✓ HTML + JSON report written', tone: 'ok' },
     ],
   },
@@ -56,8 +56,8 @@ export const terminalScenes: TerminalScene[] = [
     command: 'make deploy',
     output: [
       { text: 'caddy · prometheus · grafana · loki · alertmanager …', tone: 'muted' },
-      { text: '10 services · 18 alert rules · nightly restic backups', tone: 'muted' },
-      { text: '✓ monthly restore test passed', tone: 'ok' },
+      { text: '10 services · 18 alert rules · Caddy auto HTTPS', tone: 'muted' },
+      { text: '✓ nightly backup + monthly restore-test timers enabled', tone: 'ok' },
     ],
   },
   {
@@ -135,12 +135,12 @@ export const capabilities: Capability[] = [
     pillar: 'Build',
     title: 'Data APIs',
     description: 'Public web data turned into clean, structured APIs anyone can call.',
-    items: ['13 public Actors on Apify', 'REST, SDK & MCP access', 'Pay-per-result pricing'],
+    items: ['Public Actors on the Apify Store', 'REST, API clients & MCP access', 'Pay-per-event pricing'],
   },
   {
     pillar: 'Build',
     title: 'Apps',
-    description: 'Products people use every day, from first sketch to release.',
+    description: 'An Android app taken from first sketch to signed release.',
     items: ['Trackr for Android (Kotlin, Compose)', 'Supabase auth, Postgres & RLS', 'Offline-first sync'],
   },
 ]

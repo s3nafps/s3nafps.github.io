@@ -22,7 +22,7 @@
   position: absolute; top: 10px; left: 10px; z-index: 2;
   display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px; border-radius: var(--radius-pill);
   border: 1px solid rgba(255, 255, 255, 0.14); background: rgba(8, 10, 16, 0.55);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   color: #eef0f6; font: 500 0.66rem/1 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase;
 }
 .apis-badge svg { color: #c4b5fd; }
@@ -32,7 +32,7 @@
   position: absolute; right: 10px; bottom: 10px; z-index: 2;
   display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.16); background: rgba(8, 10, 16, 0.5);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   color: #fff; transition: transform .35s var(--ease-out), background-color .3s;
 }
 .apis-play svg { margin-left: 2px; }

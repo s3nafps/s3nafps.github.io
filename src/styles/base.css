@@ -82,7 +82,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .btn:hover svg.icon-shift { transform: translateX(3px); }
 .btn:hover svg.icon-lift { transform: translate(2px, -2px); }
 .btn-primary {
-  color: #fff; background: var(--grad-strong); box-shadow: 0 10px 30px -10px var(--glow-1), inset 0 1px 0 rgba(255,255,255,.2);
+  color: #fff; background: var(--btn-grad); box-shadow: 0 10px 30px -10px var(--glow-1), inset 0 1px 0 rgba(255,255,255,.2);
 }
 .btn-primary:hover { box-shadow: 0 16px 44px -12px var(--glow-1), 0 0 0 1px rgba(255,255,255,.08), inset 0 1px 0 rgba(255,255,255,.25); }
 .btn-ghost { color: var(--ink); background: color-mix(in srgb, var(--surface) 70%, transparent); border: 1px solid var(--line-strong); backdrop-filter: blur(10px); }
