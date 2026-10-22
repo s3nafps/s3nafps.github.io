@@ -4,7 +4,7 @@ export const experience: Experience[] = [
   {
     dates: 'Feb 2025 — Present',
     company: 'AGCE',
-    role: 'IT Support & Systems Administration',
+    role: 'IT Support — Infrastructure & Automation',
     location: 'Algiers, Algeria',
     summary:
       'Administering air-gapped Windows infrastructure, building 3+ PowerShell tools, and delivering dashboards for management, cybersecurity, and audit teams.',
@@ -17,7 +17,7 @@ export const experience: Experience[] = [
   {
     dates: 'Feb 2024 — Aug 2024',
     company: 'Agrofilm Packaging Algeria',
-    role: 'IT Support Engineer — Contract',
+    role: 'Systems Administrator — Contract',
     location: 'Algeria',
     summary:
       'Helped rebuild and stabilize system and network infrastructure across multiple sites while maintaining approximately 95% availability.',
@@ -25,8 +25,8 @@ export const experience: Experience[] = [
   },
   {
     dates: 'Dec 2022 — Dec 2023',
-    company: 'Samsung',
-    role: 'IT Support / Infrastructure Support',
+    company: 'Samsung Algeria',
+    role: 'Systems Support Specialist',
     location: 'Algeria',
     summary:
       'Administered 20+ virtual machines and maintained Active Directory, Exchange, Cisco, and FortiGate services for 500+ users.',
@@ -34,17 +34,17 @@ export const experience: Experience[] = [
   },
   {
     dates: 'May 2022 — Nov 2022',
-    company: 'IRIS SATEREX',
-    role: 'IT Support — Contract',
+    company: 'IRIS Electronics',
+    role: '24/7 Infrastructure Monitoring',
     location: 'Algeria',
     summary:
       'Monitored manufacturing IT and resolved user, system, and network incidents in a shift-based production environment.',
-    highlights: ['24/7 infrastructure monitoring', 'Alert triage & escalation'],
+    highlights: ['System & network alert triage', 'Escalation & recovery coordination'],
   },
   {
     dates: 'Apr 2021 — Apr 2022',
     company: 'Brandt Algeria',
-    role: 'IT Support Technician',
+    role: 'IT Operations Specialist',
     location: 'Algeria',
     summary:
       'Resolved 150+ GLPI tickets per month for 4,000+ users and contributed to a GLPI-to-ServiceNow migration.',

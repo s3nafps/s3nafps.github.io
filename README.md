@@ -22,7 +22,7 @@ This repository is the source of my portfolio site.
 | **4+** | years in live environments |
 | **97%** | less time on weekly health checks (~3 hours → ~5 minutes) |
 | **4,000+** | users supported |
-| **13** | public data APIs (Actors) on the Apify Store |
+| **12** | public data APIs (Actors) on the Apify Store |
 | **ACE** | Google Cloud Associate Cloud Engineer |
 
 ## What I build
@@ -36,8 +36,8 @@ This repository is the source of my portfolio site.
 
 ### Data APIs on Apify
 
-Each Actor runs in the cloud, bills per result, and can be called over REST, from the
-JavaScript or Python SDKs, or by AI agents through MCP.
+Each Actor runs in the cloud, bills per event (a page, result or report), and can be
+called over REST, from the JavaScript or Python API clients, or by AI agents through MCP.
 
 | Actor | Does |
 |---|---|
@@ -53,17 +53,16 @@ JavaScript or Python SDKs, or by AI agents through MCP.
 | [Aqar.fm Scraper](https://apify.com/s3nafps/aqar-scraper) | Saudi property listings and agents (EN/AR) |
 | [Aqar.fm Monitor](https://apify.com/s3nafps/aqar-monitor) | New listings and price-drop alerts |
 | [Bilibili Scraper](https://apify.com/s3nafps/bilibili-scraper) | Search, video stats, comments and trending, no login |
-| [Podcast RSS Episode Extractor](https://apify.com/s3nafps/podcast-rss-episode-extractor) | Episodes from RSS/Atom feeds as JSON or CSV |
 
 ## Experience
 
 | When | Where | Role |
 |---|---|---|
-| Feb 2025 — Present | AGCE | IT Support & Systems Administration |
-| Feb 2024 — Aug 2024 | Agrofilm Packaging Algeria | IT Support Engineer (contract) |
-| Dec 2022 — Dec 2023 | Samsung | IT Support / Infrastructure Support |
-| May 2022 — Nov 2022 | IRIS SATEREX | IT Support (contract) |
-| Apr 2021 — Apr 2022 | Brandt Algeria | IT Support Technician |
+| Feb 2025 — Present | AGCE | IT Support — Infrastructure & Automation |
+| Feb 2024 — Aug 2024 | Agrofilm Packaging Algeria | Systems Administrator (contract) |
+| Dec 2022 — Dec 2023 | Samsung Algeria | Systems Support Specialist |
+| May 2022 — Nov 2022 | IRIS Electronics | 24/7 Infrastructure Monitoring |
+| Apr 2021 — Apr 2022 | Brandt Algeria | IT Operations Specialist |
 
 ---
 
@@ -80,7 +79,7 @@ and a timeline that fills as you scroll. All motion respects
 The APIs section reads **live data from the public Apify Store API**
 (`GET https://api.apify.com/v2/store?username=s3nafps`, no token needed) and merges
 run counts into the curated Actor list. New Actors published on Apify appear
-automatically. If the API is slow or down, the page shows a built-in snapshot.
+automatically, and Actors the Store no longer lists drop off. If the API is slow or down, the page shows a built-in snapshot.
 
 **Built with** Vite · React 19 · TypeScript · Motion · lucide icons · plain CSS · pnpm.
 

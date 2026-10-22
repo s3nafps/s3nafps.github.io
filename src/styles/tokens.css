@@ -27,6 +27,11 @@
   --accent-ink: #0b0614;
   --grad: linear-gradient(115deg, #c4b5fd 0%, #a78bfa 30%, #818cf8 55%, #22d3ee 100%);
   --grad-strong: linear-gradient(115deg, #8b5cf6 0%, #6366f1 50%, #06b6d4 100%);
+  /* Darker stops so white button labels stay above 4.5:1 across the whole gradient. */
+  --btn-grad: linear-gradient(115deg, #7c3aed 0%, #4f46e5 55%, #0e7490 100%);
+  /* Text-safe versions of the status colors (dots and borders keep --green / --cyan). */
+  --green-ink: #34d399;
+  --cyan-ink: #22d3ee;
   --glow-1: rgba(139, 92, 246, 0.38);
   --glow-2: rgba(34, 211, 238, 0.24);
   --glow-3: rgba(99, 102, 241, 0.28);
@@ -86,6 +91,9 @@
   --accent-ink: #ffffff;
   --grad: linear-gradient(115deg, #7c3aed 0%, #6d28d9 30%, #4f46e5 55%, #0891b2 100%);
   --grad-strong: linear-gradient(115deg, #7c3aed 0%, #4f46e5 50%, #0891b2 100%);
+  --btn-grad: linear-gradient(115deg, #7c3aed 0%, #4f46e5 55%, #0e7490 100%);
+  --green-ink: #065f46;
+  --cyan-ink: #0e7490;
   --glow-1: rgba(139, 92, 246, 0.22);
   --glow-2: rgba(34, 211, 238, 0.18);
   --glow-3: rgba(99, 102, 241, 0.16);

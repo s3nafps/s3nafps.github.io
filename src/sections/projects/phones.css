@@ -103,7 +103,7 @@
   position: relative; z-index: 4; display: flex; align-items: center; gap: 4px; margin-top: 4px; padding: 3px 4px 3px 8px;
   border: 1px solid var(--line); border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--surface) 72%, transparent);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 .proj-dots { display: flex; align-items: center; }
 .proj-dot { display: grid; place-items: center; height: 30px; padding: 0 8px; border-radius: var(--radius-pill); }

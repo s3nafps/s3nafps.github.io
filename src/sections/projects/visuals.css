@@ -55,7 +55,7 @@
 .proj-report-badge {
   position: absolute; left: 16px; bottom: 16px; z-index: 2; display: grid; gap: 3px; padding: 10px 14px;
   border: 1px solid var(--line-strong); border-radius: var(--radius-md);
-  background: var(--glass-strong); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  background: var(--glass-strong); backdrop-filter: blur(16px);
   box-shadow: var(--shadow-md);
 }
 .proj-report-badge-label { color: var(--muted); font: 500 0.66rem/1.2 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }

@@ -7,7 +7,7 @@
   background:
     radial-gradient(60% 50% at 50% 35%, color-mix(in srgb, var(--violet) 14%, transparent), transparent 70%),
     color-mix(in srgb, var(--bg) 76%, transparent);
-  backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
 }
 .apis-dialog-frame {
   position: absolute; inset: 0; display: flex; overflow-y: auto; overscroll-behavior: contain;
@@ -31,7 +31,7 @@
   display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 18px;
   border-bottom: 1px solid var(--line); border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   background: color-mix(in srgb, var(--surface-2) 82%, transparent);
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 .apis-dialog-icon { width: 28px; height: 28px; flex: none; border-radius: 8px; border: 1px solid var(--line-strong); object-fit: cover; }
 .apis-dialog-path {

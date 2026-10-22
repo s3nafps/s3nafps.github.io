@@ -46,27 +46,33 @@ function toCount(value: unknown): number {
   return typeof value === 'number' && Number.isFinite(value) ? value : 0
 }
 
-/** Validates the `GET /v2/store` response and maps it to `LiveActor`s. Throws on an unexpected shape. */
+function toLiveActor(item: Record<string, unknown>, name: string, title: string): LiveActor {
+  const stats = isRecord(item.stats) ? item.stats : {}
+  return {
+    name,
+    title,
+    description: typeof item.description === 'string' ? item.description : '',
+    pictureUrl: typeof item.pictureUrl === 'string' ? item.pictureUrl : undefined,
+    categories: Array.isArray(item.categories) ? item.categories.filter((c): c is string => typeof c === 'string') : [],
+    runs: toCount(stats.totalRuns),
+    users: toCount(stats.totalUsers),
+    lastRunAt: typeof stats.lastRunStartedAt === 'string' ? stats.lastRunStartedAt : undefined,
+  }
+}
+
+/**
+ * Validates the `GET /v2/store` response and maps it to `LiveActor`s.
+ * Throws only when the envelope is wrong; a single malformed item is skipped.
+ */
 export function parseStoreResponse(json: unknown): LiveActor[] {
   const items = isRecord(json) && isRecord(json.data) ? json.data.items : undefined
   if (!Array.isArray(items)) throw new Error('Unexpected Apify store response shape')
 
-  return items.map((item) => {
-    if (!isRecord(item) || typeof item.name !== 'string' || typeof item.title !== 'string') {
-      throw new Error('Unexpected Apify store item shape')
-    }
-    const stats = isRecord(item.stats) ? item.stats : {}
-    return {
-      name: item.name,
-      title: item.title,
-      description: typeof item.description === 'string' ? item.description : '',
-      pictureUrl: typeof item.pictureUrl === 'string' ? item.pictureUrl : undefined,
-      categories: Array.isArray(item.categories) ? item.categories.filter((c): c is string => typeof c === 'string') : [],
-      runs: toCount(stats.totalRuns),
-      users: toCount(stats.totalUsers),
-      lastRunAt: typeof stats.lastRunStartedAt === 'string' ? stats.lastRunStartedAt : undefined,
-    }
-  })
+  return items.flatMap((item) =>
+    isRecord(item) && typeof item.name === 'string' && typeof item.title === 'string'
+      ? [toLiveActor(item, item.name, item.title)]
+      : [],
+  )
 }
 
 const CATEGORY_MAP: Record<string, ActorCategory> = {
@@ -90,27 +96,30 @@ export function categoryFor(categories: string[]): ActorCategory {
 }
 
 /**
- * Overlays live stats on the curated list (matched by slug) and appends any
- * Actor that is live in the store but not curated yet, so new Actors show up
- * without a code change. Curated copy always wins over live copy.
+ * Overlays live stats on the curated list (matched by slug). When the Store
+ * answers, it is the source of truth: curated Actors it no longer lists are
+ * dropped, and Actors it lists that are not curated yet are appended, so the
+ * page follows the Store without a code change. Curated copy wins over live copy.
+ * An empty or missing live list leaves the curated list untouched.
  */
 export function mergeActors(curated: Actor[], live: LiveActor[] | null): ActorWithStats[] {
-  if (!live) return curated.map((actor) => ({ ...actor }))
+  if (!live || live.length === 0) return curated.map((actor) => ({ ...actor }))
 
   const bySlug = new Map(live.map((actor) => [actor.name, actor]))
-  const merged: ActorWithStats[] = curated.map((actor) => {
+  const merged: ActorWithStats[] = []
+  for (const actor of curated) {
     const match = bySlug.get(actor.slug)
-    if (!match) return { ...actor }
+    if (!match) continue
     bySlug.delete(actor.slug)
-    return { ...actor, stats: { runs: match.runs, users: match.users, lastRunAt: match.lastRunAt } }
-  })
+    merged.push({ ...actor, stats: { runs: match.runs, users: match.users, lastRunAt: match.lastRunAt } })
+  }
 
   for (const extra of bySlug.values()) {
     merged.push({
       slug: extra.name,
       title: extra.title,
       storeTitle: extra.title,
-      tagline: extra.description,
+      tagline: extra.description || 'Live on the Apify Store.',
       category: categoryFor(extra.categories),
       tags: [],
       priceLabel: 'See Apify Store',
@@ -247,12 +256,13 @@ export function buildSnippets(slug: string, input: Record<string, unknown>): Sni
   ].join('\n')
 
   const python = [
+    '# pip install "apify-client>=3"',
     'import os',
     'from apify_client import ApifyClient',
     '',
     'client = ApifyClient(os.environ["APIFY_TOKEN"])',
     `run = client.actor("${id}").call(run_input=${toPythonLiteral(input)})`,
-    'items = client.dataset(run["defaultDatasetId"]).list_items().items',
+    'items = client.dataset(run.default_dataset_id).list_items().items',
     'print(items)',
   ].join('\n')
 
