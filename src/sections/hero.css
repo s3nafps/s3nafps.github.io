@@ -17,17 +17,23 @@
 @keyframes drift-2 { to { transform: translate(-22%, -16%) scale(0.9); } }
 @keyframes drift-3 { to { transform: translate(18%, 20%) scale(1.1); } }
 
+/* The mask stays put while an oversized grid layer pans underneath it (transform only, so it stays on the GPU). */
 .hero-grid {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; overflow: hidden;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 75%);
+}
+.hero-grid::before {
+  content: ''; position: absolute; inset: -64px 0 0 -64px; will-change: transform;
   background-image:
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 64px 64px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 75%);
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 75%);
   animation: grid-pan 30s linear infinite;
 }
-@keyframes grid-pan { to { background-position: 64px 64px, 64px 64px; } }
+@keyframes grid-pan { to { transform: translate3d(64px, 64px, 0); } }
+/* Loops rest while the hero is off-screen (set from Hero.tsx). */
+.hero[data-offscreen] *, .hero[data-offscreen] *::before { animation-play-state: paused !important; }
 .hero-spot {
   position: absolute; inset: 0;
   background: radial-gradient(520px circle at var(--hx) var(--hy), color-mix(in srgb, var(--violet) 14%, transparent), transparent 60%);
@@ -110,5 +116,5 @@
   .hero-actions .btn { flex: 1 1 auto; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .blob, .hero-grid, .hero-float { animation: none; }
+  .blob, .hero-grid::before, .hero-float { animation: none; }
 }

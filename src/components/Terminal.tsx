@@ -6,20 +6,24 @@ import './terminal.css'
 const TYPE_MS = 34
 const LINE_MS = 260
 const HOLD_MS = 2600
+/** Stop after this many passes so the content doesn't move forever (WCAG 2.2.2). */
+const MAX_CYCLES = 2
 
-type Phase = { scene: number; typed: number; lines: number }
+type Phase = { scene: number; typed: number; lines: number; cycle: number }
 
 /**
  * A terminal that types each scene's command, prints its output line by line,
- * holds, then moves to the next scene. Pauses off-screen and in hidden tabs.
+ * holds, then moves to the next scene. Pauses off-screen, in hidden tabs, and on
+ * hover or keyboard focus; stops for good after two passes, on the last scene.
  * With reduced motion it shows the first scene fully and does not cycle.
  */
 export function Terminal({ scenes, title = 'mohamed@ops: ~' }: { scenes: TerminalScene[]; title?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { margin: '0px 0px -10% 0px' })
   const reduceMotion = useReducedMotion()
-  const [phase, setPhase] = useState<Phase>({ scene: 0, typed: 0, lines: 0 })
+  const [phase, setPhase] = useState<Phase>({ scene: 0, typed: 0, lines: 0, cycle: 0 })
   const [pageVisible, setPageVisible] = useState(true)
+  const [held, setHeld] = useState(false)
 
   useEffect(() => {
     const onVisibility = () => setPageVisible(document.visibilityState === 'visible')
@@ -27,7 +31,9 @@ export function Terminal({ scenes, title = 'mohamed@ops: ~' }: { scenes: Termina
     return () => document.removeEventListener('visibilitychange', onVisibility)
   }, [])
 
-  const running = inView && pageVisible && !reduceMotion
+  const lastScene = phase.scene === scenes.length - 1
+  const finished = phase.cycle >= MAX_CYCLES - 1 && lastScene && phase.lines === scenes[phase.scene].output.length
+  const running = inView && pageVisible && !held && !reduceMotion && !finished
   const scene = scenes[phase.scene]
 
   useEffect(() => {
@@ -42,11 +48,11 @@ export function Terminal({ scenes, title = 'mohamed@ops: ~' }: { scenes: Termina
       next = { ...phase, lines: phase.lines + 1 }
     } else {
       delay = HOLD_MS
-      next = { scene: (phase.scene + 1) % scenes.length, typed: 0, lines: 0 }
+      next = { scene: (phase.scene + 1) % scenes.length, typed: 0, lines: 0, cycle: phase.cycle + (lastScene ? 1 : 0) }
     }
     const timer = window.setTimeout(() => setPhase(next), delay)
     return () => window.clearTimeout(timer)
-  }, [running, phase, scene, scenes.length])
+  }, [running, phase, scene, scenes.length, lastScene])
 
   const shown = reduceMotion ? { ...phase, scene: 0, typed: scenes[0].command.length, lines: scenes[0].output.length } : phase
   const current = scenes[shown.scene]
@@ -56,6 +62,8 @@ export function Terminal({ scenes, title = 'mohamed@ops: ~' }: { scenes: Termina
     <div
       ref={ref}
       className="terminal"
+      onPointerEnter={() => setHeld(true)}
+      onPointerLeave={() => setHeld(false)}
       role="img"
       aria-label={`Terminal replaying commands from my projects: ${scenes.map((s) => s.command).join('; ')}`}
     >

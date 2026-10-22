@@ -1,8 +1,10 @@
-import { useEffect, useState, type MouseEvent } from 'react'
+import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { Download, Menu, Moon, Sun, X } from 'lucide-react'
 import { profile } from '../data/profile.ts'
+import { useMediaQuery } from '../hooks/useMediaQuery.ts'
 import { useScrollSpy } from '../hooks/useScrollSpy.ts'
+import { trapTab } from '../lib/focus.ts'
 import type { Theme } from '../hooks/useTheme.ts'
 import { EASE_OUT } from './motion/ease.ts'
 import './nav.css'
@@ -28,25 +30,51 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const compact = useMediaQuery('(max-width: 920px)')
+  const shellRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLElement>(null)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
     const previous = scrollY.getPrevious() ?? 0
     setScrolled(latest > 24)
-    // Tuck the bar away while reading downwards; bring it back on any upward scroll.
-    setHidden(latest > 480 && latest > previous + 4 && !menuOpen)
-    if (latest < previous - 4) setHidden(false)
+    // Tuck the bar away on a clear downward scroll, bring it back on a clear upward one.
+    // Small deltas (end of a wheel notch, trackpad momentum) leave it as it is.
+    const focusInside = headerRef.current?.contains(document.activeElement) ?? false
+    if (menuOpen || focusInside || latest <= 480) setHidden(false)
+    else if (latest > previous + 4) setHidden(true)
+    else if (latest < previous - 4) setHidden(false)
   })
 
+  // The sheet only exists on compact layouts: close it if the viewport grows (tablet rotation).
+  useEffect(() => {
+    if (!compact) setMenuOpen(false)
+  }, [compact])
+
+  // While the sheet is open it behaves like a modal: page scroll locked, page content inert,
+  // Tab cycles through the header and sheet, Escape closes and returns focus to the menu button.
   useEffect(() => {
     if (!menuOpen) return
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+    const background = [document.getElementById('main'), document.querySelector('.site-footer')]
+    for (const node of background) node?.setAttribute('inert', '')
+    const frame = requestAnimationFrame(() => {
+      document.querySelector<HTMLElement>('#mobile-menu a')?.focus({ preventScroll: true })
+    })
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMenuOpen(false)
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+        menuButtonRef.current?.focus()
+      } else {
+        trapTab(event, shellRef.current)
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => {
+      cancelAnimationFrame(frame)
       document.body.style.overflow = previousOverflow
+      for (const node of background) node?.removeAttribute('inert')
       window.removeEventListener('keydown', onKey)
     }
   }, [menuOpen])
@@ -57,20 +85,23 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
   }
 
   return (
-    <>
+    <div ref={shellRef}>
       <motion.header
+        ref={headerRef}
         className={`nav${scrolled ? ' is-scrolled' : ''}`}
+        onFocusCapture={() => setHidden(false)}
         initial={{ y: -90, opacity: 0 }}
         animate={{ y: hidden ? -96 : 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: EASE_OUT }}
       >
         <nav className="nav-inner container" aria-label="Primary">
-          <a className="nav-brand" href="#top" aria-label={`${profile.name}, back to top`}>
+          <a className="nav-brand" href="#top">
             <span className="nav-mark" aria-hidden="true">{profile.initials}</span>
             <span className="nav-brand-text">
               {profile.name}
               <span>Systems · Cloud · Builder</span>
             </span>
+            <span className="sr-only">, back to top</span>
           </a>
 
           <ul className="nav-links">
@@ -111,6 +142,7 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
               CV
             </a>
             <button
+              ref={menuButtonRef}
               type="button"
               className="icon-btn nav-menu-btn"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -125,7 +157,7 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
       </motion.header>
 
       <AnimatePresence>
-        {menuOpen ? (
+        {menuOpen && compact ? (
           <motion.div
             id="mobile-menu"
             className="mobile-menu"
@@ -160,6 +192,6 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
           </motion.div>
         ) : null}
       </AnimatePresence>
-    </>
+    </div>
   )
 }
