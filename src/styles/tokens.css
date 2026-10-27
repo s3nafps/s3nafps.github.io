@@ -1,63 +1,63 @@
-/* Design tokens. Dark is the default; [data-theme='light'] overrides. */
+/* Runbook palette. Dark is the default; [data-theme='light'] is warm paper.
+   One accent (signal amber). No gradient identity, no glow. */
 :root {
   color-scheme: dark;
 
-  --bg: #07080c;
-  --bg-elev: #0b0d13;
-  --surface: #0f121a;
-  --surface-2: #151925;
-  --surface-3: #1b2030;
-  --line: rgba(255, 255, 255, 0.075);
-  --line-strong: rgba(255, 255, 255, 0.15);
-  --ink: #eef0f6;
-  --ink-2: #c6ccd8;
-  --muted: #8b94a6;
-  --faint: #5b6375;
+  --bg: #141311;
+  --bg-elev: #1c1a16;
+  --surface: #221f1b;
+  --surface-2: #2b2722;
+  --surface-3: #352f28;
+  --line: rgba(244, 239, 230, 0.12);
+  --line-strong: rgba(244, 239, 230, 0.24);
+  --ink: #f4efe6;
+  --ink-2: #ddd4c6;
+  --muted: #a89f91;
+  --faint: #746c60;
 
-  --violet: #8b5cf6;
-  --violet-soft: #a78bfa;
-  --indigo: #818cf8;
-  --cyan: #22d3ee;
-  --green: #34d399;
-  --amber: #fbbf24;
-  --red: #f87171;
+  --green: #8fbf9a;
+  --amber: #e8b56a;
+  --red: #e08a78;
+  --cyan: #9bb8b0;
 
-  --accent: #a78bfa;
-  --accent-2: #22d3ee;
-  --accent-ink: #0b0614;
-  --grad: linear-gradient(115deg, #c4b5fd 0%, #a78bfa 30%, #818cf8 55%, #22d3ee 100%);
-  --grad-strong: linear-gradient(115deg, #8b5cf6 0%, #6366f1 50%, #06b6d4 100%);
-  /* Darker stops so white button labels stay above 4.5:1 across the whole gradient. */
-  --btn-grad: linear-gradient(115deg, #7c3aed 0%, #4f46e5 55%, #0e7490 100%);
-  /* Text-safe versions of the status colors (dots and borders keep --green / --cyan). */
-  --green-ink: #34d399;
-  --cyan-ink: #22d3ee;
-  --glow-1: rgba(139, 92, 246, 0.38);
-  --glow-2: rgba(34, 211, 238, 0.24);
-  --glow-3: rgba(99, 102, 241, 0.28);
-  --glass: rgba(10, 12, 18, 0.62);
-  --glass-strong: rgba(10, 12, 18, 0.86);
-  --grid-line: rgba(255, 255, 255, 0.045);
-  --shadow-lg: 0 30px 80px -24px rgba(0, 0, 0, 0.7);
-  --shadow-md: 0 12px 32px -12px rgba(0, 0, 0, 0.55);
-  --noise-opacity: 0.06;
-  --code-bg: #0a0c12;
+  --accent: #e8b56a;
+  --accent-2: #e8b56a;
+  --accent-ink: #1a140c;
+  /* Flat stand-ins so older rules cannot paint a purple gradient. */
+  --violet: var(--accent);
+  --violet-soft: var(--accent);
+  --indigo: var(--accent);
+  --green-ink: #b7d7bf;
+  --cyan-ink: #c5ddd6;
+  --grad: var(--accent);
+  --grad-strong: var(--accent);
+  --btn-grad: var(--ink);
+  --glow-1: transparent;
+  --glow-2: transparent;
+  --glow-3: transparent;
+  --glass: var(--bg);
+  --glass-strong: var(--bg-elev);
+  --grid-line: transparent;
+  --shadow-lg: none;
+  --shadow-md: none;
+  --noise-opacity: 0.035;
+  --code-bg: #100e0c;
 
-  --font-display: 'Inter Tight', 'Inter', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
-  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-display: 'Newsreader', 'Iowan Old Style', Palatino, Georgia, serif;
+  --font-body: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-serif: 'Newsreader', Georgia, serif;
 
-  --radius-xl: 28px;
-  --radius-lg: 20px;
-  --radius-md: 14px;
-  --radius-sm: 10px;
-  --radius-pill: 999px;
+  --radius-xl: 2px;
+  --radius-lg: 2px;
+  --radius-md: 2px;
+  --radius-sm: 2px;
+  --radius-pill: 2px;
 
-  --gutter: clamp(16px, 4vw, 40px);
-  --container: 1200px;
-  --section-pad: clamp(80px, 9vw, 128px);
-  --nav-h: 68px;
+  --gutter: clamp(18px, 4vw, 48px);
+  --container: 1120px;
+  --section-pad: clamp(72px, 8vw, 108px);
+  --nav-h: 62px;
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -66,42 +66,31 @@
 [data-theme='light'] {
   color-scheme: light;
 
-  --bg: #f6f6fa;
-  --bg-elev: #fbfbfd;
-  --surface: #ffffff;
-  --surface-2: #f1f2f7;
-  --surface-3: #e8eaf2;
-  --line: rgba(15, 18, 32, 0.085);
-  --line-strong: rgba(15, 18, 32, 0.16);
-  --ink: #0b0d14;
-  --ink-2: #2a2f3c;
-  --muted: #586174;
-  --faint: #8a93a5;
+  --bg: #f3efe6;
+  --bg-elev: #faf7f0;
+  --surface: #faf7f0;
+  --surface-2: #e8e2d4;
+  --surface-3: #ddd5c4;
+  --line: rgba(28, 25, 21, 0.12);
+  --line-strong: rgba(28, 25, 21, 0.28);
+  --ink: #1c1915;
+  --ink-2: #3c352c;
+  --muted: #5e564c;
+  --faint: #8a8174;
 
-  --violet: #7c3aed;
-  --violet-soft: #6d28d9;
-  --indigo: #4f46e5;
-  --cyan: #0891b2;
-  --green: #059669;
-  --amber: #b45309;
-  --red: #dc2626;
+  --green: #1f6b3a;
+  --amber: #8a4b08;
+  --red: #9a3412;
+  --cyan: #3d5c56;
 
-  --accent: #6d28d9;
-  --accent-2: #0891b2;
-  --accent-ink: #ffffff;
-  --grad: linear-gradient(115deg, #7c3aed 0%, #6d28d9 30%, #4f46e5 55%, #0891b2 100%);
-  --grad-strong: linear-gradient(115deg, #7c3aed 0%, #4f46e5 50%, #0891b2 100%);
-  --btn-grad: linear-gradient(115deg, #7c3aed 0%, #4f46e5 55%, #0e7490 100%);
-  --green-ink: #065f46;
-  --cyan-ink: #0e7490;
-  --glow-1: rgba(139, 92, 246, 0.22);
-  --glow-2: rgba(34, 211, 238, 0.18);
-  --glow-3: rgba(99, 102, 241, 0.16);
-  --glass: rgba(255, 255, 255, 0.66);
-  --glass-strong: rgba(255, 255, 255, 0.9);
-  --grid-line: rgba(15, 18, 32, 0.06);
-  --shadow-lg: 0 30px 70px -28px rgba(30, 27, 75, 0.28);
-  --shadow-md: 0 12px 30px -14px rgba(30, 27, 75, 0.2);
-  --noise-opacity: 0.035;
-  --code-bg: #0d1017;
+  --accent: #8a4b08;
+  --accent-2: #8a4b08;
+  --accent-ink: #faf7f0;
+  --green-ink: #14532d;
+  --cyan-ink: #1f3d38;
+  --btn-grad: var(--ink);
+  --glass: var(--bg);
+  --glass-strong: var(--bg-elev);
+  --noise-opacity: 0.04;
+  --code-bg: #1c1915;
 }

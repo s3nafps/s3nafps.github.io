@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState, type PointerEvent, type RefObject } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { ArrowUpRight, Check, Clock, Copy, Download, Github, Linkedin, MapPin, Webhook, type LucideIcon } from 'lucide-react'
 import { profile } from '../data/profile.ts'
-import { Magnetic } from '../components/motion/Magnetic.tsx'
 import { Reveal } from '../components/motion/Reveal.tsx'
 import { SplitText } from '../components/motion/SplitText.tsx'
 import { EASE_OUT } from '../components/motion/ease.ts'
@@ -23,40 +22,14 @@ const LINKS: ContactLink[] = [
 const localTime = new Intl.DateTimeFormat('en-GB', { timeZone: 'Africa/Algiers', hour: '2-digit', minute: '2-digit' })
 
 export function Contact() {
-  const panelRef = useRef<HTMLDivElement>(null)
   const emailRef = useRef<HTMLSpanElement>(null)
-
-  // Soft light that follows the cursor across the panel (CSS variables only, no re-render).
-  const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    const node = panelRef.current
-    if (!node || event.pointerType !== 'mouse') return
-    const rect = node.getBoundingClientRect()
-    node.style.setProperty('--cx', `${event.clientX - rect.left}px`)
-    node.style.setProperty('--cy', `${event.clientY - rect.top}px`)
-  }
 
   return (
       <section id="contact" className="section contact" aria-labelledby="contact-title">
         <div className="container">
-          <motion.div
-            ref={panelRef}
-            className="contact-panel"
-            onPointerMove={onPointerMove}
-            initial={{ opacity: 0, y: 60, scale: 0.96 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: '0px 0px -15% 0px' }}
-            transition={{ duration: 1.1, ease: EASE_OUT }}
-          >
-            <div className="contact-bg" aria-hidden="true">
-              <div className="contact-aura" />
-              <div className="contact-grid" />
-              <div className="contact-horizon" />
-              <div className="contact-spot" />
-            </div>
-
             <div className="contact-inner">
-              <Reveal className="contact-top" y={18}>
-                <p className="eyebrow contact-eyebrow">Contact</p>
+              <Reveal className="contact-top" y={12} blur={false}>
+                <p className="eyebrow">05 — Contact</p>
                 <p className="contact-status">
                   <span className="live-dot" />
                   {profile.status}
@@ -64,26 +37,16 @@ export function Contact() {
               </Reveal>
 
               <h2 id="contact-title" className="contact-title">
-                <SplitText
-                  delay={0.1}
-                  parts={[
-                    "Let's make",
-                    { text: 'important', className: 'serif-accent contact-serif' },
-                    'systems easier to',
-                    { text: 'run.', className: 'gradient-text' },
-                  ]}
-                />
+                <SplitText parts={['Write to me.']} />
               </h2>
 
-              <Reveal className="contact-email-row" delay={0.35} y={20}>
-                <Magnetic strength={0.18}>
-                  <a className="contact-email" href={`mailto:${profile.email}`}>
-                    <span ref={emailRef} className="contact-email-text">
-                      {profile.email}
-                    </span>
-                    <ArrowUpRight className="contact-email-arrow" size={28} strokeWidth={1.75} aria-hidden="true" />
-                  </a>
-                </Magnetic>
+              <Reveal className="contact-email-row" delay={0.12} y={12} blur={false}>
+                <a className="contact-email" href={`mailto:${profile.email}`}>
+                  <span ref={emailRef} className="contact-email-text">
+                    {profile.email}
+                  </span>
+                  <ArrowUpRight className="contact-email-arrow" size={28} strokeWidth={1.75} aria-hidden="true" />
+                </a>
                 <CopyEmail email={profile.email} fallbackTarget={emailRef} />
               </Reveal>
 
@@ -107,14 +70,13 @@ export function Contact() {
                 ))}
               </motion.ul>
 
-              <Reveal className="contact-meta" delay={0.6} y={12} blur={false}>
+              <Reveal className="contact-meta" delay={0.2} y={8} blur={false}>
                 <span>
                   <MapPin size={14} aria-hidden="true" /> {profile.location}
                 </span>
                 <LocalTime />
               </Reveal>
             </div>
-          </motion.div>
         </div>
       </section>
   )

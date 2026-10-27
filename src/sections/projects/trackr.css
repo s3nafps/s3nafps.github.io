@@ -4,27 +4,13 @@
   --trackr-violet: #7c5cff;
   --trackr-amber: #ffb547;
   position: relative; isolation: isolate; overflow: hidden;
-  padding: clamp(22px, 4.2vw, 60px);
-  border: 1px solid var(--line); border-radius: var(--radius-xl);
-  background:
-    radial-gradient(60% 80% at 80% 34%, color-mix(in srgb, var(--trackr-violet) 13%, transparent), transparent 70%),
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 82%, transparent), var(--surface) 70%);
-  box-shadow: var(--shadow-lg), inset 0 1px 0 color-mix(in srgb, var(--ink) 7%, transparent);
+  padding: clamp(8px, 1vw, 12px) 0 clamp(22px, 4vw, 40px);
+  border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
-/* Faint dot grid that fades out toward the copy. */
-.proj-trackr-bg {
-  position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background-image: radial-gradient(circle, color-mix(in srgb, var(--ink) 16%, transparent) 1px, transparent 1.5px);
-  background-size: 22px 22px;
-  -webkit-mask-image: radial-gradient(55% 60% at 76% 38%, #000 10%, transparent 75%);
-  mask-image: radial-gradient(55% 60% at 76% 38%, #000 10%, transparent 75%);
-  opacity: 0.55;
-}
-/* Top hairline highlight in the brand colors. */
-.proj-trackr::before {
-  content: ''; position: absolute; inset: 0 12% auto; height: 1px; pointer-events: none;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--trackr-violet) 80%, transparent), color-mix(in srgb, var(--trackr-amber) 70%, transparent), transparent);
-}
+.proj-trackr-bg { display: none; }
+.proj-trackr::before { content: none; }
 
 .proj-trackr-main {
   display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
@@ -35,10 +21,7 @@
 .proj-trackr-brand { display: flex; align-items: center; gap: 16px; }
 .proj-trackr-icon {
   display: block; flex: none; width: 64px; height: 64px; overflow: hidden; border-radius: 18px;
-  box-shadow:
-    0 16px 36px -12px color-mix(in srgb, var(--trackr-violet) 70%, transparent),
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: none; border: 1px solid var(--line);
   transition: transform 0.6s var(--ease-out);
 }
 .proj-trackr-icon svg { width: 100%; height: 100%; }
@@ -59,11 +42,10 @@
 .proj-trackr-highlights { display: grid; gap: 10px; margin-top: 24px; }
 .proj-trackr-highlights li { display: flex; align-items: center; gap: 11px; color: var(--ink-2); font-size: 0.93rem; }
 .proj-trackr-check {
-  display: grid; flex: none; place-items: center; width: 20px; height: 20px; border-radius: 50%;
-  color: var(--trackr-violet); background: color-mix(in srgb, var(--trackr-violet) 16%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--trackr-violet) 30%, transparent);
+  display: grid; flex: none; place-items: center; width: 16px; height: 16px;
+  color: var(--accent); background: none; box-shadow: none;
 }
-[data-theme='light'] .proj-trackr-check { color: #5b3fe0; }
+[data-theme='light'] .proj-trackr-check { color: var(--accent); }
 .proj-trackr-stack { margin-top: 24px; }
 .proj-trackr-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 
@@ -81,11 +63,11 @@
 .proj-feature:nth-child(3n + 2), .proj-feature:nth-child(3n) { border-left: 1px solid var(--line); }
 .proj-feature:nth-child(n + 4) { margin-top: 24px; border-top: 1px solid var(--line); }
 .proj-feature-icon {
-  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px;
-  color: var(--trackr-violet); background: color-mix(in srgb, var(--trackr-violet) 13%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--trackr-violet) 26%, transparent);
+  display: grid; place-items: center; width: 28px; height: 28px; border-radius: 0;
+  color: var(--accent); background: none; border: 1px solid var(--line-strong);
+  box-shadow: none;
 }
-[data-theme='light'] .proj-feature-icon { color: #5b3fe0; }
+[data-theme='light'] .proj-feature-icon { color: var(--accent); }
 .proj-feature-title { font-size: 1.04rem; font-weight: 620; letter-spacing: -0.02em; }
 .proj-feature-copy { grid-column: 1 / -1; color: var(--muted); font-size: 0.9rem; line-height: 1.6; text-wrap: pretty; }
 

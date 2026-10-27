@@ -59,17 +59,10 @@ export function Apis({ store }: { store: ApifyStoreState }) {
         <div className="section-head section-head--split apis-head">
           <div>
             <Reveal>
-              <p className="eyebrow">APIs on Apify</p>
+              <p className="eyebrow">02 — Apify Actors</p>
             </Reveal>
             <h2 id="apis-title" className="section-title apis-title">
-              <SplitText
-                parts={[
-                  'Public web data, as',
-                  { text: 'APIs', className: 'gradient-text' },
-                  { text: 'anyone', className: 'serif-accent apis-title-serif' },
-                  'can call.',
-                ]}
-              />
+              <SplitText parts={['Live on the Apify Store.']} />
             </h2>
           </div>
           <Reveal delay={0.15} className="apis-head-aside">

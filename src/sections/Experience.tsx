@@ -35,19 +35,13 @@ export function Experience() {
         <div className="section-head section-head--split exp-head">
           <div>
             <Reveal>
-              <p className="eyebrow">Experience</p>
+              <p className="eyebrow">04 — Experience</p>
             </Reveal>
             <h2 id="exp-title" className="section-title exp-title">
-              <SplitText
-                parts={[
-                  'Built in environments where',
-                  { text: 'uptime', className: 'serif-accent exp-accent' },
-                  { text: 'matters.', className: 'gradient-text' },
-                ]}
-              />
+              <SplitText parts={['Where the work happened.']} />
             </h2>
-            <Reveal delay={0.15}>
-              <p className="section-lead">Most recent first, from service-desk queues to air-gapped Windows infrastructure.</p>
+            <Reveal delay={0.1}>
+              <p className="section-lead">Most recent first. Service desk, then networks, then air-gapped Windows.</p>
             </Reveal>
           </div>
           <Reveal className="exp-range" delay={0.25} y={16}>
@@ -201,7 +195,7 @@ function CertificationCard({ cert }: { cert: Certification }) {
         {cert.year ? (
           <p className="exp-cert-year">
             <span className="exp-cert-year-label">Certified</span>
-            <span className="exp-cert-year-value gradient-text">{cert.year}</span>
+            <span className="exp-cert-year-value">{cert.year}</span>
           </p>
         ) : null}
       </article>

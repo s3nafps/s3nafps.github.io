@@ -13,13 +13,13 @@
 .footer-top-link:hover { color: var(--ink); }
 .footer-top-icon {
   position: relative; display: grid; place-items: center; width: 34px; height: 34px; overflow: hidden;
-  border: 1px solid var(--line-strong); border-radius: 50%; background: color-mix(in srgb, var(--surface) 60%, transparent);
+  border: 1px solid var(--line-strong); border-radius: 0; background: transparent;
   transition: border-color .25s, box-shadow .35s;
 }
 .footer-top-icon svg { grid-area: 1 / 1; transition: transform .5s var(--ease-out); }
 .footer-top-icon svg:nth-child(2) { transform: translateY(170%); }
 .footer-top-link:hover .footer-top-icon, .footer-top-link:focus-visible .footer-top-icon {
-  border-color: color-mix(in srgb, var(--accent) 60%, var(--line-strong)); box-shadow: 0 0 18px -4px var(--glow-1);
+  border-color: var(--accent);
 }
 /* The arrow flies out the top and a fresh one rises in from below. */
 .footer-top-link:hover .footer-top-icon svg:first-child,

@@ -4,7 +4,7 @@ import { flushSync } from 'react-dom'
 export type Theme = 'dark' | 'light'
 
 const STORAGE_KEY = 'portfolio-theme'
-const THEME_COLORS: Record<Theme, string> = { dark: '#07080c', light: '#f6f6fa' }
+const THEME_COLORS: Record<Theme, string> = { dark: '#141311', light: '#f3efe6' }
 
 function readInitialTheme(): Theme {
   const fromDom = document.documentElement.dataset.theme

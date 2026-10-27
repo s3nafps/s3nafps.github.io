@@ -48,11 +48,9 @@ export function SplitText({ parts, delay = 0, stagger = 0.055, immediate = false
                       className={className}
                       style={{ display: 'inline-block', willChange: 'transform' }}
                       variants={{
-                        hidden: { y: '105%', opacity: 0, rotate: 4 },
+                        hidden: { y: '110%' },
                         show: {
                           y: '0%',
-                          opacity: 1,
-                          rotate: 0,
                           transition: { duration: 0.95, ease: EASE_OUT, delay: delay + order * stagger },
                         },
                       }}

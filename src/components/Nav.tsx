@@ -99,7 +99,7 @@ export function Nav({ theme, onToggleTheme }: NavProps) {
             <span className="nav-mark" aria-hidden="true">{profile.initials}</span>
             <span className="nav-brand-text">
               {profile.name}
-              <span>Systems · Cloud · Builder</span>
+              <span>{profile.location}</span>
             </span>
             <span className="sr-only">, back to top</span>
           </a>

@@ -1,76 +1,20 @@
-/* Stack marquee: a full-bleed band between the hero and the first section. */
-.stack {
-  --stack-gap: clamp(18px, 2.2vw, 34px);
-  position: relative; isolation: isolate;
-  padding-block: clamp(22px, 3vw, 34px) clamp(26px, 3.4vw, 40px);
-  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--surface) 45%, transparent) 50%, transparent);
+.stack { padding-block: clamp(28px, 4vw, 42px); border-bottom: 1px solid var(--line); }
+.stack-sheet { display: grid; gap: 14px; }
+.stack-title {
+  font: 500 0.72rem/1 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
 }
-/* Hairlines that fade at the edges; the top one carries a soft accent glint in the middle. */
-.stack::before, .stack::after {
-  content: ''; position: absolute; inset-inline: 0; height: 1px; pointer-events: none;
-  background: linear-gradient(90deg, transparent, var(--line-strong) 18%, var(--line-strong) 82%, transparent);
+.stack-row {
+  display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px 18px; align-items: baseline;
 }
-.stack::before {
-  top: 0;
-  background: linear-gradient(90deg, transparent, var(--line-strong) 18%, color-mix(in srgb, var(--violet-soft) 70%, transparent) 42%, color-mix(in srgb, var(--cyan) 60%, transparent) 58%, var(--line-strong) 82%, transparent);
+.stack-label { color: var(--faint); font: 500 0.72rem/1.4 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.stack-list { display: flex; flex-wrap: wrap; gap: 6px 0; }
+.stack-list li {
+  color: var(--ink-2); font: 400 0.95rem/1.45 var(--font-body);
 }
-.stack::after { bottom: 0; }
-
-.stack-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: clamp(14px, 1.8vw, 20px); }
-.stack-label { margin: 0; }
-/* Pause/play for the marquee (WCAG 2.2.2); hidden under reduced motion, where nothing moves. */
-.stack-toggle {
-  display: grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 50%;
-  border: 1px solid var(--line); color: var(--muted); transition: color 0.2s, border-color 0.2s, background-color 0.2s;
-}
-.stack-toggle:hover { color: var(--ink); border-color: var(--line-strong); background: var(--surface-2); }
-.stack-toggle[aria-pressed='true'] { color: var(--ink); border-color: var(--line-strong); }
-
-.stack-rows {
-  display: grid; gap: clamp(6px, 1vw, 12px);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
-}
-.stack-row { display: flex; overflow: hidden; padding-block: 6px; }
-
-/* Each copy is at least as wide as the band and slides by exactly its own width, so the loop never shows a seam. */
-.stack-group {
-  flex: none; display: flex; align-items: center; justify-content: space-around; min-width: 100%;
-  animation: stack-scroll var(--stack-duration, 60s) linear infinite;
-}
-.stack-row[data-direction='right'] .stack-group { animation-direction: reverse; }
-@keyframes stack-scroll { to { transform: translate3d(-100%, 0, 0); } }
-.stack[data-paused] .stack-group,
-.stack-row:focus-within .stack-group { animation-play-state: paused; }
-@media (hover: hover) {
-  .stack-row:hover .stack-group { animation-play-state: paused; }
+.stack-list li:not(:last-child)::after {
+  content: '/'; margin-inline: 8px; color: var(--faint); font-family: var(--font-mono); font-size: 0.8rem;
 }
 
-.stack-item {
-  display: inline-flex; align-items: center; gap: var(--stack-gap); padding-inline-end: var(--stack-gap);
-  color: var(--ink-2); white-space: nowrap;
-  font: 550 clamp(1.05rem, 1.75vw, 1.55rem)/1.25 var(--font-display); letter-spacing: -0.025em;
-  transition: color .3s var(--ease-out);
-}
-.stack-row[data-direction='right'] .stack-item { color: var(--muted); }
-.stack-item:hover { color: var(--ink); }
-
-/* Small gradient diamond between tools. */
-.stack-sep {
-  flex: none; width: 6px; height: 6px; border-radius: 1.5px; transform: rotate(45deg);
-  background: var(--grad-strong); box-shadow: 0 0 10px var(--glow-1); opacity: .85;
-  transition: transform .4s var(--ease-out), opacity .3s;
-}
-.stack-item:hover .stack-sep { transform: rotate(135deg) scale(1.25); opacity: 1; }
-
-/* Reduced motion: no drift; one copy per row, wrapped inside the container. */
-@media (prefers-reduced-motion: reduce) {
-  .stack-rows {
-    width: min(var(--container), calc(100% - 2 * var(--gutter))); margin-inline: auto; gap: 4px;
-    -webkit-mask-image: none; mask-image: none;
-  }
-  .stack-row { overflow: visible; }
-  .stack-group { flex: 1 1 auto; flex-wrap: wrap; justify-content: flex-start; row-gap: 8px; min-width: 0; animation: none; }
-  .stack-group[data-clone] { display: none; }
-  .stack-toggle { display: none; }
+@media (max-width: 640px) {
+  .stack-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
 }

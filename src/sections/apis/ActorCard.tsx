@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type PointerEvent } from 'react'
+import { useEffect, useState, type PointerEvent } from 'react'
 import { Activity, ArrowUpRight } from 'lucide-react'
 import type { ActorWithStats } from '../../data/types.ts'
 import { useFinePointer } from '../../hooks/useMediaQuery.ts'
@@ -24,7 +24,6 @@ type ActorCardProps = {
  * so the entire card is clickable without nesting a heading inside a button.
  */
 export function ActorCard({ actor, wide = false, suspended = false, onOpen }: ActorCardProps) {
-  const ref = useRef<HTMLElement>(null)
   const finePointer = useFinePointer()
   const [hovered, setHovered] = useState(false)
   const [intent, setIntent] = useState(false)
@@ -46,15 +45,8 @@ export function ActorCard({ actor, wide = false, suspended = false, onOpen }: Ac
     }
   }, [intent])
 
-  // Spotlight border (base.css .spotlight) follows the mouse.
   const onPointerMove = (event: PointerEvent<HTMLElement>) => {
-    const node = ref.current
-    if (!node || event.pointerType !== 'mouse') return
-    const rect = node.getBoundingClientRect()
-    node.style.setProperty('--mx', `${event.clientX - rect.left}px`)
-    node.style.setProperty('--my', `${event.clientY - rect.top}px`)
-    node.style.setProperty('--spot', '1')
-    // Restart the wait after a scroll cancelled it.
+    if (event.pointerType !== 'mouse') return
     if (!hovered && !intent) setIntent(true)
   }
   const onPointerEnter = (event: PointerEvent<HTMLElement>) => {
@@ -63,15 +55,13 @@ export function ActorCard({ actor, wide = false, suspended = false, onOpen }: Ac
   const onPointerLeave = () => {
     setIntent(false)
     setHovered(false)
-    ref.current?.style.setProperty('--spot', '0')
   }
 
   const runs = actor.stats?.runs
 
   return (
     <article
-      ref={ref}
-      className={`card spotlight apis-card${wide ? ' apis-card--wide' : ''}`}
+      className={`apis-card${wide ? ' apis-card--wide' : ''}`}
       data-featured={actor.featured || undefined}
       onPointerMove={onPointerMove}
       onPointerEnter={onPointerEnter}
