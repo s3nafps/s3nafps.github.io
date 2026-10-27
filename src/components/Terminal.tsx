@@ -68,11 +68,6 @@ export function Terminal({ scenes, title = 'mohamed@ops: ~' }: { scenes: Termina
       aria-label={`Terminal replaying commands from my projects: ${scenes.map((s) => s.command).join('; ')}`}
     >
       <div className="terminal-bar" aria-hidden="true">
-        <span className="terminal-dots">
-          <i />
-          <i />
-          <i />
-        </span>
         <span className="terminal-title">{title}</span>
         <span className="terminal-scene">
           {shown.scene + 1}/{scenes.length}

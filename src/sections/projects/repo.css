@@ -1,63 +1,35 @@
-/* Repo bento card: an inset visual frame plus copy. The wide variant puts the visual on the right. */
 .proj-repo {
-  display: grid; grid-template-rows: auto 1fr; grid-template-areas: 'visual' 'body';
-  height: 100%; padding: 12px;
+  display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  align-items: center; gap: clamp(20px, 3vw, 40px);
+  padding: clamp(28px, 4vw, 44px) 0;
+  border-bottom: 1px solid var(--line);
 }
-.proj-repo > .proj-repo-visual { grid-area: visual; min-width: 0; container-type: inline-size; }
-.proj-repo > .proj-repo-body {
-  grid-area: body; display: flex; flex-direction: column; min-width: 0;
-  padding: clamp(18px, 2vw, 26px) clamp(12px, 1.6vw, 20px) clamp(10px, 1.4vw, 16px);
-}
-.proj-repo--wide {
-  grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr); grid-template-rows: auto;
-  grid-template-areas: 'body visual'; column-gap: clamp(8px, 2vw, 28px);
-}
-.proj-repo--wide > .proj-repo-body { padding: clamp(20px, 3vw, 40px) clamp(14px, 2.6vw, 36px); }
-.proj-repo--wide > .proj-repo-visual { display: grid; }
+.proj-repo > .proj-repo-visual { min-width: 0; container-type: inline-size; }
+.proj-repo > .proj-repo-body { display: flex; flex-direction: column; min-width: 0; }
 
-/* Copy */
 .proj-repo-kicker {
-  display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
-  color: var(--muted); font: 500 0.74rem/1.3 var(--font-mono); letter-spacing: 0.01em; overflow-wrap: anywhere;
+  display: inline-flex; align-items: baseline; gap: 10px;
+  color: var(--muted); font: 400 0.75rem/1.4 var(--font-mono);
 }
-.proj-repo-kicker svg { flex: none; }
-.proj-repo-title { margin-top: 14px; font-size: clamp(1.55rem, 2.3vw, 1.95rem); letter-spacing: -0.04em; }
-.proj-repo--wide .proj-repo-title { font-size: clamp(1.8rem, 3.2vw, 2.6rem); }
-.proj-repo-tagline {
-  margin-top: 10px; color: var(--ink-2);
-  font: 500 1.06rem/1.45 var(--font-display); letter-spacing: -0.015em; text-wrap: balance;
-}
-.proj-repo--wide .proj-repo-tagline { font-size: clamp(1.06rem, 1.4vw, 1.2rem); }
-.proj-repo-desc { margin-top: 12px; color: var(--muted); font-size: 0.94rem; line-height: 1.68; text-wrap: pretty; }
-.proj-repo-highlights { display: grid; gap: 9px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
-.proj-repo-highlights li { display: flex; align-items: flex-start; gap: 10px; color: var(--ink-2); font-size: 0.9rem; line-height: 1.45; }
-.proj-repo-highlights svg { flex: none; margin-top: 2px; color: var(--green); }
-.proj-repo-foot { display: grid; justify-items: start; gap: 20px; margin-top: auto; padding-top: 24px; }
+.proj-repo-index { color: var(--accent); letter-spacing: 0.08em; }
+.proj-repo-title { margin-top: 8px; font-size: clamp(1.8rem, 3vw, 2.6rem); }
+.proj-repo-tagline { margin-top: 8px; color: var(--ink-2); font-size: 1.08rem; line-height: 1.4; }
+.proj-repo-desc { margin-top: 10px; max-width: 58ch; color: var(--muted); font-size: 0.98rem; line-height: 1.65; }
+.proj-repo-highlights { display: grid; gap: 6px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.proj-repo-highlights li { color: var(--ink-2); font-size: 0.92rem; line-height: 1.45; }
+.proj-repo-highlights li::before { content: '— '; color: var(--accent); }
+.proj-repo-foot { display: grid; justify-items: start; gap: 16px; margin-top: 20px; }
 
-/* Inset frame shared by the three visuals */
 .proj-visual {
-  position: relative; overflow: hidden; margin: 0;
-  border: 1px solid var(--line); border-radius: calc(var(--radius-lg) - 6px);
-  background:
-    radial-gradient(circle, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 1.5px) 0 0 / 18px 18px,
-    radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--violet) 9%, transparent), transparent 62%),
-    color-mix(in srgb, var(--bg) 55%, var(--surface));
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 5%, transparent);
+  position: relative; overflow: hidden; margin: 0; min-height: 280px;
+  border: 1px solid var(--line); background: var(--bg-elev);
 }
-.proj-repo--wide .proj-visual { height: 100%; min-height: 440px; }
-.proj-repo--wide .proj-repo-desc { max-width: 64ch; }
 
-/* Side-by-side cards share one visual height so their copy lines up. */
 @media (min-width: 901px) {
-  .proj-repo:not(.proj-repo--wide) .proj-visual { height: clamp(300px, 26vw, 336px); }
+  .proj-visual { min-height: 380px; }
 }
-/* Below this the report needs more room than a side column gives it: stack the wide card. */
-@media (max-width: 1180px) {
-  .proj-repo--wide { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; grid-template-areas: 'visual' 'body'; }
-  .proj-repo--wide > .proj-repo-body { padding: clamp(18px, 2vw, 26px) clamp(12px, 1.6vw, 20px) clamp(10px, 1.4vw, 16px); }
-  .proj-repo--wide .proj-visual { height: clamp(240px, 52vw, 440px); min-height: 0; }
-}
-@media (max-width: 560px) {
-  .proj-repo { padding: 10px; }
-  .proj-repo-foot .btn { width: 100%; }
+@media (max-width: 900px) {
+  .proj-repo { grid-template-columns: minmax(0, 1fr); }
+  .proj-repo-visual { order: -1; }
+  .proj-visual { min-height: 220px; }
 }

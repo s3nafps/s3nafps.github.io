@@ -1,36 +1,25 @@
-/* Category filter: a glass rail of toggles with a sliding active pill (like the nav). */
 .apis-filter {
-  display: flex; gap: 2px; max-width: 100%; padding: 4px; overflow-x: auto; scrollbar-width: none;
-  border: 1px solid var(--line); border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--surface) 55%, transparent);
-  backdrop-filter: blur(12px);
+  display: flex; gap: 0; max-width: 100%; overflow-x: auto; scrollbar-width: none;
+  border-bottom: 1px solid var(--line);
 }
 .apis-filter::-webkit-scrollbar { display: none; }
 .apis-filter-btn {
   position: relative; display: inline-flex; flex: none; align-items: center; gap: 8px;
-  padding: 8px 12px 8px 15px; border-radius: var(--radius-pill);
-  color: var(--muted); font-size: 0.86rem; font-weight: 500; white-space: nowrap; transition: color .2s;
+  padding: 8px 14px 10px 0; margin-right: 8px;
+  color: var(--muted); font-size: 0.88rem; font-weight: 500; white-space: nowrap;
 }
 .apis-filter-btn:hover, .apis-filter-btn[aria-pressed='true'] { color: var(--ink); }
-.apis-filter-btn:focus-visible { outline-offset: -2px; border-radius: var(--radius-pill); }
 .apis-filter-pill {
-  position: absolute; inset: 0; border-radius: inherit; background: var(--surface-3);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 0 0 1px var(--line-strong), 0 8px 20px -10px var(--glow-1);
+  position: absolute; left: 0; right: 14px; bottom: -1px; height: 1px;
+  background: var(--accent); border-radius: 0; box-shadow: none;
 }
 .apis-filter-label, .apis-filter-count { position: relative; }
 .apis-filter-count {
-  display: inline-grid; place-items: center; min-width: 22px; height: 20px; padding: 0 6px; border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--ink) 7%, transparent); color: var(--muted);
-  font: 500 0.68rem/1 var(--font-mono); transition: background-color .25s, color .25s;
+  display: inline-grid; place-items: center; min-width: 1.4em;
+  color: var(--faint); font: 400 0.72rem/1 var(--font-mono);
 }
-.apis-filter-btn[aria-pressed='true'] .apis-filter-count { background: var(--btn-grad); color: #fff; }
+.apis-filter-btn[aria-pressed='true'] .apis-filter-count { color: var(--accent); background: none; }
 
 @media (max-width: 720px) {
-  /* Scrolls sideways inside its own rail; the edge fade hints there is more. */
-  .apis-filter {
-    border-radius: 16px;
-    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
-    mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
-  }
-  .apis-filter-btn { padding: 8px 10px 8px 13px; font-size: 0.84rem; }
+  .apis-filter-btn { padding: 8px 12px 10px 0; font-size: 0.84rem; }
 }

@@ -36,13 +36,13 @@
 /* Scan line: a soft band with a bright leading edge sweeping down the report. */
 .proj-report-scan {
   position: absolute; inset: 0 0 auto; height: 26%; pointer-events: none; opacity: 0;
-  background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.07) 50%, rgba(34, 211, 238, 0.2) 96%, transparent);
+  background: linear-gradient(180deg, transparent, rgba(232, 181, 106, 0.05) 50%, rgba(232, 181, 106, 0.28) 96%, transparent);
   animation: proj-scan 5.6s var(--ease-in-out) infinite;
 }
 .proj-report-scan::after {
   content: ''; position: absolute; inset: auto 0 0; height: 2px;
-  background: linear-gradient(90deg, transparent, #22d3ee 20%, #a78bfa 80%, transparent);
-  box-shadow: 0 0 16px 2px rgba(34, 211, 238, 0.5);
+  background: var(--accent);
+  box-shadow: none;
 }
 .proj-report:not([data-active]) .proj-report-scan { animation-play-state: paused; }
 @keyframes proj-scan {
@@ -55,8 +55,8 @@
 .proj-report-badge {
   position: absolute; left: 16px; bottom: 16px; z-index: 2; display: grid; gap: 3px; padding: 10px 14px;
   border: 1px solid var(--line-strong); border-radius: var(--radius-md);
-  background: var(--glass-strong); backdrop-filter: blur(16px);
-  box-shadow: var(--shadow-md);
+  background: var(--bg-elev);
+  box-shadow: none;
 }
 .proj-report-badge-label { color: var(--muted); font: 500 0.66rem/1.2 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
 .proj-report-badge strong {
@@ -82,8 +82,8 @@
   .proj-repo:not(.proj-repo--wide) .proj-lz-svg--wide { height: 100%; }
 }
 .proj-lz-zone rect {
-  fill: color-mix(in srgb, var(--violet) 5%, transparent);
-  stroke: color-mix(in srgb, var(--violet-soft) 40%, var(--line-strong)); stroke-width: 1; stroke-dasharray: 4 5;
+  fill: transparent;
+  stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 4 5;
 }
 .proj-lz-zone text { fill: var(--muted); font-size: 10px; letter-spacing: 0.06em; }
 .proj-lz-edge {
@@ -100,9 +100,9 @@
 .proj-lz-node.is-pill text { fill: var(--cyan-ink); font-size: 10px; font-weight: 600; letter-spacing: 0.06em; }
 .proj-lz-node.is-key rect { stroke: color-mix(in srgb, var(--cyan) 50%, var(--line-strong)); }
 .proj-lz-node.is-accent rect {
-  fill: color-mix(in srgb, var(--violet) 14%, var(--surface));
-  stroke: color-mix(in srgb, var(--violet-soft) 75%, transparent);
-  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--violet) 35%, transparent));
+  fill: color-mix(in srgb, var(--accent) 16%, var(--surface));
+  stroke: var(--accent);
+  filter: none;
 }
 .proj-lz-node.is-accent text { fill: var(--ink); font-weight: 600; }
 .proj-lz-packet-core { fill: var(--cyan); }
@@ -116,7 +116,7 @@
   color: var(--muted); font: 500 0.7rem/1.2 var(--font-mono); letter-spacing: 0.03em;
 }
 .proj-board-title { display: inline-flex; align-items: center; gap: 8px; color: var(--ink-2); }
-.proj-board-glyph { width: 8px; height: 8px; border-radius: 2px; background: var(--grad-strong); }
+.proj-board-glyph { width: 8px; height: 8px; border-radius: 2px; background: var(--accent); }
 
 .proj-board-edge { display: flex; align-items: center; gap: 10px; }
 .proj-board-ports { display: inline-flex; flex: none; gap: 4px; }

@@ -8,7 +8,7 @@ export const profile = {
   email: 'mohamed.senator@icloud.com',
   status: 'Open to systems and cloud roles',
   summary:
-    'I support Windows, network and security-sensitive infrastructure, then automate the recurring work around it. Outside the day job I ship data APIs on Apify, open-source infrastructure, and an Android app.',
+    'I look after Windows, network and security-sensitive infrastructure, and I automate the jobs that come back every week. I also publish data APIs on Apify, a few infrastructure repos, and an Android app.',
   links: {
     cv: '/Mohamed_Senator_Master_CV.pdf',
     linkedin: 'https://linkedin.com/in/mohamedsenator',
@@ -110,37 +110,37 @@ export const capabilities: Capability[] = [
   {
     pillar: 'Operate',
     title: 'Windows infrastructure',
-    description: 'Enterprise Windows environments kept available, governed and supportable.',
+    description: 'Windows Server, directory services, and the Microsoft stack around them.',
     items: ['Windows Server', 'Active Directory & Group Policy', 'Exchange, Microsoft 365 & SCCM/MECM'],
   },
   {
     pillar: 'Operate',
     title: 'Networking & security',
-    description: 'Day-to-day operation of enterprise connectivity and security controls.',
+    description: 'The network, and the firewalls and certificates in front of it.',
     items: ['TCP/IP, Cisco & LAN/WAN', 'FortiGate, FortiWeb & PKI', 'Vulnerability remediation & patching'],
   },
   {
     pillar: 'Operate',
     title: 'Cloud & virtualization',
-    description: 'Virtualized infrastructure, with a growing Google Cloud practice.',
+    description: 'vSphere and Hyper-V in production, and a Google Cloud practice I am still building.',
     items: ['GCP, Terraform & private GKE', 'VMware vSphere & Hyper-V', 'Google Cloud Associate Cloud Engineer'],
   },
   {
     pillar: 'Build',
     title: 'Automation',
-    description: 'Recurring operations turned into consistent, reviewable workflows.',
+    description: 'Weekly jobs turned into scripts, modules, and reports someone else can run.',
     items: ['PowerShell modules & health checks', 'Ansible, Bash & GitHub Actions', 'Audits, reporting & dashboards'],
   },
   {
     pillar: 'Build',
     title: 'Data APIs',
-    description: 'Public web data turned into clean, structured APIs anyone can call.',
+    description: 'Public web pages turned into APIs, with a price on each one.',
     items: ['Public Actors on the Apify Store', 'REST, API clients & MCP access', 'Pay-per-event pricing'],
   },
   {
     pillar: 'Build',
     title: 'Apps',
-    description: 'An Android app taken from first sketch to signed release.',
+    description: 'Trackr, from the first screen to a signed release.',
     items: ['Trackr for Android (Kotlin, Compose)', 'Supabase auth, Postgres & RLS', 'Offline-first sync'],
   },
 ]

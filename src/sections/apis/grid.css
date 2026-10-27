@@ -1,14 +1,4 @@
-/* Actor grid: 3 / 2 / 1 columns; the spotlight card spans the full row. */
-.apis-grid {
-  position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(14px, 1.6vw, 22px);
-}
-.apis-grid-item { display: flex; min-width: 0; }
-.apis-grid-item--wide { grid-column: 1 / -1; }
-
-@media (max-width: 1080px) {
-  .apis-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 640px) {
-  .apis-grid { grid-template-columns: minmax(0, 1fr); }
-}
+/* Actor catalog: one row per Actor. */
+.apis-grid { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--ink); }
+.apis-grid-item { display: flex; min-width: 0; border-bottom: 1px solid var(--line); }
+.apis-grid-item--wide { grid-column: auto; }

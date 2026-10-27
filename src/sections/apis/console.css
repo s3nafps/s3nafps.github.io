@@ -1,20 +1,15 @@
 /* Live console strip: status, store stats and the endpoint it reads from. */
 .apis-console {
   position: relative; display: flex; align-items: stretch; overflow: hidden;
-  border: 1px solid var(--line-strong); border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 72%, transparent), color-mix(in srgb, var(--surface) 58%, transparent));
-  backdrop-filter: blur(16px) saturate(1.3);
-  box-shadow: var(--shadow-md), inset 0 1px 0 color-mix(in srgb, #fff 5%, transparent);
+  border: 1px solid var(--line); border-radius: 0;
+  background: var(--bg-elev);
+  box-shadow: none;
 }
-/* Accent hairline along the top edge. */
-.apis-console::before {
-  content: ''; position: absolute; left: 8%; right: 8%; top: 0; height: 1px; pointer-events: none;
-  background: linear-gradient(90deg, transparent, var(--violet-soft), var(--cyan), transparent); opacity: 0.75;
-}
+.apis-console::before { content: none; }
 /* A light sweep while the request is in flight. */
 .apis-console::after {
   content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transform: translateX(-100%);
-  background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--cyan) 9%, transparent) 50%, transparent 70%);
+  background: linear-gradient(100deg, transparent 30%, color-mix(in srgb, var(--accent) 12%, transparent) 50%, transparent 70%);
   transition: opacity .4s;
 }
 .apis-console[data-status='loading']::after { opacity: 1; animation: apis-scan 1.7s var(--ease-in-out) infinite; }

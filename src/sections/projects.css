@@ -1,38 +1,21 @@
-/* Projects: the Trackr showcase, then a bento of infrastructure repos. */
-.proj { isolation: isolate; }
-.proj-glow {
-  position: absolute; inset: 8% 0 0; z-index: -1; pointer-events: none;
-  background:
-    radial-gradient(45% 30% at 72% 24%, color-mix(in srgb, var(--violet) 9%, transparent), transparent 70%),
-    radial-gradient(40% 26% at 18% 76%, color-mix(in srgb, var(--cyan) 7%, transparent), transparent 70%);
-}
-
-/* Heading */
 .proj-title { max-width: none; }
-.proj-accent { padding-right: 0.08em; font-size: 1.08em; line-height: 0.9; }
 .proj-head { align-items: flex-end; }
-.proj-lead-wrap { flex: 0 1 44ch; }
-.proj-lead { margin-top: 0; text-wrap: pretty; }
+.proj-lead-wrap { flex: 0 1 42ch; }
+.proj-lead { margin-top: 0; }
 
-/* Chapter dividers: "01 — Android app ———— Kotlin · Jetpack Compose" */
 .proj-chapter {
-  display: flex; align-items: center; gap: 14px; margin-bottom: 22px;
+  display: flex; align-items: center; gap: 14px; margin-bottom: 8px;
   color: var(--muted); font: 500 0.74rem/1.4 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase;
 }
 .proj-chapter-index { color: var(--accent); }
-.proj-chapter-label { color: var(--ink-2); }
-.proj-chapter-line { flex: 1; min-width: 24px; height: 1px; background: linear-gradient(90deg, var(--line-strong), transparent); }
+.proj-chapter-label { color: var(--ink); }
+.proj-chapter-line { flex: 1; min-width: 24px; height: 1px; background: var(--line-strong); }
 .proj-chapter-meta { letter-spacing: 0.02em; text-transform: none; }
-.proj-chapter--repos { margin-top: clamp(72px, 9vw, 120px); }
+.proj-chapter--repos { margin-top: clamp(64px, 8vw, 96px); }
 
-/* Repo bento: ADHealthCheck spans the full row, the other two sit side by side. */
-.proj-repos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 22px); }
+.proj-repos { display: grid; border-top: 1px solid var(--ink); }
 .proj-cell { display: grid; min-width: 0; }
-.proj-cell--wide { grid-column: 1 / -1; }
 
-@media (max-width: 900px) {
-  .proj-repos { grid-template-columns: minmax(0, 1fr); }
-}
 @media (max-width: 560px) {
   .proj-chapter-meta { display: none; }
 }

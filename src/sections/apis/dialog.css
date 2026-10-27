@@ -4,10 +4,7 @@
 
 .apis-dialog-backdrop {
   position: absolute; inset: 0;
-  background:
-    radial-gradient(60% 50% at 50% 35%, color-mix(in srgb, var(--violet) 14%, transparent), transparent 70%),
-    color-mix(in srgb, var(--bg) 76%, transparent);
-  backdrop-filter: blur(14px) saturate(1.2);
+  background: color-mix(in srgb, var(--bg) 88%, #000);
 }
 .apis-dialog-frame {
   position: absolute; inset: 0; display: flex; overflow-y: auto; overscroll-behavior: contain;
@@ -21,8 +18,8 @@
   --apis-drop: rgba(0, 0, 0, 0.65);
   position: absolute; inset: 0; border-radius: var(--radius-xl);
   border: 1px solid var(--line-strong);
-  background: linear-gradient(180deg, var(--surface-2), var(--surface) 46%);
-  box-shadow: var(--shadow-lg), 0 60px 140px -50px var(--apis-drop), inset 0 1px 0 color-mix(in srgb, #fff 6%, transparent);
+  background: var(--bg-elev);
+  box-shadow: 0 24px 60px -30px var(--apis-drop);
 }
 
 /* Window bar: sticks to the top so Close stays reachable while scrolling on phones. */
@@ -30,8 +27,7 @@
   position: sticky; top: 0; z-index: 3;
   display: flex; align-items: center; gap: 12px; padding: 12px 12px 12px 18px;
   border-bottom: 1px solid var(--line); border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  background: color-mix(in srgb, var(--surface-2) 82%, transparent);
-  backdrop-filter: blur(14px);
+  background: var(--bg-elev);
 }
 .apis-dialog-icon { width: 28px; height: 28px; flex: none; border-radius: 8px; border: 1px solid var(--line-strong); object-fit: cover; }
 .apis-dialog-path {

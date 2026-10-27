@@ -1,194 +1,26 @@
-/* Capabilities: two pillars (Operate, Build) as a bento of spotlight cards, joined by an animated rail. */
-.caps { isolation: isolate; }
-.caps-glow {
-  position: absolute; inset: 18% 0 8%; z-index: -1; pointer-events: none;
-  background:
-    radial-gradient(40% 50% at 28% 55%, color-mix(in srgb, var(--cyan) 9%, transparent), transparent 70%),
-    radial-gradient(40% 50% at 74% 60%, color-mix(in srgb, var(--violet) 11%, transparent), transparent 70%);
+.caps-ledger {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
 }
+.caps-pillar { min-width: 0; padding: 22px 28px 8px 0; }
+.caps-pillar + .caps-pillar { padding-left: 28px; border-left: 1px solid var(--line); }
+.caps-pillar-head { display: grid; gap: 6px; margin-bottom: 8px; }
+.caps-pillar-index { color: var(--accent); font: 500 0.72rem/1 var(--font-mono); letter-spacing: 0.12em; }
+.caps-pillar-name { font-size: clamp(1.8rem, 2.6vw, 2.4rem); }
+.caps-pillar-intent { max-width: 36ch; color: var(--muted); font-size: 0.98rem; }
 
-/* Heading */
-.caps-title { max-width: none; }
-.caps-accent { padding-right: 0.08em; font-size: 1.08em; line-height: 0.9; }
-.caps-head { align-items: flex-end; }
-.caps-lead-wrap { flex: 0 1 44ch; }
-.caps-lead { margin-top: 0; text-wrap: pretty; }
+.caps-list { display: grid; }
+.caps-list li {
+  display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 8px;
+  padding: 18px 0; border-top: 1px solid var(--line);
+}
+.caps-num { padding-top: 6px; color: var(--faint); font: 400 0.75rem/1 var(--font-mono); }
+.caps-title { font-size: 1.35rem; }
+.caps-desc { margin-top: 6px; color: var(--ink-2); font-size: 0.98rem; line-height: 1.55; }
+.caps-items { margin-top: 8px; color: var(--muted); font: 400 0.8rem/1.5 var(--font-mono); }
 
-/* Board: two pillar columns on wide screens, with rows shared through subgrid so cards line up. */
-.caps-board {
-  --caps-node: 38px;
-  --caps-gutter: clamp(28px, 4.4vw, 64px);
-  position: relative; display: grid; gap: clamp(56px, 8vw, 80px);
-}
-.caps-pillar { position: relative; z-index: 1; display: grid; align-content: start; gap: 22px; }
-.caps-pillar[data-pillar='operate'] { --caps-tone: var(--cyan); --caps-ink: var(--cyan-ink); }
-.caps-pillar[data-pillar='build'] { --caps-tone: var(--violet-soft); }
-
-/* Pillar heading: node on the rail, then name and intent. */
-.caps-pillar-head { display: grid; gap: 8px; }
-.caps-pillar-top { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
-.caps-node {
-  position: relative; flex: none; display: grid; place-items: center;
-  width: var(--caps-node); height: var(--caps-node); border-radius: 50%;
-  border: 1px solid color-mix(in srgb, var(--caps-tone) 55%, var(--line-strong));
-  background: radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--caps-tone) 20%, var(--bg)), var(--bg) 75%);
-  box-shadow: 0 0 0 5px color-mix(in srgb, var(--caps-tone) 8%, transparent), 0 0 26px -6px var(--caps-tone);
-  color: var(--caps-ink, var(--caps-tone)); font: 600 0.72rem/1 var(--font-mono); letter-spacing: 0.04em;
-}
-/* Ring that pings when the rail's signal passes the node. */
-.caps-node::after {
-  content: ''; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
-  border: 1px solid var(--caps-tone); opacity: 0;
-}
-.caps-pillar-line {
-  flex: 1; height: 1px;
-  background: linear-gradient(90deg, color-mix(in srgb, var(--caps-tone) 70%, transparent), var(--line-strong) 45%, transparent);
-}
-.caps-pillar-name {
-  display: flex; align-items: center; gap: 10px;
-  font: 650 clamp(1.5rem, 2.4vw, 1.9rem)/1.1 var(--font-display); letter-spacing: -0.035em; color: var(--ink);
-}
-.caps-pillar-intent { max-width: 46ch; color: var(--muted); font-size: 0.98rem; line-height: 1.6; text-wrap: balance; }
-
-/* Rail: only on the two-column layout, where it runs from node 01 through node 02. */
-.caps-rail { display: none; }
-
-/* Bento of cards inside each pillar: the first card spans the row, the other two share the next. */
-.caps-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.caps-cell { display: flex; container-type: inline-size; }
-.caps-cell--wide { grid-column: 1 / -1; }
-
-.caps-card {
-  flex: 1; display: flex; flex-direction: column;
-  padding: clamp(22px, 2.3vw, 28px);
-  transition: transform .55s var(--ease-out), box-shadow .55s var(--ease-out), border-color .35s;
-}
-.caps-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
-
-/* Icon in a glowing tile tinted by its pillar. */
-.caps-icon {
-  position: relative; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 15px;
-  color: var(--caps-tone);
-  background: linear-gradient(145deg, color-mix(in srgb, var(--caps-tone) 20%, var(--surface-2)), color-mix(in srgb, var(--caps-tone) 5%, var(--surface)));
-  border: 1px solid color-mix(in srgb, var(--caps-tone) 32%, var(--line));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 10px 24px -14px var(--caps-tone);
-  transition: transform .6s var(--ease-out), border-color .35s;
-}
-.caps-icon::before {
-  content: ''; position: absolute; inset: -14px; z-index: -1; border-radius: 50%; pointer-events: none;
-  background: radial-gradient(circle, color-mix(in srgb, var(--caps-tone) 38%, transparent), transparent 68%);
-  opacity: .5; transition: opacity .5s var(--ease-out), transform .6s var(--ease-out);
-}
-
-.caps-chip { gap: 7px; color: var(--muted); }
-.caps-chip::before {
-  content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--caps-tone);
-  box-shadow: 0 0 8px var(--caps-tone);
-}
-
-.caps-card-title { font-size: clamp(1.22rem, 1.6vw, 1.42rem); letter-spacing: -0.03em; line-height: 1.15; text-wrap: balance; }
-.caps-card-desc { margin-top: 10px; color: var(--muted); font-size: 0.94rem; line-height: 1.6; text-wrap: pretty; }
-
-.caps-items {
-  display: grid; align-content: start; gap: 11px; margin-top: 22px; padding-top: 20px;
-  border-top: 1px solid var(--line); color: var(--ink-2); font-size: 0.9rem; line-height: 1.45;
-}
-.caps-items li { display: flex; align-items: flex-start; gap: 11px; text-wrap: pretty; }
-.caps-nowrap { white-space: nowrap; }
-.caps-check {
-  flex: none; display: grid; place-items: center; width: 18px; height: 18px; margin-top: 1px; border-radius: 50%;
-  color: var(--caps-tone); background: color-mix(in srgb, var(--caps-tone) 15%, transparent);
-  border: 1px solid color-mix(in srgb, var(--caps-tone) 25%, transparent);
-}
-
-/* Wide card: faint grid in the corner, and copy beside the list when there is room. */
-.caps-card > .caps-card-deco {
-  position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none;
-  background:
-    radial-gradient(70% 90% at 100% 0%, color-mix(in srgb, var(--caps-tone) 10%, transparent), transparent 70%),
-    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 26px 26px,
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 26px 26px;
-  -webkit-mask-image: radial-gradient(75% 95% at 100% 0%, #000 20%, transparent 75%);
-  mask-image: radial-gradient(75% 95% at 100% 0%, #000 20%, transparent 75%);
-}
-@container (min-width: 500px) {
-  .caps-card--wide {
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto 1fr;
-    grid-template-areas: 'top top' 'body items';
-    column-gap: clamp(22px, 2.6vw, 32px);
-  }
-  .caps-card--wide .caps-card-top { grid-area: top; }
-  .caps-card--wide .caps-card-body { grid-area: body; }
-  .caps-card--wide .caps-items {
-    grid-area: items; margin-top: 0; padding: 2px 0 2px clamp(22px, 2.6vw, 32px);
-    border-top: 0; border-left: 1px solid var(--line);
-  }
-}
-
-/* Hover: lift the card and brighten the icon's glow (pointer devices only). */
-@media (hover: hover) {
-  .caps-card:hover {
-    transform: translateY(-6px);
-    border-color: color-mix(in srgb, var(--caps-tone) 28%, var(--line));
-    box-shadow: var(--shadow-lg), 0 24px 60px -36px var(--caps-tone);
-  }
-  .caps-card:hover .caps-icon { transform: translateY(-2px) rotate(-6deg) scale(1.06); border-color: color-mix(in srgb, var(--caps-tone) 55%, var(--line)); }
-  .caps-card:hover .caps-icon::before { opacity: 1; transform: scale(1.15); }
-}
-
-/* Two columns from 1200px: pillars side by side, rows shared so headings, wide cards and pairs align. */
-@media (min-width: 1200px) {
-  .caps-board {
-    grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto auto;
-    column-gap: var(--caps-gutter); row-gap: 16px;
-  }
-  .caps-pillar { grid-row: span 3; grid-template-rows: subgrid; gap: 16px; }
-  .caps-pillar-head { padding-bottom: 14px; }
-  .caps-cards { grid-row: span 2; grid-template-rows: subgrid; }
-  .caps-pillar-line { display: none; }
-
-  /* The rail box is taller than the line so the travelling comet's glow is not clipped. */
-  .caps-rail {
-    position: absolute; z-index: 0; top: calc(var(--caps-node) / 2 - 6px); left: calc(var(--caps-node) / 2); right: 0;
-    display: block; height: 12px; overflow: hidden; transform-origin: 0 50%;
-  }
-  .caps-rail::before {
-    content: ''; position: absolute; inset: 6px 0 auto; height: 1px;
-    background: linear-gradient(90deg, color-mix(in srgb, var(--cyan) 65%, transparent), var(--line-strong) 30%, color-mix(in srgb, var(--violet-soft) 60%, transparent) 54%, var(--line-strong) 75%, transparent);
-  }
-  /* A full-width layer whose comet sits in its first quarter; sliding it across the rail moves the comet end to end. */
-  .caps-rail-pulse {
-    position: absolute; inset: 5px 0 auto; display: block; height: 3px;
-    background: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--cyan) 35%, transparent) 10%, var(--cyan) 19%, var(--violet-soft) 23.4%, transparent 24%);
-    filter: drop-shadow(0 0 3px var(--cyan)) drop-shadow(0 0 6px color-mix(in srgb, var(--violet-soft) 70%, transparent));
-    transform: translate3d(-24%, 0, 0);
-    animation: caps-pulse 7s linear infinite;
-  }
-  .caps-pillar[data-pillar='operate'] .caps-node::after { animation: caps-emit 7s var(--ease-out) infinite; }
-  .caps-pillar[data-pillar='build'] .caps-node::after { animation: caps-receive 7s var(--ease-out) infinite; }
-}
-/* Travel takes the first 60% of the cycle, then the rail rests. Node 02 sits ~53% along the rail (~26% of the cycle). */
-@keyframes caps-pulse {
-  0% { transform: translate3d(-24%, 0, 0); }
-  60%, 100% { transform: translate3d(100%, 0, 0); }
-}
-@keyframes caps-emit {
-  0% { transform: scale(1); opacity: 0.9; }
-  14%, 100% { transform: scale(1.9); opacity: 0; }
-}
-@keyframes caps-receive {
-  0%, 24% { transform: scale(1); opacity: 0; }
-  26% { transform: scale(1); opacity: 0.9; }
-  40%, 100% { transform: scale(1.9); opacity: 0; }
-}
-
-@media (max-width: 1199px) {
-  .caps-lead-wrap { flex-basis: 60ch; }
-}
-@media (max-width: 639px) {
-  .caps-cards { grid-template-columns: minmax(0, 1fr); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .caps-rail-pulse, .caps-node::after { animation: none !important; display: none; }
+@media (max-width: 800px) {
+  .caps-ledger { grid-template-columns: minmax(0, 1fr); }
+  .caps-pillar { padding: 22px 0 8px; }
+  .caps-pillar + .caps-pillar { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
 }

@@ -1,11 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#8b5cf6"/>
-      <stop offset=".5" stop-color="#6366f1"/>
-      <stop offset="1" stop-color="#06b6d4"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="18" fill="url(#g)"/>
-  <text x="32" y="41" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="24" font-weight="600" fill="#fff" text-anchor="middle">MS</text>
+  <rect width="64" height="64" fill="#141311"/>
+  <rect x="0" y="60" width="64" height="4" fill="#e8b56a"/>
+  <text x="32" y="42" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="500" fill="#f4efe6" text-anchor="middle">MS</text>
 </svg>

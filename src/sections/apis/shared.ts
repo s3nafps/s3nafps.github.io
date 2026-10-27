@@ -36,7 +36,7 @@ export const SNIPPET_TABS: ReadonlyArray<{ id: keyof Snippets; label: string }> 
 export const mediaLayoutId = (slug: string) => `apis-media-${slug}`
 
 /** Same radius on both ends of the shared-element morph (Motion corrects it while scaling). */
-export const MEDIA_RADIUS = 14
+export const MEDIA_RADIUS = 2
 
 const FALLBACK_ICON = '/favicon.svg'
 

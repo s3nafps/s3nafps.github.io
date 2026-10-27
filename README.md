@@ -68,13 +68,12 @@ called over REST, from the JavaScript or Python API clients, or by AI agents thr
 
 ## About this site
 
-A dark, cinematic single page (with a light theme toggle) built around motion:
-a word-by-word hero reveal over an animated aurora and grid, a terminal that replays
-real commands from the projects, an infinite tool marquee, cursor-lit cards, a
-filterable grid of Apify Actors with video previews and an API dialog (cURL,
-JavaScript, Python and MCP snippets), a Trackr phone showcase with scroll parallax,
-and a timeline that fills as you scroll. All motion respects
-`prefers-reduced-motion`.
+A single page with a light theme toggle, set like a field runbook: warm paper or
+iron, one amber accent, and serif headlines. A terminal replays real commands from
+the projects, the tool list is a static index, and the Apify Actors are a filterable
+catalog with video previews and an API dialog (cURL, JavaScript, Python and MCP
+snippets). Trackr keeps its phone showcase, and the experience timeline fills as you
+scroll. All motion respects `prefers-reduced-motion`.
 
 The APIs section reads **live data from the public Apify Store API**
 (`GET https://api.apify.com/v2/store?username=s3nafps`, no token needed) and merges
