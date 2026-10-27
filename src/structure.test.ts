@@ -79,13 +79,17 @@ const meta: Array<[string, RegExp]> = [
   ['twitter card', /twitter:card/],
   ['canonical', /rel="canonical"/],
   ['JSON-LD Person', /"@type":\s*"Person"/],
+  ['JSON-LD graph', /"@graph"/],
+  ['JSON-LD SoftwareApplication', /"@type":\s*"SoftwareApplication"/],
+  ['GitHub profile', /https:\/\/github\.com\/s3nafps/],
   ['Apify profile', /https:\/\/apify\.com\/s3nafps/],
   ['noscript', /<noscript>/],
+  ['static fallback', /id="static"/],
 ]
 for (const [name, pattern] of meta) assert.match(html, pattern, `${name} must exist in index.html`)
 
 // Public files
-for (const file of ['robots.txt', 'sitemap.xml', 'og.png', 'favicon.svg', 'Mohamed_Senator_Master_CV.pdf']) {
+for (const file of ['robots.txt', 'sitemap.xml', 'og.png', 'favicon.svg', 'llms.txt', 'Mohamed_Senator_Master_CV.pdf']) {
   assert.ok(exists(`public/${file}`), `public/${file} must exist`)
 }
 // Apify Store READMEs link to these files: they must never move.
